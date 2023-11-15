@@ -27,6 +27,7 @@
       working_directory: "/home/ubuntu/build"
       commands:
         - ""
+        - "echo \"${INSTALL_FEATURES}\" "
         - "composer require \"${INSTALL_FEATURES}\" --no-scripts --no-plugins --ignore-platform-reqs -vvv "
       sync_paths:
         - pipeline_path: "/"
