@@ -1,0 +1,43 @@
+- pipeline: "Install Features"
+  on: "SCHEDULE"
+  refs:
+    - ":default"
+  priority: "NORMAL"
+  fail_on_prepare_env_warning: true
+  auto_clear_cache: true
+  actions:
+    - action: "Generate variables from integration"
+      type: "INTEGRATION_VARIABLES"
+      trigger_conditions:
+        - trigger_condition: "VAR_IS_NOT"
+          trigger_variable_value: "PRIV"
+          trigger_variable_key: "BUDDY_SCM_PROVIDER"
+      integration_from: "PROJECT"
+    - action: "Get Features"
+      type: "NATIVE_BUILD_DOCKER_CLI"
+      working_directory: "/home/ubuntu/build"
+      commands:
+        - ""
+        - "INSTALL_FEATURES=\"spryker-feature/wishlist\""
+      shell: "BASH"
+      docker_layer_caching: false
+      docker_layer_caching_scope: "ACTION"
+    - action: "Install Features"
+      type: "NATIVE_BUILD_DOCKER_CLI"
+      working_directory: "/home/ubuntu/build"
+      commands:
+        - ""
+        - "echo \"*** Install composer...\" "
+        - "&& composer require \"${INSTALL_FEATURES}\" --no-scripts --no-plugins --ignore-platform-reqs -vvv "
+      sync_paths:
+        - pipeline_path: "/"
+          vm_path: "/home/ubuntu/build"
+          direction: "PIPELINE_TO_VM"
+          excludes: ""
+        - pipeline_path: "/"
+          vm_path: "/home/ubuntu/build"
+          direction: "VM_TO_PIPELINE"
+          excludes: ""
+      shell: "BASH"
+      docker_layer_caching: false
+      docker_layer_caching_scope: "ACTION"
