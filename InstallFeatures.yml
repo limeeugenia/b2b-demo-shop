@@ -22,6 +22,12 @@
       shell: "BASH"
       docker_layer_caching: true
       docker_layer_caching_scope: "ACTION"
+    - action: "Pass Arguments"
+      type: "WAIT_FOR_VARIABLES"
+      variables:
+      - key: "INSTALL_FEATURE"
+        type: "VAR"
+  
     - action: "Install Features"
       type: "NATIVE_BUILD_DOCKER_CLI"
       working_directory: "/home/ubuntu/build"
