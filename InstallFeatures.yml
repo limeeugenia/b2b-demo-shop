@@ -20,7 +20,7 @@
         - ""
         - "export INSTALL_FEATURES=\"spryker-feature/wishlist\""
       shell: "BASH"
-      docker_layer_caching: false
+      docker_layer_caching: true
       docker_layer_caching_scope: "ACTION"
     - action: "Install Features"
       type: "NATIVE_BUILD_DOCKER_CLI"
@@ -39,5 +39,5 @@
           direction: "VM_TO_PIPELINE"
           excludes: ""
       shell: "BASH"
-      docker_layer_caching: false
+      docker_layer_caching: true
       docker_layer_caching_scope: "ACTION"
