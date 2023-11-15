@@ -1,4 +1,4 @@
-- pipeline: "Install Features"
+- pipeline: "Upgrader"
   on: "SCHEDULE"
   refs:
     - ":default"
@@ -27,8 +27,7 @@
       working_directory: "/home/ubuntu/build"
       commands:
         - ""
-        - "echo \"*** Install composer...\" "
-        - "&& composer require \"${INSTALL_FEATURES}\" --no-scripts --no-plugins --ignore-platform-reqs -vvv "
+        - "composer require \"${INSTALL_FEATURES}\" --no-scripts --no-plugins --ignore-platform-reqs -vvv "
       sync_paths:
         - pipeline_path: "/"
           vm_path: "/home/ubuntu/build"
