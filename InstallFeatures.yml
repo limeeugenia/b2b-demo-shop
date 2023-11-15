@@ -25,7 +25,7 @@
     - action: "Pass Arguments"
       type: "WAIT_FOR_VARIABLES"
       variables:
-      - key: "INSTALL_FEATURE"
+      - key: "INSTALL_FEATURES"
         type: "VAR"
   
     - action: "Install Features"
