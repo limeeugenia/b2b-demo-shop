@@ -18,16 +18,10 @@
       working_directory: "/home/ubuntu/build"
       commands:
         - ""
-        - "export INSTALL_FEATURES=\"spryker-feature/wishlist\""
+        - "export INSTALL_FEATURES=\"spryker-feature/wishlist\" \"spryker-feature/configurable-product-wishlist\""
       shell: "BASH"
-      docker_layer_caching: true
+      docker_layer_caching: false
       docker_layer_caching_scope: "ACTION"
-    - action: "Pass Arguments"
-      type: "WAIT_FOR_VARIABLES"
-      variables:
-      - key: "INSTALL_FEATURES"
-        type: "VAR"
-  
     - action: "Install Features"
       type: "NATIVE_BUILD_DOCKER_CLI"
       working_directory: "/home/ubuntu/build"
@@ -45,5 +39,5 @@
           direction: "VM_TO_PIPELINE"
           excludes: ""
       shell: "BASH"
-      docker_layer_caching: true
+      docker_layer_caching: false
       docker_layer_caching_scope: "ACTION"
