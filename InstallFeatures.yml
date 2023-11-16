@@ -27,7 +27,7 @@
       variables:
         - key: "INSTALL_FEATURES"
           type: "VAR"
-        - key: "SPRYKER-FEATURE--WISHLIST"
+        - key: "SPRYKER_FEATURE__WISHLIST"
           type: "VAR"
           defaults: "true\nfalse"
     - action: "Install Features"
