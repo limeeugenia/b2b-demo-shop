@@ -18,7 +18,7 @@
       working_directory: "/home/ubuntu/build"
       commands:
         - ""
-        - "export INSTALL_FEATURES=\"spryker-feature/wishlist\" \"spryker-feature/configurable-product-wishlist\""
+        - "export INSTALL_FEATURES=\"spryker-feature/wishlist\ spryker-feature/configurable-product-wishlist\""
       shell: "BASH"
       docker_layer_caching: false
       docker_layer_caching_scope: "ACTION"
