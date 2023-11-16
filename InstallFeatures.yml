@@ -1,4 +1,4 @@
-- pipeline: "Upgrader"
+- pipeline: "Install Features"
   on: "SCHEDULE"
   refs:
     - ":default"
@@ -29,7 +29,7 @@
           type: "VAR"
         - key: "SPRYKER_FEATURE__WISHLIST"
           type: "VAR"
-          defaults: "true\nfalse"
+          defaults: "false\n202307.0\n202212.0"
     - action: "Install Features"
       type: "NATIVE_BUILD_DOCKER_CLI"
       working_directory: "/home/ubuntu/build"
