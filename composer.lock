@@ -9551,16 +9551,16 @@
         },
         {
             "name": "spryker-shop/company-page",
-            "version": "2.29.0",
+            "version": "2.29.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-shop/company-page.git",
-                "reference": "caaaeac431243af9d0926c44ffe8ee587c8c2649"
+                "reference": "cb9314a08f8f332038edc0ebb55b8dfdf2a6b941"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker-shop/company-page/zipball/caaaeac431243af9d0926c44ffe8ee587c8c2649",
-                "reference": "caaaeac431243af9d0926c44ffe8ee587c8c2649",
+                "url": "https://api.github.com/repos/spryker-shop/company-page/zipball/cb9314a08f8f332038edc0ebb55b8dfdf2a6b941",
+                "reference": "cb9314a08f8f332038edc0ebb55b8dfdf2a6b941",
                 "shasum": ""
             },
             "require": {
@@ -9623,9 +9623,9 @@
             ],
             "description": "CompanyPage module",
             "support": {
-                "source": "https://github.com/spryker-shop/company-page/tree/2.29.0"
+                "source": "https://github.com/spryker-shop/company-page/tree/2.29.1"
             },
-            "time": "2024-10-22T10:55:53+00:00"
+            "time": "2024-11-04T12:33:53+00:00"
         },
         {
             "name": "spryker-shop/company-user-agent-widget",
@@ -69261,7 +69261,7 @@
         "ext-readline": "*",
         "ext-redis": "*"
     },
-    "platform-dev": {},
+    "platform-dev": [],
     "platform-overrides": {
         "php": "8.2.0"
     },
