@@ -4091,3 +4091,5 @@ merchant_relationship.mail.trans.merchant_relationship_delete.main_text,"Merchan
 merchant_relationship.mail.trans.merchant_relationship_delete.main_text,"Der Händler %merchant_name% hat Ihre Händlerbeziehung beendet. Bei Fragen wenden Sie sich bitte an den Händler.",de_DE
 merchant_relationship.mail.trans.merchant_relationship_delete.link,Contact merchant,en_US
 merchant_relationship.mail.trans.merchant_relationship_delete.link,Händler kontaktieren,de_DE
+customer.salutation.n/a,n/a,en_US
+customer.salutation.n/a,n/a,de_DE
