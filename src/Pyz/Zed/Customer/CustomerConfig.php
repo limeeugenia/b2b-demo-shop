@@ -11,6 +11,7 @@ use Spryker\Zed\Customer\CustomerConfig as SprykerCustomerConfig;
 
 class CustomerConfig extends SprykerCustomerConfig
 {
+    protected const IS_CUSTOMER_EMAIL_VALIDATION_CASE_SENSITIVE = false;
     /**
      * @var bool
      */
