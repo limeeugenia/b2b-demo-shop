@@ -58,7 +58,6 @@ class TwigDependencyProvider extends SprykerTwigDependencyProvider
     protected function getTwigPlugins(): array
     {
         return [
-            new DebugTwigPlugin(),
             new FormTwigPlugin(),
             new HttpKernelTwigPlugin(),
             new RoutingTwigPlugin(),
@@ -98,6 +97,7 @@ class TwigDependencyProvider extends SprykerTwigDependencyProvider
             // Form buttons
             new SubmitButtonTwigPlugin(),
             new GuiFilterTwigPlugin(),
+            new Spryker\Shared\Twig\Plugin\VarDumperTwigPlugin(),
         ];
     }
 

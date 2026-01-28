@@ -54,7 +54,6 @@ class TwigDependencyProvider extends SprykerTwigDependencyProvider
     protected function getTwigPlugins(): array
     {
         return [
-            new DebugTwigPlugin(),
             new FormTwigPlugin(),
             new HttpKernelTwigPlugin(),
             new RoutingTwigPlugin(),
@@ -87,6 +86,7 @@ class TwigDependencyProvider extends SprykerTwigDependencyProvider
             new ContentNavigationTwigPlugin(),
             new PriceModeTwigPlugin(),
             new NumberFormatterTwigPlugin(),
+            new Spryker\Shared\Twig\Plugin\VarDumperTwigPlugin(),
         ];
     }
 
