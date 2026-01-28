@@ -5,11 +5,12 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace Pyz\Yves\Log;
 
 use Spryker\Yves\Customer\Plugin\Log\CurrentCustomerDataRequestProcessorPlugin;
 use Spryker\Yves\Log\LogDependencyProvider as SprykerLogDependencyProvider;
-use Spryker\Yves\Log\Plugin\Handler\ExceptionStreamHandlerPlugin;
 use Spryker\Yves\Log\Plugin\Handler\StreamHandlerPlugin;
 use Spryker\Yves\Log\Plugin\Log\AuditLogMetaDataProcessorPlugin;
 use Spryker\Yves\Log\Plugin\Log\AuditLogRequestProcessorPlugin;
@@ -31,7 +32,6 @@ class LogDependencyProvider extends SprykerLogDependencyProvider
     {
         return [
             new StreamHandlerPlugin(),
-            new ExceptionStreamHandlerPlugin(),
         ];
     }
 

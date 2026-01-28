@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace PyzTest\Yves\Checkout\Process\Steps;
 
 use Codeception\Test\Unit;
@@ -32,19 +34,10 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class PlaceOrderStepTest extends Unit
 {
-    /**
-     * @var string
-     */
     protected const LOCALE_NAME_PLACE_ORDER_STEP = 'en_US';
 
-    /**
-     * @var string
-     */
     protected const MESSAGE_CHECKOUT_ERROR_TRANSFER = 'MESSAGE_CHECKOUT_ERROR_TRANSFER';
 
-    /**
-     * @return void
-     */
     public function testPlaceOrderExecuteWhenExternalRedirectProvidedShouldSetIt(): void
     {
         $checkoutClientMock = $this->createCheckoutClientMock();
@@ -61,9 +54,6 @@ class PlaceOrderStepTest extends Unit
         $this->assertEquals($redirectUrl, $placeOrderStep->getExternalRedirectUrl());
     }
 
-    /**
-     * @return void
-     */
     public function testPlaceOrderExecuteWhenOrderSuccessfullyPlacedShouldHaveStoreOrderData(): void
     {
         $checkoutClientMock = $this->createCheckoutClientMock();
@@ -84,9 +74,6 @@ class PlaceOrderStepTest extends Unit
         $this->assertTrue($placeOrderStep->postCondition($quoteTransfer));
     }
 
-    /**
-     * @return void
-     */
     public function testPlaceOrderExecuteWhenOrderHaveErrorsShouldLogToFlashMessenger(): void
     {
         $checkoutClientMock = $this->createCheckoutClientMock();
@@ -110,9 +97,6 @@ class PlaceOrderStepTest extends Unit
         $placeOrderStep->execute($this->createRequest(), $quoteTransfer);
     }
 
-    /**
-     * @return void
-     */
     public function testPostConditionsShouldReturnTrueWhenOrderPlaceIsReady(): void
     {
         $checkoutResponseTransfer = new CheckoutResponseTransfer();
@@ -127,9 +111,6 @@ class PlaceOrderStepTest extends Unit
         $this->assertTrue($placeOrderStep->postCondition($quoteTransfer));
     }
 
-    /**
-     * @return void
-     */
     public function testRequireInputShouldBeFalse(): void
     {
         $checkoutClientMock = $this->createCheckoutClientMock();
@@ -142,8 +123,6 @@ class PlaceOrderStepTest extends Unit
     /**
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCheckoutClientInterface|\PHPUnit\Framework\MockObject\MockObject $checkoutClientMock
      * @param \Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface|\PHPUnit\Framework\MockObject\MockObject|null $flashMessengerMock
-     *
-     * @return \SprykerShop\Yves\CheckoutPage\Process\Steps\PlaceOrderStep
      */
     protected function createPlaceOrderStep(
         CheckoutPageToCheckoutClientInterface $checkoutClientMock,
@@ -171,9 +150,6 @@ class PlaceOrderStepTest extends Unit
         return $this->getMockBuilder(CheckoutPageToGlossaryStorageClientInterface::class)->getMock();
     }
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\Request
-     */
     protected function createRequest(): Request
     {
         return Request::createFromGlobals();
@@ -203,9 +179,6 @@ class PlaceOrderStepTest extends Unit
         return $this->getMockBuilder(StepHandlerPluginInterface::class)->getMock();
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
     protected function createQuoteTransfer(): QuoteTransfer
     {
         $quoteTransfer = new QuoteTransfer();

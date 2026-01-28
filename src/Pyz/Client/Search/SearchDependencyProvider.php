@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace Pyz\Client\Search;
 
 use Spryker\Client\Catalog\Plugin\Config\CatalogSearchConfigBuilder;
@@ -19,12 +21,7 @@ use Spryker\Client\SearchHttp\Plugin\Search\SearchHttpSearchContextExpanderPlugi
 
 class SearchDependencyProvider extends SprykerSearchDependencyProvider
 {
-    /**
-     * @param \Spryker\Client\Kernel\Container $container
-     *
-     * @return \Spryker\Client\Search\Dependency\Plugin\SearchConfigBuilderInterface
-     */
-    protected function createSearchConfigBuilderPlugin(Container $container): SearchConfigBuilderInterface
+    protected function createSearchConfigBuilderPlugin(Container $container): SearchConfigBuilderInterface // phpcs:ignore SlevomatCodingStandard.Functions.UnusedParameter
     {
         return new CatalogSearchConfigBuilder();
     }

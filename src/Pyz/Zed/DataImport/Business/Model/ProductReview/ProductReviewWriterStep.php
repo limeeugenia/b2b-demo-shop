@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace Pyz\Zed\DataImport\Business\Model\ProductReview;
 
 use Orm\Zed\ProductReview\Persistence\Map\SpyProductReviewTableMap;
@@ -18,31 +20,16 @@ use Spryker\Zed\ProductReview\Dependency\ProductReviewEvents;
 
 class ProductReviewWriterStep extends PublishAwareStep implements DataImportStepInterface
 {
-    /**
-     * @var \Pyz\Zed\DataImport\Business\Model\Product\Repository\ProductRepositoryInterface
-     */
-    protected $productRepository;
+    protected ProductRepositoryInterface $productRepository;
 
-    /**
-     * @var \Pyz\Zed\DataImport\Business\Model\Locale\Repository\LocaleRepositoryInterface
-     */
-    protected $localeRepository;
+    protected LocaleRepositoryInterface $localeRepository;
 
-    /**
-     * @param \Pyz\Zed\DataImport\Business\Model\Product\Repository\ProductRepositoryInterface $productRepository
-     * @param \Pyz\Zed\DataImport\Business\Model\Locale\Repository\LocaleRepositoryInterface $localeRepository
-     */
     public function __construct(ProductRepositoryInterface $productRepository, LocaleRepositoryInterface $localeRepository)
     {
         $this->productRepository = $productRepository;
         $this->localeRepository = $localeRepository;
     }
 
-    /**
-     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
-     *
-     * @return void
-     */
     public function execute(DataSetInterface $dataSet): void
     {
         $productReviewEntity = SpyProductReviewQuery::create()
@@ -57,31 +44,23 @@ class ProductReviewWriterStep extends PublishAwareStep implements DataImportStep
 
         $productReviewEntity->fromArray($dataSet->getArrayCopy());
 
-        if ($productReviewEntity->isNew() || $productReviewEntity->isModified()) {
-            $productReviewEntity->save();
-
-            if ($productReviewEntity->getStatus() === SpyProductReviewTableMap::COL_STATUS_APPROVED) {
-                $this->addPublishEvents(ProductReviewEvents::PRODUCT_REVIEW_PUBLISH, $productReviewEntity->getIdProductReview());
-            }
-            $this->addPublishEvents(ProductReviewEvents::PRODUCT_ABSTRACT_REVIEW_PUBLISH, $productReviewEntity->getFkProductAbstract());
+        if (!$productReviewEntity->isNew() && !$productReviewEntity->isModified()) {
+            return;
         }
+
+        $productReviewEntity->save();
+
+        if ($productReviewEntity->getStatus() === SpyProductReviewTableMap::COL_STATUS_APPROVED) {
+            $this->addPublishEvents(ProductReviewEvents::PRODUCT_REVIEW_PUBLISH, $productReviewEntity->getIdProductReview());
+        }
+        $this->addPublishEvents(ProductReviewEvents::PRODUCT_ABSTRACT_REVIEW_PUBLISH, $productReviewEntity->getFkProductAbstract());
     }
 
-    /**
-     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
-     *
-     * @return int
-     */
     protected function getFkProductAbstract(DataSetInterface $dataSet): int
     {
         return $this->productRepository->getIdProductAbstractByAbstractSku($dataSet['abstract_product_sku']);
     }
 
-    /**
-     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
-     *
-     * @return int
-     */
     protected function getFkLocale(DataSetInterface $dataSet): int
     {
         return $this->localeRepository->getIdLocaleByLocale($dataSet['locale_name']);

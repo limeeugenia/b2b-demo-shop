@@ -67,6 +67,7 @@ npm-debug.log
 !/tests/_support/_generated/.gitkeep
 /codeception.local.yml
 
+/tests/cypress-tests
 /tests/PyzTest/*/*/_output/*
 /tests/PyzTest/*/*/_support/_generated/*
 
@@ -105,3 +106,6 @@ docker
 # angular
 /.angular/cache
 /.angular
+
+# Generated icon sprite
+/frontend/assets/global/default/icons/sprite.svg

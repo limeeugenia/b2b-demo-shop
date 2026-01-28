@@ -4,9 +4,15 @@ namespace: spryker_ci
 tag: '1.0'
 
 environment: docker.ci.cypress
-pipeline: docker.ci.acceptance.dynamic-store-off.cypress
+pipeline: docker.ci.acceptance
 image:
-    tag: spryker/php:8.3
+    tag: spryker/php:8.4
+    php:
+        enabled-extensions:
+            - otel
+        ini:
+            max_execution_time: 300
+            request_terminate_timeout: 300
     environment:
         SPRYKER_PRODUCT_CONFIGURATOR_HOST: date-time-configurator-example.spryker.local
         SPRYKER_PRODUCT_CONFIGURATOR_PORT: 80
@@ -21,8 +27,8 @@ image:
         npm: 9
 
 composer:
-    mode: ''
-    autoload: ''
+    mode: '--dev --quiet -o -a'
+    autoload: '-o'
 
 regions:
     EU:
@@ -61,7 +67,7 @@ groups:
     EU:
         region: EU
         applications:
-            yves_eu:
+            yves:
                 application: yves
                 endpoints:
                     date-time-configurator-example.spryker.local:
@@ -76,14 +82,14 @@ groups:
                         services:
                             session:
                                 namespace: 2
-            glue_eu:
+            glue:
                 application: glue
                 endpoints:
                     glue.de.spryker.local:
                         store: DE
                     glue.at.spryker.local:
                         store: AT
-            backoffice_eu:
+            boffice:
                 application: backoffice
                 endpoints:
                     backoffice.de.spryker.local:
@@ -96,7 +102,7 @@ groups:
                         services:
                             session:
                                 namespace: 4
-            backend_gateway_eu:
+            backgw:
                 application: backend-gateway
                 endpoints:
                     backend-gateway.de.spryker.local:
@@ -105,7 +111,7 @@ groups:
                     backend-gateway.at.spryker.local:
                         store: AT
                         primal: true
-            backend_api_eu:
+            backapi:
                 application: zed
                 endpoints:
                     backend-api.de.spryker.local:
@@ -114,15 +120,19 @@ groups:
                     backend-api.at.spryker.local:
                         store: AT
                         entry-point: BackendApi
-            glue_storefront_eu:
+            gluestorefront:
                 application: glue-storefront
                 endpoints:
                     glue-storefront.de.spryker.local:
                         store: DE
                     glue-storefront.at.spryker.local:
                         store: AT
-            glue_backend_eu:
+            gluebackend:
                 application: glue-backend
+                limits:
+                    request-terminate-timeout: 5m
+                http:
+                    timeout: 5m
                 endpoints:
                     glue-backend.de.spryker.local:
                         store: DE
@@ -141,19 +151,19 @@ services:
                 protocol: tcp
     broker:
         engine: rabbitmq
-        version: '3.9'
+        version: '4.1'
         api:
             username: 'spryker'
             password: 'secret'
     session:
-        engine: redis
+        engine: valkey
     key_value_store:
-        engine: redis
+        engine: valkey
     search:
         engine: elastic
         version: '7.10'
     mail_catcher:
-        engine: mailhog
+        engine: mailpit
 
 docker:
     ssl:
@@ -174,4 +184,4 @@ docker:
 
     compose:
         yamls:
-            - vendor/spryker/cypress-tests/docker-compose.cypress.yml
+            - tests/cypress-tests/docker-compose.cypress.yml

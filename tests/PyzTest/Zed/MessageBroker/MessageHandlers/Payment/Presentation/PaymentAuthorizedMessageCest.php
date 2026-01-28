@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace PyzTest\Zed\MessageBroker\MessageHandlers\Payment\Presentation;
 
 use Generated\Shared\Transfer\PaymentAuthorizedTransfer;
@@ -24,32 +26,16 @@ use PyzTest\Zed\MessageBroker\PaymentPresentationTester;
  */
 class PaymentAuthorizedMessageCest
 {
-    /**
-     * @var string
-     */
     protected const INITIAL_ITEM_STATE = 'payment pending';
 
-    /**
-     * @var string
-     */
     public const FINAL_ITEM_STATE = 'payment authorized';
 
-    /**
-     * @param \PyzTest\Zed\MessageBroker\PaymentPresentationTester $i
-     *
-     * @return void
-     */
     public function _before(PaymentPresentationTester $i): void
     {
         $i->amZed();
         $i->amLoggedInUser();
     }
 
-    /**
-     * @param \PyzTest\Zed\MessageBroker\PaymentPresentationTester $I
-     *
-     * @return void
-     */
     public function testPaymentAuthorizedMessageIsSuccessfullyHandled(PaymentPresentationTester $I): void
     {
         // Arrange

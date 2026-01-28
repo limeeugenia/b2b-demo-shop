@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace Pyz\Zed\DataImport\Business\Model\ProductConcrete\Writer;
 
 use Generated\Shared\Transfer\EventEntityTransfer;
@@ -27,33 +29,17 @@ use Spryker\Zed\ProductSearch\Dependency\ProductSearchEvents;
 
 class ProductConcretePropelDataSetWriter implements DataSetWriterInterface
 {
-    /**
-     * @uses \Spryker\Shared\ProductBundleStorage\ProductBundleStorageConfig::PRODUCT_BUNDLE_PUBLISH
-     *
-     * @var string
-     */
     protected const PRODUCT_BUNDLE_PUBLISH = 'ProductBundle.product_bundle.publish.write';
 
     protected const COLUMN_ABSTRACT_SKU = ProductConcreteHydratorStep::COLUMN_ABSTRACT_SKU;
 
-    /**
-     * @var \Pyz\Zed\DataImport\Business\Model\Product\Repository\ProductRepositoryInterface
-     */
-    protected $productRepository;
+    protected ProductRepositoryInterface $productRepository;
 
-    /**
-     * @param \Pyz\Zed\DataImport\Business\Model\Product\Repository\ProductRepositoryInterface $productRepository
-     */
     public function __construct(ProductRepositoryInterface $productRepository)
     {
         $this->productRepository = $productRepository;
     }
 
-    /**
-     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
-     *
-     * @return void
-     */
     public function write(DataSetInterface $dataSet): void
     {
         $productConcreteEntity = $this->createOrUpdateProductConcrete($dataSet);
@@ -67,19 +53,11 @@ class ProductConcretePropelDataSetWriter implements DataSetWriterInterface
         $this->createOrUpdateBundles($dataSet, $productConcreteEntity->getIdProduct());
     }
 
-    /**
-     * @return void
-     */
     public function flush(): void
     {
         DataImporterPublisher::triggerEvents();
     }
 
-    /**
-     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProduct
-     */
     protected function createOrUpdateProductConcrete(DataSetInterface $dataSet): SpyProduct
     {
         $idAbstract = $this
@@ -110,12 +88,6 @@ class ProductConcretePropelDataSetWriter implements DataSetWriterInterface
         return $productConcreteEntity;
     }
 
-    /**
-     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
-     * @param int $idProduct
-     *
-     * @return void
-     */
     protected function createOrUpdateBundles(DataSetInterface $dataSet, int $idProduct): void
     {
         $productBundleData = $this->getProductConcreteBundleData($dataSet);
@@ -131,22 +103,20 @@ class ProductConcretePropelDataSetWriter implements DataSetWriterInterface
                 ->findOneOrCreate();
             $productBundleEntity->fromArray($productBundle[ProductConcreteHydratorStep::KEY_PRODUCT_BUNDLE_TRANSFER]->modifiedToArray());
 
-            if ($productBundleEntity->isNew() || $productBundleEntity->isModified()) {
-                $productBundleEntity->save();
+            if (!$productBundleEntity->isNew() && !$productBundleEntity->isModified()) {
+                continue;
             }
+
+            $productBundleEntity->save();
         }
 
-        if ($productBundleData) {
-            DataImporterPublisher::addEvent(static::PRODUCT_BUNDLE_PUBLISH, $idProduct);
+        if (!$productBundleData) {
+            return;
         }
+
+        DataImporterPublisher::addEvent(static::PRODUCT_BUNDLE_PUBLISH, $idProduct);
     }
 
-    /**
-     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
-     * @param int $idProduct
-     *
-     * @return void
-     */
     protected function createOrUpdateProductConcreteLocalizedAttributesEntities(
         DataSetInterface $dataSet,
         int $idProduct,
@@ -171,12 +141,6 @@ class ProductConcretePropelDataSetWriter implements DataSetWriterInterface
         }
     }
 
-    /**
-     * @param int $idProduct
-     * @param \Generated\Shared\Transfer\SpyProductSearchEntityTransfer $productSearchEntityTransfer
-     *
-     * @return void
-     */
     protected function createOrUpdateProductConcreteSearchEntities(
         int $idProduct,
         SpyProductSearchEntityTransfer $productSearchEntityTransfer,
@@ -188,24 +152,19 @@ class ProductConcretePropelDataSetWriter implements DataSetWriterInterface
         $productSearchEntity->fromArray($productSearchEntityTransfer->modifiedToArray());
 
         $isNewProductSearchEntity = $productSearchEntity->isNew();
-        if ($isNewProductSearchEntity || $productSearchEntity->isModified()) {
-            $productSearchEntity->save();
-            $eventEntityTransfer = $this->mapProductSearchEntityToEventEntityTransfer(
-                $productSearchEntity,
-                $isNewProductSearchEntity,
-                new EventEntityTransfer(),
-            );
-            DataImporterPublisher::addEvent($eventEntityTransfer->getEvent(), $eventEntityTransfer->getId(), $eventEntityTransfer);
+        if (!$isNewProductSearchEntity && !$productSearchEntity->isModified()) {
+            return;
         }
+
+        $productSearchEntity->save();
+        $eventEntityTransfer = $this->mapProductSearchEntityToEventEntityTransfer(
+            $productSearchEntity,
+            $isNewProductSearchEntity,
+            new EventEntityTransfer(),
+        );
+        DataImporterPublisher::addEvent($eventEntityTransfer->getEvent(), $eventEntityTransfer->getId(), $eventEntityTransfer);
     }
 
-    /**
-     * @param \Orm\Zed\ProductSearch\Persistence\SpyProductSearch $productSearchEntity
-     * @param bool $isNewProductSearchEntity
-     * @param \Generated\Shared\Transfer\EventEntityTransfer $eventEntityTransfer
-     *
-     * @return \Generated\Shared\Transfer\EventEntityTransfer
-     */
     protected function mapProductSearchEntityToEventEntityTransfer(
         SpyProductSearch $productSearchEntity,
         bool $isNewProductSearchEntity,
@@ -248,11 +207,6 @@ class ProductConcretePropelDataSetWriter implements DataSetWriterInterface
         return $dataSet[ProductConcreteHydratorStep::DATA_PRODUCT_CONCRETE_LOCALIZED_TRANSFER] ?? [];
     }
 
-    /**
-     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
-     *
-     * @return \Generated\Shared\Transfer\SpyProductEntityTransfer
-     */
     protected function getProductConcreteTransfer(DataSetInterface $dataSet): SpyProductEntityTransfer
     {
         return $dataSet[ProductConcreteHydratorStep::DATA_PRODUCT_CONCRETE_TRANSFER];

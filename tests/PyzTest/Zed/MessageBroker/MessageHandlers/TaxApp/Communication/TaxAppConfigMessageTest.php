@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace PyzTest\Zed\MessageBroker\MessageHandlers\TaxApp\Communication;
 
 use Codeception\Test\Unit;
@@ -27,24 +29,12 @@ use PyzTest\Zed\MessageBroker\TaxAppCommunicationTester;
  */
 class TaxAppConfigMessageTest extends Unit
 {
-    /**
-     * @var string
-     */
     protected const STORE_REFERENCE = 'DE';
 
-    /**
-     * @var string
-     */
     protected const VENDOR_CODE = 'VENDOR_CODE';
 
-    /**
-     * @var \PyzTest\Zed\MessageBroker\TaxAppCommunicationTester
-     */
     protected TaxAppCommunicationTester $tester;
 
-    /**
-     * @return void
-     */
     public function testConfigureTaxAppMessageIsSuccessfullyHandled(): void
     {
         // Arrange
@@ -65,9 +55,6 @@ class TaxAppConfigMessageTest extends Unit
         $this->tester->assertTaxAppConfigIsSavedCorrectlyForStore($storeTransfer, $configureTaxAppTransfer);
     }
 
-    /**
-     * @return void
-     */
     public function testDeleteTaxAppMessageIsSuccessfullyHandled(): void
     {
         // Arrange
@@ -89,9 +76,6 @@ class TaxAppConfigMessageTest extends Unit
         $this->tester->assertTaxAppConfigIsRemovedForStore($storeTransfer, $deleteTaxAppTransfer);
     }
 
-    /**
-     * @return void
-     */
     protected function createDummyTaxAppConfig(): void
     {
         $this->tester->handleTaxAppMessage(

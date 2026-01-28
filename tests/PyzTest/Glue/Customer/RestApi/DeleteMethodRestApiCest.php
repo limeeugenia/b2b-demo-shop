@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace PyzTest\Glue\Customer\RestApi;
 
 use Codeception\Util\HttpCode;
@@ -25,16 +27,8 @@ use Spryker\Glue\CustomersRestApi\CustomersRestApiConfig;
  */
 class DeleteMethodRestApiCest
 {
-    /**
-     * @var \PyzTest\Glue\Customer\RestApi\CustomerRestApiFixtures
-     */
     protected CustomerRestApiFixtures $fixtures;
 
-    /**
-     * @param \PyzTest\Glue\Customer\CustomerApiTester $i
-     *
-     * @return void
-     */
     public function _before(CustomerApiTester $i): void
     {
         /** @var \PyzTest\Glue\Customer\RestApi\CustomerRestApiFixtures $fixtures */
@@ -48,8 +42,6 @@ class DeleteMethodRestApiCest
      *
      * When SymfonyListener is not enabled Glue returns 204 with content inside, this test is to check it doesn't happen
      * Jira ticket GLUE-9691
-     *
-     * @return void
      */
     public function ensureDeleteRequestHasNoBody(CustomerApiTester $i): void
     {
@@ -98,11 +90,6 @@ class DeleteMethodRestApiCest
         $i->assertSame('', $result, 'Content in 204 response');
     }
 
-    /**
-     * @param \PyzTest\Glue\Customer\CustomerApiTester $i
-     *
-     * @return void
-     */
     public function ensureDeleteRequestForbidden(CustomerApiTester $i): void
     {
         // Arrange

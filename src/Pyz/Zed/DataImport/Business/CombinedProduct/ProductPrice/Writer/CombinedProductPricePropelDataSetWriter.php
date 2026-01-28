@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace Pyz\Zed\DataImport\Business\CombinedProduct\ProductPrice\Writer;
 
 use Pyz\Zed\DataImport\Business\CombinedProduct\ProductPrice\CombinedProductPriceHydratorStep;
@@ -31,11 +33,6 @@ class CombinedProductPricePropelDataSetWriter extends ProductPricePropelDataSetW
 
     protected const COLUMN_PRICE_DATA_CHECKSUM = CombinedProductPriceHydratorStep::COLUMN_PRICE_DATA_CHECKSUM;
 
-    /**
-     * @param \Pyz\Zed\DataImport\Business\Model\Product\Repository\ProductRepository $productRepository
-     * @param \Spryker\Zed\Store\Business\StoreFacadeInterface $storeFacade
-     * @param \Spryker\Zed\Currency\Business\CurrencyFacadeInterface $currencyFacade
-     */
     public function __construct(
         ProductRepository $productRepository,
         StoreFacadeInterface $storeFacade,

@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace PyzTest\Zed\Console;
 
 use Codeception\Actor;
@@ -30,16 +32,12 @@ class ConsoleConsoleTester extends Actor
 {
     use _generated\ConsoleConsoleTesterActions;
 
-    /**
-     * @return string
-     */
     public function runConsoleApplication(): string
     {
         $cmd = 'vendor/bin/console';
         $process = new Process([$cmd]);
         $process->run();
-        $output = $process->getOutput();
 
-        return $output;
+        return $process->getOutput();
     }
 }

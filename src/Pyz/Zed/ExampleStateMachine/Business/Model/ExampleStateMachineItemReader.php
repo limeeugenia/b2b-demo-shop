@@ -5,21 +5,18 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace Pyz\Zed\ExampleStateMachine\Business\Model;
 
 use Generated\Shared\Transfer\StateMachineItemTransfer;
+use Propel\Runtime\Collection\ObjectCollection;
 use Pyz\Zed\ExampleStateMachine\Persistence\ExampleStateMachineQueryContainerInterface;
 
 class ExampleStateMachineItemReader
 {
-    /**
-     * @var \Pyz\Zed\ExampleStateMachine\Persistence\ExampleStateMachineQueryContainerInterface
-     */
-    protected $exampleStateMachineQueryContainer;
+    protected ExampleStateMachineQueryContainerInterface $exampleStateMachineQueryContainer;
 
-    /**
-     * @param \Pyz\Zed\ExampleStateMachine\Persistence\ExampleStateMachineQueryContainerInterface $exampleStateMachineQueryContainer
-     */
     public function __construct(ExampleStateMachineQueryContainerInterface $exampleStateMachineQueryContainer)
     {
         $this->exampleStateMachineQueryContainer = $exampleStateMachineQueryContainer;
@@ -56,7 +53,7 @@ class ExampleStateMachineItemReader
      *
      * @return array<\Generated\Shared\Transfer\StateMachineItemTransfer>
      */
-    protected function hydrateTransferFromPersistence($exampleStateMachineItems): array
+    protected function hydrateTransferFromPersistence(ObjectCollection $exampleStateMachineItems): array
     {
         $stateMachineItems = [];
         foreach ($exampleStateMachineItems as $exampleStateMachineItemEntity) {

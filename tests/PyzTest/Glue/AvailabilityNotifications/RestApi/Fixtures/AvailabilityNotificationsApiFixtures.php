@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace PyzTest\Glue\AvailabilityNotifications\RestApi\Fixtures;
 
 use Generated\Shared\Transfer\CustomerTransfer;
@@ -25,34 +27,17 @@ use SprykerTest\Shared\Testify\Fixtures\FixturesContainerInterface;
  */
 class AvailabilityNotificationsApiFixtures implements FixturesBuilderInterface, FixturesContainerInterface
 {
-    /**
-     * @var string
-     */
     protected const TEST_USERNAME = 'UserRestApiFixtures';
 
-    /**
-     * @var string
-     */
     protected const TEST_PASSWORD = 'change123';
 
-    /**
-     * @var \Generated\Shared\Transfer\CustomerTransfer
-     */
     protected CustomerTransfer $customerTransfer;
 
-    /**
-     * @return \Generated\Shared\Transfer\CustomerTransfer
-     */
     public function getCustomerTransfer(): CustomerTransfer
     {
         return $this->customerTransfer;
     }
 
-    /**
-     * @param \PyzTest\Glue\AvailabilityNotifications\AvailabilityNotificationsRestApiTester $I
-     *
-     * @return \SprykerTest\Shared\Testify\Fixtures\FixturesContainerInterface
-     */
     public function buildFixtures(AvailabilityNotificationsRestApiTester $I): FixturesContainerInterface
     {
         $this->customerTransfer = $this->createCustomer($I);
@@ -61,11 +46,6 @@ class AvailabilityNotificationsApiFixtures implements FixturesBuilderInterface, 
         return $this;
     }
 
-    /**
-     * @param \PyzTest\Glue\AvailabilityNotifications\AvailabilityNotificationsRestApiTester $I
-     *
-     * @return \Generated\Shared\Transfer\CustomerTransfer
-     */
     protected function createCustomer(AvailabilityNotificationsRestApiTester $I): CustomerTransfer
     {
         return $I->haveCustomer([

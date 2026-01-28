@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace Pyz\Yves\ShoppingListWidget\Controller;
 
 use SprykerShop\Yves\ShoppingListWidget\Controller\ShoppingListWidgetController as SprykerShopShoppingListWidgetController;
@@ -16,11 +18,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ShoppingListWidgetController extends SprykerShopShoppingListWidgetController
 {
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
     public function indexAction(Request $request): RedirectResponse
     {
         $parentResponse = parent::indexAction($request);
@@ -37,7 +34,7 @@ class ShoppingListWidgetController extends SprykerShopShoppingListWidgetControll
      *
      * @return array<mixed>|string|null
      */
-    protected function getRefererUrl(Request $request)
+    protected function getRefererUrl(Request $request): array|string|null
     {
         if ($request->headers->has(static::REQUEST_HEADER_REFERER)) {
             return $request->headers->get(static::REQUEST_HEADER_REFERER);

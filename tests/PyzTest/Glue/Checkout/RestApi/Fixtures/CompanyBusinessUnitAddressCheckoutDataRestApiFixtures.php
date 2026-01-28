@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace PyzTest\Glue\Checkout\RestApi\Fixtures;
 
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
@@ -23,73 +25,38 @@ use SprykerTest\Shared\Testify\Fixtures\FixturesContainerInterface;
 
 class CompanyBusinessUnitAddressCheckoutDataRestApiFixtures implements FixturesBuilderInterface, FixturesContainerInterface
 {
-    /**
-     * @var string
-     */
     protected const TEST_USERNAME = 'CompanyBUAddressCheckoutDataRestApiFixtures';
 
-    /**
-     * @var string
-     */
     protected const TEST_PASSWORD = 'change123';
 
-    /**
-     * @var \Generated\Shared\Transfer\CustomerTransfer
-     */
     protected CustomerTransfer $customerTransfer;
 
-    /**
-     * @var \Generated\Shared\Transfer\QuoteTransfer
-     */
     protected QuoteTransfer $quoteTransfer;
 
-    /**
-     * @var \Generated\Shared\Transfer\CompanyUserTransfer
-     */
     protected CompanyUserTransfer $companyUserTransfer;
 
-    /**
-     * @var \Generated\Shared\Transfer\CompanyUnitAddressTransfer
-     */
     protected CompanyUnitAddressTransfer $companyUnitAddressTransfer;
 
-    /**
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
     public function getQuoteTransfer(): QuoteTransfer
     {
         return $this->quoteTransfer;
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\CustomerTransfer
-     */
     public function getCustomerTransfer(): CustomerTransfer
     {
         return $this->customerTransfer;
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\CompanyUserTransfer
-     */
     public function getCompanyUserTransfer(): CompanyUserTransfer
     {
         return $this->companyUserTransfer;
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer
-     */
     public function getCompanyUnitAddressTransfer(): CompanyUnitAddressTransfer
     {
         return $this->companyUnitAddressTransfer;
     }
 
-    /**
-     * @param \PyzTest\Glue\Checkout\CheckoutApiTester $I
-     *
-     * @return \SprykerTest\Shared\Testify\Fixtures\FixturesContainerInterface
-     */
     public function buildFixtures(CheckoutApiTester $I): FixturesContainerInterface
     {
         $I->truncateSalesOrderThresholds();
@@ -108,12 +75,6 @@ class CompanyBusinessUnitAddressCheckoutDataRestApiFixtures implements FixturesB
         return $this;
     }
 
-    /**
-     * @param \PyzTest\Glue\Checkout\CheckoutApiTester $I
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return void
-     */
     protected function buildCompanyUserAccount(
         CheckoutApiTester $I,
         CustomerTransfer $customerTransfer,
@@ -143,11 +104,6 @@ class CompanyBusinessUnitAddressCheckoutDataRestApiFixtures implements FixturesB
         ]);
     }
 
-    /**
-     * @param \PyzTest\Glue\Checkout\CheckoutApiTester $I
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
     protected function createPersistentQuoteWithItemsAndItemLevelShipment(CheckoutApiTester $I): QuoteTransfer
     {
         $shipmentMethodTransfer = $I->haveShipmentMethod(
@@ -168,11 +124,6 @@ class CompanyBusinessUnitAddressCheckoutDataRestApiFixtures implements FixturesB
         );
     }
 
-    /**
-     * @param \PyzTest\Glue\Checkout\CheckoutApiTester $I
-     *
-     * @return void
-     */
     protected function mockCompanyPostSavePlugins(CheckoutApiTester $I): void
     {
         $I->setDependency(CompanyDependencyProvider::COMPANY_POST_SAVE_PLUGINS, []);

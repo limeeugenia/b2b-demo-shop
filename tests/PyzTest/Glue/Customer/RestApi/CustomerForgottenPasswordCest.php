@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace PyzTest\Glue\Customer\RestApi;
 
 use Codeception\Example;
@@ -29,21 +31,10 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class CustomerForgottenPasswordCest
 {
-    /**
-     * @var \PyzTest\Glue\Customer\RestApi\CustomerRestApiFixtures
-     */
     protected CustomerRestApiFixtures $fixtures;
 
-    /**
-     * @var \Generated\Shared\Transfer\CustomerTransfer
-     */
     protected CustomerTransfer $customerTransfer;
 
-    /**
-     * @param \PyzTest\Glue\Customer\CustomerApiTester $I
-     *
-     * @return void
-     */
     public function _before(CustomerApiTester $I): void
     {
         /** @var \PyzTest\Glue\Customer\RestApi\CustomerRestApiFixtures $fixtures */
@@ -66,8 +57,6 @@ class CustomerForgottenPasswordCest
      *
      * @param \PyzTest\Glue\Customer\CustomerApiTester $I
      * @param \Codeception\Example $example
-     *
-     * @return void
      */
     public function requestPostCustomerForgottenPasswordFailsValidation(CustomerApiTester $I, Example $example): void
     {
@@ -88,14 +77,14 @@ class CustomerForgottenPasswordCest
         $I->seeResponseMatchesOpenApiSchema();
 
         foreach ($example['errors'] as $index => $error) {
-            $I->seeResponseErrorsHaveCode($error[RestErrorMessageTransfer::CODE], $index);
-            $I->seeResponseErrorsHaveStatus($error[RestErrorMessageTransfer::STATUS], $index);
-            $I->seeResponseErrorsHaveDetail($error[RestErrorMessageTransfer::DETAIL], $index);
+            $I->seeResponseErrorsHaveCode($error[RestErrorMessageTransfer::CODE], (string)$index);
+            $I->seeResponseErrorsHaveStatus($error[RestErrorMessageTransfer::STATUS], (string)$index);
+            $I->seeResponseErrorsHaveDetail($error[RestErrorMessageTransfer::DETAIL], (string)$index);
         }
     }
 
     /**
-     * @return array
+     * @return array<array<string, mixed>>
      */
     protected function requestPostCustomerForgottenPasswordFailsValidationDataProvider(): array
     {

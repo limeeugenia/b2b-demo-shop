@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace PyzTest\Glue\PriceProducts;
 
 use Generated\Shared\Transfer\CustomerTransfer;
@@ -30,11 +32,6 @@ class PriceProductsApiTester extends ApiEndToEndTester
 {
     use _generated\PriceProductsApiTesterActions;
 
-    /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return void
-     */
     public function authorizeCustomerToGlue(CustomerTransfer $customerTransfer): void
     {
         $oauthResponseTransfer = $this->haveAuthorizationToGlue($customerTransfer);

@@ -5,9 +5,13 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace Pyz\Yves\CustomerPage\Controller;
 
+use Spryker\Yves\Kernel\View\View;
 use SprykerShop\Yves\CustomerPage\Controller\RegisterController as SprykerRegisterController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -16,18 +20,11 @@ use Symfony\Component\HttpFoundation\Request;
 class RegisterController extends SprykerRegisterController
 {
     /**
-     * @var string
-     *
      * @uses \SprykerShop\Yves\CompanyUserInvitationPage\CompanyUserInvitationPageConfig::INVITATION_SESSION_ID
      */
     protected const INVITATION_SESSION_ID = 'COMPANY_USER_INVITATION';
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    public function indexAction(Request $request)
+    public function indexAction(Request $request): View|RedirectResponse
     {
         $response = $this->executeIndexAction($request);
 
@@ -35,7 +32,7 @@ class RegisterController extends SprykerRegisterController
             return $response;
         }
 
-        if ($this->getFactory()->getSessionClient()->get(static::INVITATION_SESSION_ID)) {
+        if ($this->getFactory()->getPyzSessionClient()->get(static::INVITATION_SESSION_ID)) {
             return $this->view($response, [], '@CustomerPage/views/register/register.twig');
         }
 

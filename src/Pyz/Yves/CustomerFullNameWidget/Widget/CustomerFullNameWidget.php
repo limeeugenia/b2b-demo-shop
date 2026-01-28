@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace Pyz\Yves\CustomerFullNameWidget\Widget;
 
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
@@ -14,22 +16,13 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
  */
 class CustomerFullNameWidget extends AbstractWidget
 {
-    /**
-     * @var string
-     */
     protected const PARAMETER_CUSTOMER_FULL_NAME = 'customerFullName';
 
-    /**
-     * @return string
-     */
     public static function getName(): string
     {
         return 'CustomerFullNameWidget';
     }
 
-    /**
-     * @return string
-     */
     public static function getTemplate(): string
     {
         return '@CustomerFullNameWidget/views/customer-full-name-widget/customer-full-name-widget.twig';
@@ -40,9 +33,6 @@ class CustomerFullNameWidget extends AbstractWidget
         $this->addCustomerFullNameParameter();
     }
 
-    /**
-     * @return void
-     */
     protected function addCustomerFullNameParameter(): void
     {
         $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();

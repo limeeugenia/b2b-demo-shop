@@ -5,12 +5,15 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace PyzTest\Zed\MessageBroker\MessageHandlers\PaymentMethod\Presentation;
 
 use Generated\Shared\Transfer\AddPaymentMethodTransfer;
 use Generated\Shared\Transfer\DeletePaymentMethodTransfer;
 use PyzTest\Zed\MessageBroker\PageObject\PaymentMethodPage;
 use PyzTest\Zed\MessageBroker\PaymentMethodPresentationTester;
+use Spryker\Zed\MessageBroker\MessageBrokerDependencyProvider;
 
 /**
  * Auto-generated group annotations
@@ -26,21 +29,10 @@ use PyzTest\Zed\MessageBroker\PaymentMethodPresentationTester;
  */
 class PaymentMethodMessageCest
 {
-    /**
-     * @var string
-     */
     protected const PAYMENT_METHOD_NAME = 'payment-method-name';
 
-    /**
-     * @var string
-     */
     protected const PROVIDER_NAME = 'provider-name';
 
-    /**
-     * @param \PyzTest\Zed\MessageBroker\PaymentMethodPresentationTester $I
-     *
-     * @return void
-     */
     public function testAddPaymentMethodMessageIsSuccessfullyHandled(PaymentMethodPresentationTester $I): void
     {
         // Arrange
@@ -54,6 +46,8 @@ class PaymentMethodMessageCest
         // Act
         $channelName = 'payment-method-commands';
         $I->setupMessageBroker(AddPaymentMethodTransfer::class, $channelName);
+        $I->setDependency(MessageBrokerDependencyProvider::PLUGINS_EXTERNAL_VALIDATOR, []);
+        $I->setDependency(MessageBrokerDependencyProvider::PLUGINS_FILTER_MESSAGE_CHANNEL, []);
         $messageBrokerFacade->sendMessage(
             $I->haveAddPaymentMethodTransfer(
                 [
@@ -78,11 +72,6 @@ class PaymentMethodMessageCest
         $I->cleanupPaymentMethodByPaymentMethodKey($paymentMethodKey);
     }
 
-    /**
-     * @param \PyzTest\Zed\MessageBroker\PaymentMethodPresentationTester $I
-     *
-     * @return void
-     */
     public function testPaymentMethodRemovedMessageIsSuccessfullyHandled(PaymentMethodPresentationTester $I): void
     {
         // Arrange
@@ -95,6 +84,8 @@ class PaymentMethodMessageCest
 
         $channelName = 'payment-method-commands';
         $I->setupMessageBroker(AddPaymentMethodTransfer::class, $channelName);
+        $I->setDependency(MessageBrokerDependencyProvider::PLUGINS_EXTERNAL_VALIDATOR, []);
+        $I->setDependency(MessageBrokerDependencyProvider::PLUGINS_FILTER_MESSAGE_CHANNEL, []);
         $messageBrokerFacade->sendMessage(
             $I->haveAddPaymentMethodTransfer(
                 [

@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace PyzTest\Glue\ProductConfigurations\RestApi;
 
 use Codeception\Util\HttpCode;
@@ -30,16 +32,8 @@ use Spryker\Shared\Price\PriceConfig;
  */
 class ProductConfigurationRestApiCest
 {
-    /**
-     * @var \PyzTest\Glue\ProductConfigurations\RestApi\Fixtures\ProductConfigurationsRestApiFixtures
-     */
     protected ProductConfigurationsRestApiFixtures $fixtures;
 
-    /**
-     * @param \PyzTest\Glue\ProductConfigurations\ProductConfigurationsApiTester $I
-     *
-     * @return void
-     */
     public function loadFixtures(ProductConfigurationsApiTester $I): void
     {
         /** @var \PyzTest\Glue\ProductConfigurations\RestApi\Fixtures\ProductConfigurationsRestApiFixtures $fixtures */
@@ -52,12 +46,10 @@ class ProductConfigurationRestApiCest
      * @depends loadFixtures
      *
      * @param \PyzTest\Glue\ProductConfigurations\ProductConfigurationsApiTester $I
-     *
-     * @return void
      */
     public function requestProductConcrete(ProductConfigurationsApiTester $I): void
     {
-        $url = $I->formatFullUrl(
+        $I->formatFullUrl(
             '{resourceConcreteProducts}/{productConcreteSku}',
             [
                 'resourceConcreteProducts' => ProductsRestApiConfig::RESOURCE_CONCRETE_PRODUCTS,
@@ -95,11 +87,6 @@ class ProductConfigurationRestApiCest
             ->seeProductConfigurationInstanceEqualToExpectedValue($this->fixtures->getProductConfigurationTransfer());
     }
 
-    /**
-     * @param \PyzTest\Glue\ProductConfigurations\ProductConfigurationsApiTester $I
-     *
-     * @return void
-     */
     public function requestAddConfigurableItemsToCart(ProductConfigurationsApiTester $I): void
     {
         // Arrange
@@ -168,11 +155,6 @@ class ProductConfigurationRestApiCest
         );
     }
 
-    /**
-     * @param \PyzTest\Glue\ProductConfigurations\ProductConfigurationsApiTester $I
-     *
-     * @return void
-     */
     public function requestGetOrderDetails(ProductConfigurationsApiTester $I): void
     {
         // Arrange

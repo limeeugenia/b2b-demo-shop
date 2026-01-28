@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace Pyz\Zed\ProductStorage\Persistence;
 
 use Orm\Zed\ProductBundle\Persistence\SpyProductBundleQuery;
@@ -17,9 +19,6 @@ use Spryker\Zed\ProductStorage\Persistence\ProductStoragePersistenceFactory as S
  */
 class ProductStoragePersistenceFactory extends SprykerProductStoragePersistenceFactory
 {
-    /**
-     * @return \Orm\Zed\ProductBundle\Persistence\SpyProductBundleQuery
-     */
     public function createProductBundleQuery(): SpyProductBundleQuery
     {
         return SpyProductBundleQuery::create();

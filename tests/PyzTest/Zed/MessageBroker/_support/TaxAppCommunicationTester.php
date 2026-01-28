@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace PyzTest\Zed\MessageBroker;
 
 use Codeception\Actor;
@@ -38,12 +40,6 @@ class TaxAppCommunicationTester extends Actor
 {
     use _generated\TaxAppCommunicationTesterActions;
 
-    /**
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     * @param \Generated\Shared\Transfer\ConfigureTaxAppTransfer $configureTaxAppTransfer
-     *
-     * @return void
-     */
     public function assertTaxAppConfigIsSavedCorrectlyForStore(StoreTransfer $storeTransfer, ConfigureTaxAppTransfer $configureTaxAppTransfer): void
     {
         $taxAppConfigEntity = $this->findTaxAppConfigEntity($storeTransfer, $configureTaxAppTransfer->getVendorCode());
@@ -57,12 +53,6 @@ class TaxAppCommunicationTester extends Actor
         $this->assertEquals($taxAppConfigEntity->getIsActive(), $configureTaxAppTransfer->getIsActive());
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     * @param \Generated\Shared\Transfer\DeleteTaxAppTransfer $deleteTaxAppTransfer
-     *
-     * @return void
-     */
     public function assertTaxAppConfigIsRemovedForStore(StoreTransfer $storeTransfer, DeleteTaxAppTransfer $deleteTaxAppTransfer): void
     {
         $taxAppConfigEntity = $this->findTaxAppConfigEntity($storeTransfer, $deleteTaxAppTransfer->getVendorCode());
@@ -70,12 +60,6 @@ class TaxAppCommunicationTester extends Actor
         $this->assertNull($taxAppConfigEntity);
     }
 
-    /**
-     * @param array $messageAttributesSeed
-     * @param array $configureTaxAppSeed
-     *
-     * @return \Generated\Shared\Transfer\ConfigureTaxAppTransfer
-     */
     public function buildConfigureTaxAppTransfer(array $messageAttributesSeed = [], array $configureTaxAppSeed = []): ConfigureTaxAppTransfer
     {
         return (new ConfigureTaxAppBuilder())->seed($configureTaxAppSeed)->withApiUrls()
@@ -83,12 +67,6 @@ class TaxAppCommunicationTester extends Actor
             ->build();
     }
 
-    /**
-     * @param array $messageAttributesSeed
-     * @param array $configureTaxAppSeed
-     *
-     * @return \Generated\Shared\Transfer\DeleteTaxAppTransfer
-     */
     public function buildDeleteTaxAppTransfer(array $messageAttributesSeed = [], array $configureTaxAppSeed = []): DeleteTaxAppTransfer
     {
         return (new DeleteTaxAppBuilder())->seed($configureTaxAppSeed)
@@ -96,11 +74,6 @@ class TaxAppCommunicationTester extends Actor
             ->build();
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     *
-     * @return void
-     */
     public function removeTaxAppConfigForStore(StoreTransfer $storeTransfer): void
     {
         (new SpyTaxAppConfigQuery())
@@ -108,15 +81,11 @@ class TaxAppCommunicationTester extends Actor
             ->delete();
     }
 
-    /**
-     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $configureTaxAppMessage
-     *
-     * @return void
-     */
     public function handleTaxAppMessage(TransferInterface $configureTaxAppMessage): void
     {
         $channelName = 'tax-commands';
         $this->setupMessageBroker($configureTaxAppMessage::class, $channelName);
+        $this->setupMessageBrokerPlugins();
         $messageBrokerFacade = $this->getLocator()->messageBroker()->facade();
         $messageBrokerFacade->sendMessage($configureTaxAppMessage);
         $messageBrokerFacade->startWorker(
@@ -125,12 +94,6 @@ class TaxAppCommunicationTester extends Actor
         $this->resetInMemoryMessages();
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     * @param string $vendorCode
-     *
-     * @return \Orm\Zed\TaxApp\Persistence\SpyTaxAppConfig|null
-     */
     protected function findTaxAppConfigEntity(StoreTransfer $storeTransfer, string $vendorCode): ?SpyTaxAppConfig
     {
         return (new SpyTaxAppConfigQuery())

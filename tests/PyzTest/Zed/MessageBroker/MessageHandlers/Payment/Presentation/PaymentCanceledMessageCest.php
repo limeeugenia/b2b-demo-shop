@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace PyzTest\Zed\MessageBroker\MessageHandlers\Payment\Presentation;
 
 use Generated\Shared\Transfer\PaymentCanceledTransfer;
@@ -24,37 +26,18 @@ use PyzTest\Zed\MessageBroker\PaymentPresentationTester;
  */
 class PaymentCanceledMessageCest
 {
-    /**
-     * @var string
-     */
     protected const INITIAL_ITEM_STATE = 'payment cancellation pending';
 
-    /**
-     * @var string
-     */
     public const FINAL_ITEM_STATE = 'payment cancelled';
 
-    /**
-     * @var string
-     */
     public const NOT_ALLOWED_FOR_CANCEL_ITEM_STATE = 'payment captured';
 
-    /**
-     * @param \PyzTest\Zed\MessageBroker\PaymentPresentationTester $i
-     *
-     * @return void
-     */
     public function _before(PaymentPresentationTester $i): void
     {
         $i->amZed();
         $i->amLoggedInUser();
     }
 
-    /**
-     * @param \PyzTest\Zed\MessageBroker\PaymentPresentationTester $I
-     *
-     * @return void
-     */
     public function testPaymentCanceledMessageIsSuccessfullyHandled(PaymentPresentationTester $I): void
     {
         // Arrange
@@ -71,11 +54,6 @@ class PaymentCanceledMessageCest
         $I->assertOrderHasCorrectState($salesOrderEntity, static::FINAL_ITEM_STATE);
     }
 
-    /**
-     * @param \PyzTest\Zed\MessageBroker\PaymentPresentationTester $I
-     *
-     * @return void
-     */
     public function testPaymentCanceledMessageIsIgnoredWhenTransitionIsNotPossible(PaymentPresentationTester $I): void
     {
         // Arrange

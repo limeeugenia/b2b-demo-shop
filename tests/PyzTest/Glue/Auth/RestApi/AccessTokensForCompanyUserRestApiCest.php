@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace PyzTest\Glue\Auth\RestApi;
 
 use Codeception\Util\HttpCode;
@@ -24,16 +26,8 @@ use Spryker\Glue\AuthRestApi\AuthRestApiConfig;
  */
 class AccessTokensForCompanyUserRestApiCest
 {
-    /**
-     * @var \PyzTest\Glue\Auth\RestApi\AccessTokensForCompanyUserRestApiFixtures
-     */
     protected AccessTokensForCompanyUserRestApiFixtures $fixtures;
 
-    /**
-     * @param \PyzTest\Glue\Auth\AuthRestApiTester $I
-     *
-     * @return void
-     */
     public function loadFixtures(AuthRestApiTester $I): void
     {
         /** @var \PyzTest\Glue\Auth\RestApi\AccessTokensForCompanyUserRestApiFixtures $fixtures */
@@ -46,8 +40,6 @@ class AccessTokensForCompanyUserRestApiCest
      * @depends loadFixtures
      *
      * @param \PyzTest\Glue\Auth\AuthRestApiTester $I
-     *
-     * @return void
      */
     public function requestAccessTokenForExistingCustomerWithoutCompanyUser(AuthRestApiTester $I): void
     {
@@ -76,8 +68,6 @@ class AccessTokensForCompanyUserRestApiCest
      * @depends loadFixtures
      *
      * @param \PyzTest\Glue\Auth\AuthRestApiTester $I
-     *
-     * @return void
      */
     public function requestAccessTokenForExistingCustomerWithCompanyUser(AuthRestApiTester $I): void
     {
@@ -106,8 +96,6 @@ class AccessTokensForCompanyUserRestApiCest
      * @depends loadFixtures
      *
      * @param \PyzTest\Glue\Auth\AuthRestApiTester $I
-     *
-     * @return void
      */
     public function requestAccessTokenForCustomerWithTwoCompanyUserWithoutDefaultOne(AuthRestApiTester $I): void
     {
@@ -136,8 +124,6 @@ class AccessTokensForCompanyUserRestApiCest
      * @depends loadFixtures
      *
      * @param \PyzTest\Glue\Auth\AuthRestApiTester $I
-     *
-     * @return void
      */
     public function requestAccessTokenForCustomerWithTwoCompanyUserWithDefaultOne(AuthRestApiTester $I): void
     {

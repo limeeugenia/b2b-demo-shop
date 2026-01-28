@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace Pyz\Zed\CustomerAccess\Business;
 
 use Generated\Shared\Transfer\CustomerAccessTransfer;
@@ -19,8 +21,6 @@ interface CustomerAccessFacadeInterface extends SprykerCustomerAccessFacadeInter
      * @api
      *
      * @param \Generated\Shared\Transfer\CustomerAccessTransfer $customerAccessTransfer
-     *
-     * @return \Generated\Shared\Transfer\CustomerAccessTransfer
      */
     public function filterManageableContentTypes(CustomerAccessTransfer $customerAccessTransfer): CustomerAccessTransfer;
 
@@ -31,8 +31,6 @@ interface CustomerAccessFacadeInterface extends SprykerCustomerAccessFacadeInter
      * @api
      *
      * @param \Generated\Shared\Transfer\CustomerAccessTransfer $customerAccessTransfer
-     *
-     * @return \Generated\Shared\Transfer\CustomerAccessTransfer
      */
     public function filterNonManageableContentTypes(CustomerAccessTransfer $customerAccessTransfer): CustomerAccessTransfer;
 }

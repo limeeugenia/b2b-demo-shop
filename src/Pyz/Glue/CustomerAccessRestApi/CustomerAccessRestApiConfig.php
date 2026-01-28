@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace Pyz\Glue\CustomerAccessRestApi;
 
 use Pyz\Glue\CheckoutRestApi\CheckoutRestApiConfig;
@@ -15,9 +17,6 @@ use Spryker\Shared\CustomerAccess\CustomerAccessConfig;
 
 class CustomerAccessRestApiConfig extends SprykerCustomerAccessRestApiConfig
 {
-    /**
-     * @var array<string, array<string>>
-     */
     protected const CUSTOMER_ACCESS_CONTENT_TYPE_TO_RESOURCE_TYPE_MAPPING = [
         CustomerAccessConfig::CONTENT_TYPE_PRICE => [
             ProductPricesRestApiConfig::RESOURCE_ABSTRACT_PRODUCT_PRICES,

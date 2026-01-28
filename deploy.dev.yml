@@ -5,31 +5,16 @@ tag: 'dev'
 
 environment: docker.dev
 image:
-    tag: spryker/php:8.3
+    tag: spryker/php:8.4
     php:
         enabled-extensions:
-            - blackfire
+            - otel
     environment:
         SPRYKER_PRODUCT_CONFIGURATOR_HOST: date-time-configurator-example.spryker.local
         SPRYKER_PRODUCT_CONFIGURATOR_PORT: 80
         SPRYKER_DYNAMIC_STORE_MODE: true
         SPRYKER_YVES_HOST_EU: yves.eu.spryker.local
         SPRYKER_YVES_HOST_US: yves.us.spryker.local
-        #AOP
-        SPRYKER_AOP_INFRASTRUCTURE: '{
-                "SPRYKER_MESSAGE_BROKER_HTTP_SENDER_CONFIG": {},
-                "SPRYKER_MESSAGE_BROKER_SQS_RECEIVER_CONFIG": {}
-            }'
-        SPRYKER_AOP_APPLICATION: '{
-                "APP_DOMAINS": [],
-                "STORE_NAME_REFERENCE_MAP": {},
-                "APP_CATALOG_SCRIPT_URL": ""
-            }'
-        SPRYKER_AOP_AUTHENTICATION: '{
-                "AUTH0_CUSTOM_DOMAIN": "",
-                "AUTH0_CLIENT_ID": "",
-                "AUTH0_CLIENT_SECRET": ""
-            }'
     node:
         version: 18
         npm: 9
@@ -81,7 +66,7 @@ groups:
     EU:
         region: EU
         applications:
-            yves_eu:
+            yves_eu: # custom name to differentiate between two applications, incorrect for the cloud usage
                 application: yves
                 endpoints:
                     date-time-configurator-example.spryker.local:
@@ -91,22 +76,22 @@ groups:
                         services:
                             session:
                                 namespace: 2
-            glue_eu:
+            glue_eu: # custom name to differentiate between two applications, incorrect for the cloud usage
                 application: glue
                 endpoints:
                     glue.eu.spryker.local:
                         region: EU
-            glue_storefront_eu:
+            gluestorefront_eu: # custom name to differentiate between two applications, incorrect for the cloud usage
                 application: glue-storefront
                 endpoints:
                     glue-storefront.eu.spryker.local:
                         region: EU
-            glue_backend_eu:
+            gluebackend_eu: # custom name to differentiate between two applications, incorrect for the cloud usage
                 application: glue-backend
                 endpoints:
                     glue-backend.eu.spryker.local:
                         region: EU
-            backoffice_eu:
+            boffice_eu: # custom name to differentiate between two applications, incorrect for the cloud usage
                 application: backoffice
                 endpoints:
                     backoffice.eu.spryker.local:
@@ -115,13 +100,13 @@ groups:
                         services:
                             session:
                                 namespace: 3
-            backend_gateway_eu:
+            backgw_eu: # custom name to differentiate between two applications, incorrect for the cloud usage
                 application: backend-gateway
                 endpoints:
                     backend-gateway.eu.spryker.local:
                         region: EU
                         primal: true
-            backend_api_eu:
+            backapi_eu: # custom name to differentiate between two applications, incorrect for the cloud usage
                 application: zed
                 endpoints:
                     backend-api.eu.spryker.local:
@@ -131,7 +116,7 @@ groups:
     US:
         region: US
         applications:
-            yves_us:
+            yves_us: # custom name to differentiate between two applications, incorrect for the cloud usage
                 application: yves
                 endpoints:
                     yves.us.spryker.local:
@@ -139,22 +124,22 @@ groups:
                         services:
                             session:
                                 namespace: 5
-            glue_us:
+            glue_us: # custom name to differentiate between two applications, incorrect for the cloud usage
                 application: glue
                 endpoints:
                     glue.us.spryker.local:
                         region: US
-            glue_storefront_us:
+            gluestorefront_us: # custom name to differentiate between two applications, incorrect for the cloud usage
                 application: glue-storefront
                 endpoints:
                     glue-storefront.us.spryker.local:
                         region: US
-            glue_backend_us:
+            gluebackend_us: # custom name to differentiate between two applications, incorrect for the cloud usage
                 application: glue-backend
                 endpoints:
                     glue-backend.us.spryker.local:
                         region: US
-            backoffice_us:
+            boffice_us: # custom name to differentiate between two applications, incorrect for the cloud usage
                 application: backoffice
                 endpoints:
                     backoffice.us.spryker.local:
@@ -163,13 +148,13 @@ groups:
                         services:
                             session:
                                 namespace: 6
-            backend_gateway_us:
+            backgw_us: # custom name to differentiate between two applications, incorrect for the cloud usage
                 application: backend-gateway
                 endpoints:
                     backend-gateway.us.spryker.local:
                         region: US
                         primal: true
-            backend_api_us:
+            backapi_us: # custom name to differentiate between two applications, incorrect for the cloud usage
                 application: zed
                 endpoints:
                     backend-api.us.spryker.local:
@@ -187,7 +172,7 @@ services:
                 protocol: tcp
     broker:
         engine: rabbitmq
-        version: '3.9'
+        version: '4.1'
         api:
             username: 'spryker'
             password: 'secret'
@@ -196,9 +181,9 @@ services:
             localhost:5672:
                 protocol: tcp
     session:
-        engine: redis
+        engine: valkey
     key_value_store:
-        engine: redis
+        engine: valkey
         endpoints:
             localhost:16379:
                 protocol: tcp
@@ -210,12 +195,12 @@ services:
                 protocol: tcp
     scheduler:
         engine: jenkins
-        version: '2.442'
+        version: '2.492.3'
         csrf-protection-enabled: true
         endpoints:
             scheduler.spryker.local:
     mail_catcher:
-        engine: mailhog
+        engine: mailpit
         endpoints:
             mail.spryker.local:
     swagger:

@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace Pyz\Client\RabbitMq;
 
 use Spryker\Client\RabbitMq\RabbitMqConfig as SprykerRabbitMqConfig;
@@ -66,9 +68,6 @@ class RabbitMqConfig extends SprykerRabbitMqConfig
         ];
     }
 
-    /**
-     * @return string|null
-     */
     public function getDefaultLocaleCode(): ?string
     {
         return 'en_US';
@@ -105,13 +104,14 @@ class RabbitMqConfig extends SprykerRabbitMqConfig
     protected function getPublishQueueConfiguration(): array
     {
         return [
+            AvailabilityStorageConfig::PUBLISH_AVAILABILITY,
+            CustomerStorageConfig::PUBLISH_CUSTOMER_INVALIDATED,
+            MerchantStorageConfig::PUBLISH_MERCHANT,
+            PublishAndSynchronizeHealthCheckConfig::PUBLISH_PUBLISH_AND_SYNCHRONIZE_HEALTH_CHECK,
             PublisherConfig::PUBLISH_QUEUE => [
                 PublisherConfig::PUBLISH_ROUTING_KEY_RETRY => PublisherConfig::PUBLISH_RETRY_QUEUE,
                 PublisherConfig::PUBLISH_ROUTING_KEY_ERROR => PublisherConfig::PUBLISH_ERROR_QUEUE,
             ],
-            GlossaryStorageConfig::PUBLISH_TRANSLATION,
-            PublishAndSynchronizeHealthCheckConfig::PUBLISH_PUBLISH_AND_SYNCHRONIZE_HEALTH_CHECK,
-            UrlStorageConfig::PUBLISH_URL,
             AvailabilityStorageConfig::PUBLISH_AVAILABILITY,
             PriceProductStorageConfig::PUBLISH_PRICE_PRODUCT_ABSTRACT,
             PriceProductStorageConfig::PUBLISH_PRICE_PRODUCT_CONCRETE,
@@ -121,7 +121,9 @@ class RabbitMqConfig extends SprykerRabbitMqConfig
             ProductPageSearchConfig::PUBLISH_PRODUCT_CONCRETE_PAGE,
             ProductStorageConfig::PUBLISH_PRODUCT_ABSTRACT,
             ProductStorageConfig::PUBLISH_PRODUCT_CONCRETE,
-            CustomerStorageConfig::PUBLISH_CUSTOMER_INVALIDATED,
+            UrlStorageConfig::PUBLISH_URL => [
+                PublisherConfig::PUBLISH_ROUTING_KEY_RETRY => UrlStorageConfig::PUBLISH_URL_RETRY,
+            ],
         ];
     }
 
@@ -164,9 +166,6 @@ class RabbitMqConfig extends SprykerRabbitMqConfig
         ];
     }
 
-    /**
-     * @return string
-     */
     protected function getDefaultBoundQueueNamePrefix(): string
     {
         return 'error';

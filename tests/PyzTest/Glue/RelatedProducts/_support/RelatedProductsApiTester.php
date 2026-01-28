@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace PyzTest\Glue\RelatedProducts;
 
 use Spryker\Glue\GlueApplication\Rest\RequestConstantsInterface;
@@ -34,8 +36,6 @@ class RelatedProductsApiTester extends ApiEndToEndTester
 
     /**
      * @param array<string> $includes
-     *
-     * @return string
      */
     public function formatQueryInclude(array $includes = []): string
     {
@@ -49,8 +49,6 @@ class RelatedProductsApiTester extends ApiEndToEndTester
     /**
      * @param string $productAbstractSku
      * @param array<string> $includes
-     *
-     * @return string
      */
     public function buildRelatedProductsUrl(string $productAbstractSku, array $includes = []): string
     {
@@ -67,8 +65,6 @@ class RelatedProductsApiTester extends ApiEndToEndTester
     /**
      * @param string $productAbstractSku
      * @param array<string> $includes
-     *
-     * @return string
      */
     public function buildProductAbstractUrl(string $productAbstractSku, array $includes = []): string
     {

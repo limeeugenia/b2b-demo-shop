@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace Pyz\Shared\Console;
 
 interface ConsoleConstants
@@ -15,8 +17,6 @@ interface ConsoleConstants
      * - Must be set to false for environments where composer install --no-dev is performed.
      *
      * @api
-     *
-     * @var string
      */
     public const ENABLE_DEVELOPMENT_CONSOLE_COMMANDS = 'CONSOLE:ENABLE_DEVELOPMENT_CONSOLE_COMMANDS';
 }

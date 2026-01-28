@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace Pyz\Zed\CustomerAccess\Business;
 
 use Pyz\Zed\CustomerAccess\Business\CustomerAccess\CustomerAccessFilter;
@@ -20,9 +22,6 @@ use Spryker\Zed\CustomerAccess\Business\CustomerAccessBusinessFactory as Spryker
  */
 class CustomerAccessBusinessFactory extends SprykerCustomerAccessBusinessFactory
 {
-    /**
-     * @return \Pyz\Zed\CustomerAccess\Business\CustomerAccess\CustomerAccessFilterInterface
-     */
     public function createCustomerAccessFilter(): CustomerAccessFilterInterface
     {
         return new CustomerAccessFilter(
@@ -30,9 +29,6 @@ class CustomerAccessBusinessFactory extends SprykerCustomerAccessBusinessFactory
         );
     }
 
-    /**
-     * @return \Spryker\Zed\CustomerAccess\Business\CustomerAccess\CustomerAccessUpdaterInterface
-     */
     public function createCustomerAccessUpdater(): CustomerAccessUpdaterInterface
     {
         return new CustomerAccessUpdater(

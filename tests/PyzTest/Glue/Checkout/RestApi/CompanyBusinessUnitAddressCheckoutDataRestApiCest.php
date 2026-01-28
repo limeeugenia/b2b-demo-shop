@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace PyzTest\Glue\Checkout\RestApi;
 
 use Codeception\Util\HttpCode;
@@ -25,16 +27,8 @@ use Spryker\Glue\CheckoutRestApi\CheckoutRestApiConfig;
  */
 class CompanyBusinessUnitAddressCheckoutDataRestApiCest
 {
-    /**
-     * @var \PyzTest\Glue\Checkout\RestApi\Fixtures\CompanyBusinessUnitAddressCheckoutDataRestApiFixtures
-     */
     protected CompanyBusinessUnitAddressCheckoutDataRestApiFixtures $fixtures;
 
-    /**
-     * @param \PyzTest\Glue\Checkout\CheckoutApiTester $I
-     *
-     * @return void
-     */
     public function loadFixtures(CheckoutApiTester $I): void
     {
         $fixtures = $I->loadFixtures(CompanyBusinessUnitAddressCheckoutDataRestApiFixtures::class);
@@ -45,8 +39,6 @@ class CompanyBusinessUnitAddressCheckoutDataRestApiCest
      * @depends loadFixtures
      *
      * @param \PyzTest\Glue\Checkout\CheckoutApiTester $I
-     *
-     * @return void
      */
     public function requestCheckoutDataReturnsCompanyBusinessUnitAddressesInIncludes(CheckoutApiTester $I): void
     {
@@ -85,8 +77,6 @@ class CompanyBusinessUnitAddressCheckoutDataRestApiCest
      * @depends loadFixtures
      *
      * @param \PyzTest\Glue\Checkout\CheckoutApiTester $I
-     *
-     * @return void
      */
     public function requestCheckoutDataReturnsShipmentsWithMappedCompanyBusinessUnitAddressId(CheckoutApiTester $I): void
     {
@@ -98,6 +88,11 @@ class CompanyBusinessUnitAddressCheckoutDataRestApiCest
             'data' => [
                 'type' => CheckoutRestApiConfig::RESOURCE_CHECKOUT_DATA,
                 'attributes' => [
+                    'customer' =>
+                        array_merge(
+                            $this->fixtures->getCustomerTransfer()->toArray(),
+                            ['idCompanyUser' => $this->fixtures->getCompanyUserTransfer()->getIdCompanyUser()],
+                        ),
                     'idCart' => $quoteTransfer->getUuid(),
                     'shipments' => [
                         $I->getSplitShipmentRequestPayloadWithCompanyBusinessUnitAddress(
@@ -127,8 +122,6 @@ class CompanyBusinessUnitAddressCheckoutDataRestApiCest
      * @depends loadFixtures
      *
      * @param \PyzTest\Glue\Checkout\CheckoutApiTester $I
-     *
-     * @return void
      */
     public function requestCheckoutDataShouldAcceptCompanyBusinessUnitAddressForBillingAddress(CheckoutApiTester $I): void
     {

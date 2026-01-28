@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace PyzTest\Yves\CompanyUser\Helper;
 
 use Codeception\Module;
@@ -34,20 +36,12 @@ class CompanyUserHelper extends Module
     use LocatorHelperTrait;
     use DependencyHelperTrait;
 
-    /**
-     * @var array
-     */
     protected const COMPANY_USER_PERMISSIONS_KEY_LIST = [
         'AddCartItemPermissionPlugin',
         'ChangeCartItemPermissionPlugin',
         'RemoveCartItemPermissionPlugin',
     ];
 
-    /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyUserTransfer
-     */
     public function haveRegisteredCompanyUser(CustomerTransfer $customerTransfer): CompanyUserTransfer
     {
         $companyTransfer = $this->createCompany();
@@ -58,19 +52,15 @@ class CompanyUserHelper extends Module
         $companyBusinessUnitTransfer = $this->createCompanyBusinessUnit([
             CompanyBusinessUnitTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
         ]);
-        $companyUserTransfer = $this->createCompanyUser([
+
+        return $this->createCompanyUser([
             CompanyUserTransfer::CUSTOMER => $customerTransfer,
             CompanyUserTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
             CompanyUserTransfer::FK_COMPANY_BUSINESS_UNIT => $companyBusinessUnitTransfer->getIdCompanyBusinessUnit(),
             CompanyUserTransfer::COMPANY_ROLE_COLLECTION => (new CompanyRoleCollectionTransfer())->addRole($companyRoleTransfer),
         ]);
-
-        return $companyUserTransfer;
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
-     */
     protected function createPermissionCollectionTransferWithCartPermissions(): PermissionCollectionTransfer
     {
         $this->setDependency(PermissionDependencyProvider::PLUGINS_PERMISSION_STORAGE, [
@@ -83,30 +73,22 @@ class CompanyUserHelper extends Module
 
         $permissionCollectionTransfer = new PermissionCollectionTransfer();
         foreach ($availablePermissions as $permissionTransfer) {
-            if (in_array($permissionTransfer->getKey(), static::COMPANY_USER_PERMISSIONS_KEY_LIST, true)) {
-                $permissionCollectionTransfer->addPermission($permissionTransfer);
+            if (!in_array($permissionTransfer->getKey(), static::COMPANY_USER_PERMISSIONS_KEY_LIST, true)) {
+                continue;
             }
+
+            $permissionCollectionTransfer->addPermission($permissionTransfer);
         }
 
         return $permissionCollectionTransfer;
     }
 
-    /**
-     * @param array $seed
-     *
-     * @return \Generated\Shared\Transfer\CompanyRoleTransfer
-     */
     protected function createCompanyRole(array $seed = []): CompanyRoleTransfer
     {
         return $this->getModule('\\' . CompanyRoleHelper::class)
             ->haveCompanyRole($seed);
     }
 
-    /**
-     * @param array $seed
-     *
-     * @return \Generated\Shared\Transfer\CompanyTransfer
-     */
     protected function createCompany(array $seed = []): CompanyTransfer
     {
         $mailMock = new CompanyMailConnectorToMailFacadeBridge($this->getMailMock());
@@ -118,22 +100,12 @@ class CompanyUserHelper extends Module
             ]);
     }
 
-    /**
-     * @param array $seed
-     *
-     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer
-     */
     protected function createCompanyBusinessUnit(array $seed = []): CompanyBusinessUnitTransfer
     {
         return $this->getModule('\\' . CompanyBusinessUnitHelper::class)
             ->haveCompanyBusinessUnit($seed);
     }
 
-    /**
-     * @param array $seed
-     *
-     * @return \Generated\Shared\Transfer\CompanyUserTransfer
-     */
     protected function createCompanyUser(array $seed = []): CompanyUserTransfer
     {
         return $this->getModule('\\' . SprykerTestCompanyUserHelper::class)
@@ -142,25 +114,16 @@ class CompanyUserHelper extends Module
             ]);
     }
 
-    /**
-     * @return \Spryker\Zed\Permission\Business\PermissionFacadeInterface
-     */
     protected function getPermissionFacade(): PermissionFacadeInterface
     {
         return $this->getLocator()->permission()->facade();
     }
 
-    /**
-     * @return \Spryker\Zed\PermissionExtension\Dependency\Plugin\PermissionStoragePluginInterface
-     */
     protected function getPermissionStoragePluginMock(): PermissionStoragePluginInterface
     {
         return Stub::makeEmpty(PermissionStoragePluginInterface::class);
     }
 
-    /**
-     * @return \Spryker\Zed\Mail\Business\MailFacadeInterface
-     */
     protected function getMailMock(): MailFacadeInterface
     {
         return Stub::makeEmpty(MailFacadeInterface::class);

@@ -5,16 +5,16 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace PyzTest\Yves\Checkout\Helper;
 
 use Codeception\Module;
+use Codeception\Module\WebDriver;
 
 class CheckoutHelper extends Module
 {
-    /**
-     * @return \Codeception\Module|\Codeception\Module\WebDriver
-     */
-    protected function getWebDriver()
+    protected function getWebDriver(): Module|WebDriver
     {
         return $this->getModule('WebDriver');
     }

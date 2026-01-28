@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace PyzTest\Glue\AlternativeProducts\RestApi;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
@@ -26,37 +28,20 @@ use SprykerTest\Shared\Testify\Fixtures\FixturesContainerInterface;
  */
 class ConcreteAlternativeProductsRestApiFixtures implements FixturesBuilderInterface, FixturesContainerInterface
 {
-    /**
-     * @var \Generated\Shared\Transfer\ProductConcreteTransfer
-     */
     protected ProductConcreteTransfer $productConcreteTransfer;
 
-    /**
-     * @var \Generated\Shared\Transfer\ProductConcreteTransfer
-     */
     protected ProductConcreteTransfer $alternativeProductConcreteTransfer;
 
-    /**
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
-     */
     public function getProductConcreteTransfer(): ProductConcreteTransfer
     {
         return $this->productConcreteTransfer;
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
-     */
     public function getAlternativeProductConcreteTransfer(): ProductConcreteTransfer
     {
         return $this->alternativeProductConcreteTransfer;
     }
 
-    /**
-     * @param \PyzTest\Glue\AlternativeProducts\AlternativeProductsRestApiTester $I
-     *
-     * @return \SprykerTest\Shared\Testify\Fixtures\FixturesContainerInterface
-     */
     public function buildFixtures(AlternativeProductsRestApiTester $I): FixturesContainerInterface
     {
         $this->createAlternativeRelationBetweenProducts($I);
@@ -64,11 +49,6 @@ class ConcreteAlternativeProductsRestApiFixtures implements FixturesBuilderInter
         return $this;
     }
 
-    /**
-     * @param \PyzTest\Glue\AlternativeProducts\AlternativeProductsRestApiTester $I
-     *
-     * @return void
-     */
     protected function createAlternativeRelationBetweenProducts(AlternativeProductsRestApiTester $I): void
     {
         $this->productConcreteTransfer = $I->haveFullProduct();

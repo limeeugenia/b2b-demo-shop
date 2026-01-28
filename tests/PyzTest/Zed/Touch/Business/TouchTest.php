@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace PyzTest\Zed\Touch\Business;
 
 use Codeception\Test\Unit;
@@ -22,9 +24,6 @@ use Orm\Zed\Touch\Persistence\SpyTouchQuery;
  */
 class TouchTest extends Unit
 {
-    /**
-     * @return void
-     */
     public function testDatabaseAccessWorks(): void
     {
         $query = SpyTouchQuery::create();

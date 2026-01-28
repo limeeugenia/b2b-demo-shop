@@ -43,7 +43,7 @@ tag: '1.0'
 environment: docker.demo
 
 image:
-    tag: spryker/php:8.2
+    tag: spryker/php:8.4
     environment:
         SPRYKER_DEFAULT_STORE: "DE"
         SPRYKER_ACTIVE_STORES: "DE,AT"
@@ -72,6 +72,7 @@ image:
         enabled-extensions:
             - blackfire
             - newrelic
+            - otel
     node:
         version: 18
         npm: 9
@@ -81,13 +82,11 @@ composer:
     autoload: --classmap-authoritative
 
 assets:
-    image: fholzer/nginx-brotli:v1.18.0
+    image: spryker/nginx-brotli:latest
     mode: production
     compression:
         brotli:
-            static: only
-        gzip:
-            static: true
+            static: on
             level: 5
 
 regions:
@@ -196,7 +195,7 @@ services:
                 protocol: tcp
     broker:
         engine: rabbitmq
-        version: '3.9'
+        version: '4.1'
         api:
             username: "spryker"
             password: "secret"
@@ -219,11 +218,12 @@ services:
                 protocol: tcp
     scheduler:
         engine: jenkins
+        version: '2.492.3'
         csrf-protection-enabled: true
         endpoints:
             scheduler.consultant.demo-spryker.com:
     mail_catcher:
-        engine: mailhog
+        engine: mailpit
         endpoints:
             mail.consultant.demo-spryker.com:
 

@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace Pyz\Zed\DataImport\Business\Model\ProductAbstract;
 
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
@@ -25,114 +27,49 @@ use Spryker\Zed\Url\Dependency\UrlEvents;
 
 class ProductAbstractWriterStep extends PublishAwareStep implements DataImportStepInterface
 {
-    /**
-     * @var int
-     */
     public const BULK_SIZE = 100;
 
-    /**
-     * @var string
-     */
     public const KEY_ABSTRACT_SKU = 'abstract_sku';
 
-    /**
-     * @var string
-     */
     public const KEY_COLOR_CODE = 'color_code';
 
-    /**
-     * @var string
-     */
     public const KEY_ID_TAX_SET = 'idTaxSet';
 
-    /**
-     * @var string
-     */
     public const KEY_ATTRIBUTES = 'attributes';
 
-    /**
-     * @var string
-     */
     public const KEY_NAME = 'name';
 
-    /**
-     * @var string
-     */
     public const KEY_URL = 'url';
 
-    /**
-     * @var string
-     */
     public const KEY_DESCRIPTION = 'description';
 
-    /**
-     * @var string
-     */
     public const KEY_META_TITLE = 'meta_title';
 
-    /**
-     * @var string
-     */
     public const KEY_META_DESCRIPTION = 'meta_description';
 
-    /**
-     * @var string
-     */
     public const KEY_META_KEYWORDS = 'meta_keywords';
 
-    /**
-     * @var string
-     */
     public const KEY_TAX_SET_NAME = 'tax_set_name';
 
-    /**
-     * @var string
-     */
     public const KEY_CATEGORY_KEY = 'category_key';
 
-    /**
-     * @var string
-     */
     public const KEY_CATEGORY_KEYS = 'categoryKeys';
 
-    /**
-     * @var string
-     */
     public const KEY_CATEGORY_PRODUCT_ORDER = 'category_product_order';
 
-    /**
-     * @var string
-     */
     public const KEY_LOCALES = 'locales';
 
-    /**
-     * @var string
-     */
     public const KEY_NEW_FROM = 'new_from';
 
-    /**
-     * @var string
-     */
     public const KEY_NEW_TO = 'new_to';
 
-    /**
-     * @var \Pyz\Zed\DataImport\Business\Model\Product\Repository\ProductRepository
-     */
-    protected $productRepository;
+    protected ProductRepository $productRepository;
 
-    /**
-     * @param \Pyz\Zed\DataImport\Business\Model\Product\Repository\ProductRepository $productRepository
-     */
     public function __construct(ProductRepository $productRepository)
     {
         $this->productRepository = $productRepository;
     }
 
-    /**
-     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
-     *
-     * @return void
-     */
     public function execute(DataSetInterface $dataSet): void
     {
         $productAbstractEntity = $this->importProductAbstract($dataSet);
@@ -146,11 +83,6 @@ class ProductAbstractWriterStep extends PublishAwareStep implements DataImportSt
         $this->addPublishEvents(ProductEvents::PRODUCT_ABSTRACT_PUBLISH, $productAbstractEntity->getIdProductAbstract());
     }
 
-    /**
-     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAbstract
-     */
     protected function importProductAbstract(DataSetInterface $dataSet): SpyProductAbstract
     {
         $productAbstractEntity = SpyProductAbstractQuery::create()
@@ -171,12 +103,6 @@ class ProductAbstractWriterStep extends PublishAwareStep implements DataImportSt
         return $productAbstractEntity;
     }
 
-    /**
-     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
-     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
-     *
-     * @return void
-     */
     protected function importProductAbstractLocalizedAttributes(DataSetInterface $dataSet, SpyProductAbstract $productAbstractEntity): void
     {
         foreach ($dataSet[ProductLocalizedAttributesExtractorStep::KEY_LOCALIZED_ATTRIBUTES] as $idLocale => $localizedAttributes) {
@@ -193,9 +119,11 @@ class ProductAbstractWriterStep extends PublishAwareStep implements DataImportSt
                 ->setMetaKeywords($localizedAttributes[static::KEY_META_KEYWORDS])
                 ->setAttributes(json_encode($localizedAttributes[static::KEY_ATTRIBUTES]));
 
-            if ($productAbstractLocalizedAttributesEntity->isNew() || $productAbstractLocalizedAttributesEntity->isModified()) {
-                $productAbstractLocalizedAttributesEntity->save();
+            if (!$productAbstractLocalizedAttributesEntity->isNew() && !$productAbstractLocalizedAttributesEntity->isModified()) {
+                continue;
             }
+
+            $productAbstractLocalizedAttributesEntity->save();
         }
     }
 
@@ -204,8 +132,6 @@ class ProductAbstractWriterStep extends PublishAwareStep implements DataImportSt
      * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
      *
      * @throws \Spryker\Zed\DataImport\Business\Exception\DataKeyNotFoundInDataSetException
-     *
-     * @return void
      */
     protected function importProductCategories(DataSetInterface $dataSet, SpyProductAbstract $productAbstractEntity): void
     {
@@ -233,12 +159,14 @@ class ProductAbstractWriterStep extends PublishAwareStep implements DataImportSt
             $productCategoryEntity
                 ->setProductOrder($productOrder);
 
-            if ($productCategoryEntity->isNew() || $productCategoryEntity->isModified()) {
-                $productCategoryEntity->save();
-
-                $this->addPublishEvents(ProductCategoryEvents::PRODUCT_CATEGORY_PUBLISH, $productAbstractEntity->getIdProductAbstract());
-                $this->addPublishEvents(ProductEvents::PRODUCT_ABSTRACT_PUBLISH, $productAbstractEntity->getIdProductAbstract());
+            if (!$productCategoryEntity->isNew() && !$productCategoryEntity->isModified()) {
+                continue;
             }
+
+            $productCategoryEntity->save();
+
+            $this->addPublishEvents(ProductCategoryEvents::PRODUCT_CATEGORY_PUBLISH, $productAbstractEntity->getIdProductAbstract());
+            $this->addPublishEvents(ProductEvents::PRODUCT_ABSTRACT_PUBLISH, $productAbstractEntity->getIdProductAbstract());
         }
     }
 
@@ -247,7 +175,7 @@ class ProductAbstractWriterStep extends PublishAwareStep implements DataImportSt
      *
      * @return array<string>
      */
-    protected function getCategoryKeys($categoryKeys): array
+    protected function getCategoryKeys(string $categoryKeys): array
     {
         $categoryKeys = explode(',', $categoryKeys);
 
@@ -259,7 +187,7 @@ class ProductAbstractWriterStep extends PublishAwareStep implements DataImportSt
      *
      * @return array<int>
      */
-    protected function getCategoryProductOrder($categoryProductOrder): array
+    protected function getCategoryProductOrder(string $categoryProductOrder): array
     {
         $categoryProductOrder = explode(',', $categoryProductOrder);
         $categoryProductOrder = array_map('trim', $categoryProductOrder);
@@ -267,12 +195,6 @@ class ProductAbstractWriterStep extends PublishAwareStep implements DataImportSt
         return array_map('intval', $categoryProductOrder);
     }
 
-    /**
-     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
-     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
-     *
-     * @return void
-     */
     protected function importProductUrls(DataSetInterface $dataSet, SpyProductAbstract $productAbstractEntity): void
     {
         foreach ($dataSet[ProductLocalizedAttributesExtractorStep::KEY_LOCALIZED_ATTRIBUTES] as $idLocale => $localizedAttributes) {
@@ -287,20 +209,17 @@ class ProductAbstractWriterStep extends PublishAwareStep implements DataImportSt
 
             $urlEntity->setUrl($abstractProductUrl);
 
-            if ($urlEntity->isNew() || $urlEntity->isModified()) {
-                $urlEntity->save();
-
-                $this->addPublishEvents(UrlEvents::URL_PUBLISH, $urlEntity->getIdUrl());
+            if (!$urlEntity->isNew() && !$urlEntity->isModified()) {
+                continue;
             }
+
+            $urlEntity->save();
+
+            $this->addPublishEvents(UrlEvents::URL_PUBLISH, $urlEntity->getIdUrl());
         }
     }
 
-    /**
-     * @param string $abstractProductUrl
-     *
-     * @return void
-     */
-    protected function cleanupRedirectUrls($abstractProductUrl): void
+    protected function cleanupRedirectUrls(string $abstractProductUrl): void
     {
         SpyUrlQuery::create()
             ->filterByUrl($abstractProductUrl)

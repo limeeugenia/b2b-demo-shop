@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace PyzTest\Glue\Customer\RestApi;
 
 use Codeception\Example;
@@ -30,21 +32,10 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class CustomerPasswordCest
 {
-    /**
-     * @var \PyzTest\Glue\Customer\RestApi\CustomerRestApiFixtures
-     */
     protected CustomerRestApiFixtures $fixtures;
 
-    /**
-     * @var \Generated\Shared\Transfer\CustomerTransfer
-     */
     protected CustomerTransfer $customerTransfer;
 
-    /**
-     * @param \PyzTest\Glue\Customer\CustomerApiTester $I
-     *
-     * @return void
-     */
     public function _before(CustomerApiTester $I): void
     {
         /** @var \PyzTest\Glue\Customer\RestApi\CustomerRestApiFixtures $fixtures */
@@ -64,17 +55,12 @@ class CustomerPasswordCest
         $I->amBearerAuthenticated($oauthResponseTransfer->getAccessToken());
     }
 
-    /**
-     * @param \PyzTest\Glue\Customer\CustomerApiTester $I
-     *
-     * @return void
-     */
     public function requestPatchCustomerPasswordUpdatesCustomerPassword(CustomerApiTester $I): void
     {
         // Arrange
         $restCustomerPasswordAttributesTransfer = (new RestCustomerPasswordAttributesTransfer())
-            ->setConfirmPassword('qwertyuI1!')
-            ->setNewPassword('qwertyuI1!')
+            ->setConfirmPassword('Change!23456')
+            ->setNewPassword('Change!23456')
             ->setPassword('change123');
 
         // Act
@@ -99,11 +85,6 @@ class CustomerPasswordCest
         $I->seeResponseCodeIs(HttpCode::NO_CONTENT);
     }
 
-    /**
-     * @param \PyzTest\Glue\Customer\CustomerApiTester $I
-     *
-     * @return void
-     */
     public function requestPatchCustomerPasswordFailsToUseAnotherCustomerReference(CustomerApiTester $I): void
     {
         // Arrange
@@ -116,8 +97,8 @@ class CustomerPasswordCest
         $I->confirmCustomer($firstCustomerTransfer);
 
         $restCustomerPasswordAttributesTransfer = (new RestCustomerPasswordAttributesTransfer())
-            ->setConfirmPassword('qwertyuI1!')
-            ->setNewPassword('qwertyuI1!')
+            ->setConfirmPassword('Change!23456')
+            ->setNewPassword('Change!23456')
             ->setPassword('change123');
 
         // Act
@@ -153,8 +134,6 @@ class CustomerPasswordCest
      *
      * @param \PyzTest\Glue\Customer\CustomerApiTester $I
      * @param \Codeception\Example $example
-     *
-     * @return void
      */
     public function requestPatchCustomerPasswordFailsValidation(CustomerApiTester $I, Example $example): void
     {
@@ -182,14 +161,14 @@ class CustomerPasswordCest
         $I->seeResponseMatchesOpenApiSchema();
 
         foreach ($example['errors'] as $index => $error) {
-            $I->seeResponseErrorsHaveCode($error[RestErrorMessageTransfer::CODE], $index);
-            $I->seeResponseErrorsHaveStatus($error[RestErrorMessageTransfer::STATUS], $index);
-            $I->seeResponseErrorsHaveDetail($error[RestErrorMessageTransfer::DETAIL], $index);
+            $I->seeResponseErrorsHaveCode($error[RestErrorMessageTransfer::CODE], (string)$index);
+            $I->seeResponseErrorsHaveStatus($error[RestErrorMessageTransfer::STATUS], (string)$index);
+            $I->seeResponseErrorsHaveDetail($error[RestErrorMessageTransfer::DETAIL], (string)$index);
         }
     }
 
     /**
-     * @return array
+     * @return array<array<string, mixed>>
      */
     protected function requestPatchCustomerPasswordFailsValidationDataProvider(): array
     {
@@ -197,20 +176,20 @@ class CustomerPasswordCest
             [
                 'attributes' => [
                     RestCustomerPasswordAttributesTransfer::PASSWORD => 'change123',
-                    RestCustomerPasswordAttributesTransfer::NEW_PASSWORD => 'qwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiop',
-                    RestCustomerPasswordAttributesTransfer::CONFIRM_PASSWORD => 'qwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiop',
+                    RestCustomerPasswordAttributesTransfer::NEW_PASSWORD => 'Change!23456pqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuioppqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwert',
+                    RestCustomerPasswordAttributesTransfer::CONFIRM_PASSWORD => 'Change!23456pqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuioppqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwert',
                 ],
                 RestErrorMessageTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,
                 'errors' => [
                     [
                         RestErrorMessageTransfer::CODE => RestRequestValidatorConfig::RESPONSE_CODE_REQUEST_INVALID,
                         RestErrorMessageTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,
-                        RestErrorMessageTransfer::DETAIL => 'newPassword => This value is too long. It should have 64 characters or less.',
+                        RestErrorMessageTransfer::DETAIL => 'newPassword => This value is too long. It should have 128 characters or less.',
                     ],
                     [
                         RestErrorMessageTransfer::CODE => RestRequestValidatorConfig::RESPONSE_CODE_REQUEST_INVALID,
                         RestErrorMessageTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,
-                        RestErrorMessageTransfer::DETAIL => 'confirmPassword => This value is too long. It should have 64 characters or less.',
+                        RestErrorMessageTransfer::DETAIL => 'confirmPassword => This value is too long. It should have 128 characters or less.',
                     ],
                 ],
             ],
@@ -225,35 +204,25 @@ class CustomerPasswordCest
                     [
                         RestErrorMessageTransfer::CODE => RestRequestValidatorConfig::RESPONSE_CODE_REQUEST_INVALID,
                         RestErrorMessageTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,
-                        RestErrorMessageTransfer::DETAIL => 'newPassword => This value is too short. It should have 8 characters or more.',
+                        RestErrorMessageTransfer::DETAIL => 'newPassword => This value is too short. It should have 12 characters or more.',
                     ],
                     [
                         RestErrorMessageTransfer::CODE => RestRequestValidatorConfig::RESPONSE_CODE_REQUEST_INVALID,
                         RestErrorMessageTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,
-                        RestErrorMessageTransfer::DETAIL => 'confirmPassword => This value is too short. It should have 8 characters or more.',
+                        RestErrorMessageTransfer::DETAIL => 'newPassword => Your password must include at least one uppercase letter, one lowercase letter, one number, and one special character from the following list: !@#$%^&*()_-+=[]{}|;:<>.,/?\~. Non-Latin and other special characters are not allowed.',
                     ],
-                ],
-            ],
-            [
-                'attributes' => [
-                    RestCustomerPasswordAttributesTransfer::PASSWORD => 'change123',
-                    RestCustomerPasswordAttributesTransfer::NEW_PASSWORD => 'qwertyui',
-                    RestCustomerPasswordAttributesTransfer::CONFIRM_PASSWORD => 'qwertyui',
-                ],
-                RestErrorMessageTransfer::STATUS => Response::HTTP_BAD_REQUEST,
-                'errors' => [
                     [
-                        RestErrorMessageTransfer::CODE => CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_PASSWORD_INVALID_CHARACTER_SET,
-                        RestErrorMessageTransfer::STATUS => Response::HTTP_BAD_REQUEST,
-                        RestErrorMessageTransfer::DETAIL => CustomersRestApiConfig::RESPONSE_MESSAGE_CUSTOMER_PASSWORD_INVALID_CHARACTER_SET,
+                        RestErrorMessageTransfer::CODE => RestRequestValidatorConfig::RESPONSE_CODE_REQUEST_INVALID,
+                        RestErrorMessageTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,
+                        RestErrorMessageTransfer::DETAIL => 'confirmPassword => This value is too short. It should have 12 characters or more.',
                     ],
                 ],
             ],
             [
                 'attributes' => [
                     RestCustomerPasswordAttributesTransfer::PASSWORD => 'change123',
-                    RestCustomerPasswordAttributesTransfer::NEW_PASSWORD => 'qwertyuI1!eee',
-                    RestCustomerPasswordAttributesTransfer::CONFIRM_PASSWORD => 'qwertyuI1!eee',
+                    RestCustomerPasswordAttributesTransfer::NEW_PASSWORD => 'Change!23456eee',
+                    RestCustomerPasswordAttributesTransfer::CONFIRM_PASSWORD => 'Change!23456eee',
                 ],
                 RestErrorMessageTransfer::STATUS => Response::HTTP_BAD_REQUEST,
                 'errors' => [

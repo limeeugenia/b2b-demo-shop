@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace Pyz\Client\Permission;
 
 use Pyz\Zed\CompanyUser\Communication\Plugin\Permission\SeeCompanyMenuPermissionPlugin;
@@ -26,7 +28,7 @@ use Spryker\Client\CustomerAccessPermission\Plugin\SeePricePermissionPlugin;
 use Spryker\Client\CustomerAccessPermission\Plugin\SeeShoppingListPermissionPlugin;
 use Spryker\Client\CustomerAccessPermission\Plugin\SeeWishlistPermissionPlugin;
 use Spryker\Client\MerchantRelationRequest\Plugin\Permission\CreateMerchantRelationRequestPermissionPlugin;
-use Spryker\Client\OauthPermission\Plugin\Permission\OauthPermissionStoragePlugin;
+use Spryker\Client\OauthPermission\Plugin\Permission\StoredOauthPermissionStoragePlugin;
 use Spryker\Client\Permission\PermissionDependencyProvider as SprykerPermissionDependencyProvider;
 use Spryker\Client\QuoteApproval\Plugin\Permission\ApproveQuotePermissionPlugin;
 use Spryker\Client\QuoteApproval\Plugin\Permission\PlaceOrderPermissionPlugin;
@@ -52,7 +54,7 @@ class PermissionDependencyProvider extends SprykerPermissionDependencyProvider
         return [
             new PermissionStoragePlugin(), #SharedCartFeature #ShoppingListFeature
             new CustomerAccessPermissionStoragePlugin(), #CustomerAccessFeature
-            new OauthPermissionStoragePlugin(),
+            new StoredOauthPermissionStoragePlugin(),
         ];
     }
 

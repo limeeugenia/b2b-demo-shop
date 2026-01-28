@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace PyzTest\Zed\MessageBroker\MessageHandlers\Product\Communication;
 
 use Codeception\Test\Unit;
@@ -30,14 +32,8 @@ use Spryker\Zed\Product\ProductDependencyProvider;
  */
 class InitializeProductExportMessageTest extends Unit
 {
-    /**
-     * @var \PyzTest\Zed\MessageBroker\ProductCommunicationTester
-     */
     protected ProductCommunicationTester $tester;
 
-    /**
-     * @return void
-     */
     public function testInitializeProductExportMessageIsSuccessfullyHandled(): void
     {
         // Arrange
@@ -64,6 +60,7 @@ class InitializeProductExportMessageTest extends Unit
 
         // Act
         $this->tester->setupMessageBroker(InitializeProductExportTransfer::class, $channelName);
+        $this->tester->setupMessageBrokerPlugins();
         $messageBrokerFacade = $this->tester->getLocator()->messageBroker()->facade();
         $messageBrokerFacade->sendMessage(
             $this->tester->buildInitializeProductExportTransfer(),

@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace Pyz\Glue\EventDispatcher;
 
 use Spryker\Glue\EventBehavior\Plugin\EventDispatcher\EventBehaviorEventDispatcherPlugin;
@@ -14,6 +16,8 @@ use Spryker\Glue\GlueApplication\Plugin\EventDispatcher\ResponseSecurityHeadersE
 use Spryker\Glue\Http\Plugin\EventDispatcher\CacheControlHeaderEventDispatcherPlugin;
 use Spryker\Glue\Http\Plugin\EventDispatcher\StrictTransportSecurityHeaderEventDispatcherPlugin;
 use Spryker\Glue\Kernel\Plugin\EventDispatcher\AutoloaderCacheEventDispatcherPlugin;
+use Spryker\Glue\Monitoring\Plugin\EventDispatcher\BackendMonitoringRequestTransactionEventDispatcherPlugin;
+use Spryker\Glue\Monitoring\Plugin\EventDispatcher\StorefrontMonitoringRequestTransactionEventDispatcherPlugin;
 use Spryker\Glue\Router\Plugin\EventDispatcher\RouterListenerEventDispatcherPlugin;
 use Spryker\Glue\Storage\Plugin\EventDispatcher\StorageKeyCacheEventDispatcherPlugin;
 use Spryker\Shared\Http\Plugin\EventDispatcher\ResponseListenerEventDispatcherPlugin;
@@ -34,6 +38,7 @@ class EventDispatcherDependencyProvider extends SprykerEventDispatcherDependency
             new ResponseSecurityHeadersEventDispatcherPlugin(),
             new StrictTransportSecurityHeaderEventDispatcherPlugin(),
             new CacheControlHeaderEventDispatcherPlugin(),
+            new StorefrontMonitoringRequestTransactionEventDispatcherPlugin(),
         ];
     }
 
@@ -52,6 +57,7 @@ class EventDispatcherDependencyProvider extends SprykerEventDispatcherDependency
             new StrictTransportSecurityHeaderEventDispatcherPlugin(),
             new EventBehaviorEventDispatcherPlugin(),
             new CacheControlHeaderEventDispatcherPlugin(),
+            new BackendMonitoringRequestTransactionEventDispatcherPlugin(),
         ];
     }
 
@@ -69,6 +75,7 @@ class EventDispatcherDependencyProvider extends SprykerEventDispatcherDependency
             new ResponseSecurityHeadersEventDispatcherPlugin(),
             new StrictTransportSecurityHeaderEventDispatcherPlugin(),
             new CacheControlHeaderEventDispatcherPlugin(),
+            new StorefrontMonitoringRequestTransactionEventDispatcherPlugin(),
         ];
     }
 }

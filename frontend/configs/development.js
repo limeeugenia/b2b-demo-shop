@@ -5,6 +5,7 @@ const filePathFilter = require('@jsdevtools/file-path-filter');
 const { findComponentEntryPoints, findComponentStyles, findAppEntryPoint } = require('../libs/finder');
 const { getAliasList } = require('../libs/alias');
 const { getAssetsConfig } = require('../libs/assets-configurator');
+const cleanDirs = require('../libs/clean-dirs');
 
 let isImagesOptimizationEnabled = false;
 let imagesOptimization = null;
@@ -15,11 +16,34 @@ try {
     console.info('Images optimization is disabled.');
 }
 
+let isExtractIconSpritesEnabled = false;
+let extractIconSprites = null;
+
+try {
+    extractIconSprites = require('../libs/icon-sprite-extractor');
+    isExtractIconSpritesEnabled = true;
+} catch (e) {
+    console.info('Icon sprite extraction is disabled.');
+}
+
 const getConfiguration = async (appSettings) => {
     const componentEntryPointsPromise = findComponentEntryPoints(appSettings.find.componentEntryPoints);
     const stylesPromise = findComponentStyles(appSettings.find.componentStyles);
     const [componentEntryPoints, styles] = await Promise.all([componentEntryPointsPromise, stylesPromise]);
     const alias = getAliasList(appSettings);
+
+    if (isExtractIconSpritesEnabled) {
+        try {
+            await extractIconSprites({
+                sourcePath: appSettings.paths.iconSprite.sources.map((src) => join(process.cwd(), src)),
+                targetPath: join(process.cwd(), appSettings.paths.iconSprite.target),
+            });
+        } catch (error) {
+            console.error('Error extracting icon sprites:', error);
+        }
+    }
+
+    cleanDirs([appSettings.paths.public, appSettings.paths.publicStatic]);
 
     const vendorTs = await findAppEntryPoint(appSettings.find.shopUiEntryPoints, './vendor.ts');
     const appTs = await findAppEntryPoint(appSettings.find.shopUiEntryPoints, './app.ts');
@@ -133,12 +157,25 @@ const getConfiguration = async (appSettings) => {
                                 loader: 'sass-loader',
                                 options: {
                                     implementation: require('sass'),
-                                },
-                            },
-                            {
-                                loader: 'sass-resources-loader',
-                                options: {
-                                    resources: [sharedScss, ...styles],
+                                    additionalData: (content, loaderContext) => {
+                                        const currentFilePath = loaderContext.resourcePath;
+                                        const allResources = [sharedScss, ...styles].filter(Boolean);
+
+                                        if (allResources.length === 0) {
+                                            return content;
+                                        }
+
+                                        const imports = allResources
+                                            .map((resource) => {
+                                                if (currentFilePath === resource) {
+                                                    return;
+                                                }
+
+                                                return `@import "${resource}";`;
+                                            })
+                                            .join('\n');
+                                        return `${imports}\n${content}`;
+                                    },
                                 },
                             },
                         ],

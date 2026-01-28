@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace Pyz\Zed\Oms\Business;
 
 use Generated\Shared\Transfer\TimeoutProcessorTimeoutRequestTransfer;
@@ -22,8 +24,6 @@ interface OmsFacadeInterface extends SprykerOmsFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\TimeoutProcessorTimeoutRequestTransfer $timeoutProcessorTimeoutRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\TimeoutProcessorTimeoutResponseTransfer
      */
     public function calculateInitiationTimeout(
         TimeoutProcessorTimeoutRequestTransfer $timeoutProcessorTimeoutRequestTransfer,

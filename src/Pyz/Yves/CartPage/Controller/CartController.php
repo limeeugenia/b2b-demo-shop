@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace Pyz\Yves\CartPage\Controller;
 
 use SprykerShop\Yves\CartPage\Controller\CartController as SprykerCartController;
@@ -17,9 +19,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CartController extends SprykerCartController
 {
-    /**
-     * @var string
-     */
     protected const PARAM_REFERER = 'referer';
 
     /**
@@ -43,21 +42,14 @@ class CartController extends SprykerCartController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param string $sku
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function addAction(Request $request, $sku): RedirectResponse
+    public function addAction(Request $request, $sku): RedirectResponse // phpcs:ignore
     {
         parent::addAction($request, $sku);
 
         return $this->redirectToReferer($request);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
     protected function redirectToReferer(Request $request): RedirectResponse
     {
         return $request->headers->has(static::PARAM_REFERER) ?

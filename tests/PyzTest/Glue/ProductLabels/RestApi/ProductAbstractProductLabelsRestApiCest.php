@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace PyzTest\Glue\ProductLabels\RestApi;
 
 use Codeception\Util\HttpCode;
@@ -24,16 +26,8 @@ use Spryker\Glue\ProductLabelsRestApi\ProductLabelsRestApiConfig;
  */
 class ProductAbstractProductLabelsRestApiCest
 {
-    /**
-     * @var \PyzTest\Glue\ProductLabels\RestApi\ProductLabelsRestApiFixtures
-     */
     protected ProductLabelsRestApiFixtures $fixtures;
 
-    /**
-     * @param \PyzTest\Glue\ProductLabels\ProductLabelsApiTester $I
-     *
-     * @return void
-     */
     public function loadFixtures(ProductLabelsApiTester $I): void
     {
         /** @var \PyzTest\Glue\ProductLabels\RestApi\ProductLabelsRestApiFixtures $fixtures */
@@ -46,8 +40,6 @@ class ProductAbstractProductLabelsRestApiCest
      * @depends loadFixtures
      *
      * @param \PyzTest\Glue\ProductLabels\ProductLabelsApiTester $I
-     *
-     * @return void
      */
     public function requestProductAbstractWithProductLabelsRelationship(ProductLabelsApiTester $I): void
     {
@@ -72,21 +64,21 @@ class ProductAbstractProductLabelsRestApiCest
             ->whenI()
             ->seeSingleResourceHasRelationshipByTypeAndId(
                 ProductLabelsRestApiConfig::RESOURCE_PRODUCT_LABELS,
-                $idProductLabel,
+                (string)$idProductLabel,
             );
 
         $I->amSure('The returned resource has product-labels include')
             ->whenI()
             ->seeIncludesContainsResourceByTypeAndId(
                 ProductLabelsRestApiConfig::RESOURCE_PRODUCT_LABELS,
-                $idProductLabel,
+                (string)$idProductLabel,
             );
 
         $I->amSure('The include has correct self-link')
             ->whenI()
             ->seeIncludedResourceByTypeAndIdHasSelfLink(
                 ProductLabelsRestApiConfig::RESOURCE_PRODUCT_LABELS,
-                $idProductLabel,
+                (string)$idProductLabel,
                 $I->buildProductLabelUrl($idProductLabel),
             );
     }
@@ -95,8 +87,6 @@ class ProductAbstractProductLabelsRestApiCest
      * @depends loadFixtures
      *
      * @param \PyzTest\Glue\ProductLabels\ProductLabelsApiTester $I
-     *
-     * @return void
      */
     public function requestProductAbstractWithoutProductLabelsRelationship(ProductLabelsApiTester $I): void
     {
@@ -125,8 +115,6 @@ class ProductAbstractProductLabelsRestApiCest
      * @depends loadFixtures
      *
      * @param \PyzTest\Glue\ProductLabels\ProductLabelsApiTester $I
-     *
-     * @return void
      */
     public function requestProductAbstractWithProductLabelsRelationshipByPost(ProductLabelsApiTester $I): void
     {
@@ -150,8 +138,6 @@ class ProductAbstractProductLabelsRestApiCest
      * @depends loadFixtures
      *
      * @param \PyzTest\Glue\ProductLabels\ProductLabelsApiTester $I
-     *
-     * @return void
      */
     public function requestProductAbstractWithProductLabelRelationshipByPatch(ProductLabelsApiTester $I): void
     {

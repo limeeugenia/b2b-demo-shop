@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace Pyz\Zed\DataImport\Business\Model\ProductStock\Writer;
 
 use Generated\Shared\Transfer\StoreTransfer;
@@ -40,77 +42,38 @@ class ProductStockPropelDataSetWriter implements DataSetWriterInterface
 
     protected const COLUMN_IS_NEVER_OUT_OF_STOCK = ProductStockHydratorStep::COLUMN_IS_NEVER_OUT_OF_STOCK;
 
-    /**
-     * @var string
-     */
     protected const KEY_AVAILABILITY_SKU = 'KEY_AVAILABILITY_SKU';
 
-    /**
-     * @var string
-     */
     protected const KEY_AVAILABILITY_QUANTITY = 'KEY_AVAILABILITY_QUANTITY';
 
-    /**
-     * @var string
-     */
     protected const KEY_AVAILABILITY_ID_STORE = 'KEY_AVAILABILITY_ID_STORE';
 
-    /**
-     * @var string
-     */
     protected const KEY_AVAILABILITY_IS_NEVER_OUT_OF_STOCK = 'KEY_AVAILABILITY_IS_NEVER_OUT_OF_STOCK';
 
-    /**
-     * @var string
-     */
     protected const KEY_AVAILABILITY_ID_AVAILABILITY_ABSTRACT = 'KEY_AVAILABILITY_ID_AVAILABILITY_ABSTRACT';
 
-    /**
-     * @var string
-     */
     protected const COL_AVAILABILITY_TOTAL_QUANTITY = 'availabilityTotalQuantity';
 
-    /**
-     * @var string
-     */
     protected const COL_STOCK_PRODUCT_TOTAL_QUANTITY = 'stockProductTotalQuantity';
 
     /**
      * @var array<string, array<int, \Orm\Zed\Availability\Persistence\SpyAvailabilityAbstract>>
      */
-    protected static $availabilityAbstractEntitiesIndexedByAbstractSkuAndIdStore = [];
+    protected static array $availabilityAbstractEntitiesIndexedByAbstractSkuAndIdStore = [];
 
     /**
      * @var array<string>
      */
-    protected static $productAbstractSkus = [];
+    protected static array $productAbstractSkus = [];
 
-    /**
-     * @var \Pyz\Zed\DataImport\Business\Model\Product\Repository\ProductRepositoryInterface
-     */
-    protected $productRepository;
+    protected ProductRepositoryInterface $productRepository;
 
-    /**
-     * @var \Spryker\Zed\ProductBundle\Business\ProductBundleFacadeInterface
-     */
-    protected $productBundleFacade;
+    protected ProductBundleFacadeInterface $productBundleFacade;
 
-    /**
-     * @var \Spryker\Zed\Store\Business\StoreFacadeInterface
-     */
-    protected $storeFacade;
+    protected StoreFacadeInterface $storeFacade;
 
-    /**
-     * @var \Spryker\Zed\Stock\Business\StockFacadeInterface
-     */
-    protected $stockFacade;
+    protected StockFacadeInterface $stockFacade;
 
-    /**
-     * @param \Spryker\Zed\ProductBundle\Business\ProductBundleFacadeInterface $productBundleFacade
-     * @param \Pyz\Zed\DataImport\Business\Model\Product\Repository\ProductRepositoryInterface $productRepository
-     * @param \Spryker\Zed\Store\Business\StoreFacadeInterface $storeFacade
-     * @param \Spryker\Zed\Stock\Business\StockFacadeInterface $stockFacade
-     */
     public function __construct(
         ProductBundleFacadeInterface $productBundleFacade,
         ProductRepositoryInterface $productRepository,
@@ -123,11 +86,6 @@ class ProductStockPropelDataSetWriter implements DataSetWriterInterface
         $this->stockFacade = $stockFacade;
     }
 
-    /**
-     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
-     *
-     * @return void
-     */
     public function write(DataSetInterface $dataSet): void
     {
         $stockEntity = $this->createOrUpdateStock($dataSet);
@@ -143,20 +101,12 @@ class ProductStockPropelDataSetWriter implements DataSetWriterInterface
         }
     }
 
-    /**
-     * @return void
-     */
     public function flush(): void
     {
         $this->triggerAvailabilityPublishEvents();
         $this->productRepository->flush();
     }
 
-    /**
-     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
-     *
-     * @return \Orm\Zed\Stock\Persistence\SpyStock
-     */
     protected function createOrUpdateStock(DataSetInterface $dataSet): SpyStock
     {
         $stockTransfer = $dataSet[ProductStockHydratorStep::STOCK_ENTITY_TRANSFER];
@@ -169,12 +119,6 @@ class ProductStockPropelDataSetWriter implements DataSetWriterInterface
         return $stockEntity;
     }
 
-    /**
-     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
-     * @param \Orm\Zed\Stock\Persistence\SpyStock $stockEntity
-     *
-     * @return void
-     */
     protected function createOrUpdateProductStock(DataSetInterface $dataSet, SpyStock $stockEntity): void
     {
         $stockProductEntityTransfer = $dataSet[ProductStockHydratorStep::STOCK_PRODUCT_ENTITY_TRANSFER];
@@ -187,20 +131,12 @@ class ProductStockPropelDataSetWriter implements DataSetWriterInterface
         $stockProductEntity->save();
     }
 
-    /**
-     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
-     *
-     * @return void
-     */
     protected function collectProductAbstractSku(DataSetInterface $dataSet): void
     {
         $productConcreteSku = $dataSet[static::COLUMN_CONCRETE_SKU];
         static::$productAbstractSkus[] = $this->productRepository->getAbstractSkuByConcreteSku($productConcreteSku);
     }
 
-    /**
-     * @return void
-     */
     protected function triggerAvailabilityPublishEvents(): void
     {
         $availabilityAbstractIds = $this->getAvailabilityAbstractIdsForCollectedAbstractSkus();
@@ -244,11 +180,6 @@ class ProductStockPropelDataSetWriter implements DataSetWriterInterface
         return $storeIds;
     }
 
-    /**
-     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
-     *
-     * @return void
-     */
     protected function updateAvailability(DataSetInterface $dataSet): void
     {
         foreach ($this->storeFacade->getAllStores() as $storeTransfer) {
@@ -256,12 +187,6 @@ class ProductStockPropelDataSetWriter implements DataSetWriterInterface
         }
     }
 
-    /**
-     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     *
-     * @return void
-     */
     protected function updateAvailabilityForStore(DataSetInterface $dataSet, StoreTransfer $storeTransfer): void
     {
         $concreteSku = $dataSet[static::COLUMN_CONCRETE_SKU];
@@ -281,12 +206,6 @@ class ProductStockPropelDataSetWriter implements DataSetWriterInterface
         $this->updateAbstractAvailabilityQuantity($availabilityAbstractEntity, $idStore);
     }
 
-    /**
-     * @param string $concreteSku
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     *
-     * @return \Spryker\DecimalObject\Decimal
-     */
     protected function getProductAvailabilityForStore(string $concreteSku, StoreTransfer $storeTransfer): Decimal
     {
         $physicalItems = $this->calculateProductStockForSkuAndStore($concreteSku, $storeTransfer);
@@ -296,12 +215,6 @@ class ProductStockPropelDataSetWriter implements DataSetWriterInterface
         return $stockProductQuantity->greatherThanOrEquals(0) ? $stockProductQuantity : new Decimal(0);
     }
 
-    /**
-     * @param string $concreteSku
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     *
-     * @return \Spryker\DecimalObject\Decimal
-     */
     protected function calculateProductStockForSkuAndStore(string $concreteSku, StoreTransfer $storeTransfer): Decimal
     {
         $idProductConcrete = $this->productRepository->getIdProductByConcreteSku($concreteSku);
@@ -323,8 +236,6 @@ class ProductStockPropelDataSetWriter implements DataSetWriterInterface
     /**
      * @param int $idProductConcrete
      * @param array<string> $stockNames
-     *
-     * @return \Spryker\DecimalObject\Decimal
      */
     protected function getStockProductQuantityByIdProductAndStockNames(
         int $idProductConcrete,
@@ -342,12 +253,6 @@ class ProductStockPropelDataSetWriter implements DataSetWriterInterface
         return new Decimal($stockProductTotalQuantity ?? 0);
     }
 
-    /**
-     * @param string $sku
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     *
-     * @return \Spryker\DecimalObject\Decimal
-     */
     protected function getReservationQuantityForStore(string $sku, StoreTransfer $storeTransfer): Decimal
     {
         $idStore = $this->getIdStore($storeTransfer);
@@ -372,12 +277,6 @@ class ProductStockPropelDataSetWriter implements DataSetWriterInterface
         return $reservationQuantity;
     }
 
-    /**
-     * @param string $sku
-     * @param \Generated\Shared\Transfer\StoreTransfer $currentStoreTransfer
-     *
-     * @return \Spryker\DecimalObject\Decimal
-     */
     protected function getReservationsFromOtherStores(string $sku, StoreTransfer $currentStoreTransfer): Decimal
     {
         $reservationQuantity = new Decimal(0);
@@ -396,11 +295,6 @@ class ProductStockPropelDataSetWriter implements DataSetWriterInterface
         return $reservationQuantity;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     *
-     * @return int
-     */
     protected function getIdStore(StoreTransfer $storeTransfer): int
     {
         if (!$storeTransfer->getIdStore()) {
@@ -415,8 +309,6 @@ class ProductStockPropelDataSetWriter implements DataSetWriterInterface
 
     /**
      * @param array<string, mixed> $availabilityData
-     *
-     * @return void
      */
     protected function persistAvailabilityData(array $availabilityData): void
     {
@@ -432,12 +324,6 @@ class ProductStockPropelDataSetWriter implements DataSetWriterInterface
         $spyAvailabilityEntity->save();
     }
 
-    /**
-     * @param string $abstractSku
-     * @param int $idStore
-     *
-     * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityAbstract
-     */
     protected function getAvailabilityAbstract(string $abstractSku, int $idStore): SpyAvailabilityAbstract
     {
         if (!empty(static::$availabilityAbstractEntitiesIndexedByAbstractSkuAndIdStore[$abstractSku][$idStore])) {
@@ -458,12 +344,6 @@ class ProductStockPropelDataSetWriter implements DataSetWriterInterface
         return $availabilityAbstractEntity;
     }
 
-    /**
-     * @param string $abstractSku
-     * @param int $idStore
-     *
-     * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityAbstract
-     */
     protected function createAvailabilityAbstract(string $abstractSku, int $idStore): SpyAvailabilityAbstract
     {
         $availableAbstractEntity = (new SpyAvailabilityAbstract())
@@ -475,12 +355,6 @@ class ProductStockPropelDataSetWriter implements DataSetWriterInterface
         return $availableAbstractEntity;
     }
 
-    /**
-     * @param \Orm\Zed\Availability\Persistence\SpyAvailabilityAbstract $availabilityAbstractEntity
-     * @param int $idStore
-     *
-     * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityAbstract
-     */
     protected function updateAbstractAvailabilityQuantity(
         SpyAvailabilityAbstract $availabilityAbstractEntity,
         int $idStore,
@@ -493,7 +367,7 @@ class ProductStockPropelDataSetWriter implements DataSetWriterInterface
             ->findOne();
 
         $availabilityAbstractEntity->setFkStore($idStore);
-        $availabilityAbstractEntity->setQuantity($sumQuantity);
+        $availabilityAbstractEntity->setQuantity((string)$sumQuantity);
         $availabilityAbstractEntity->save();
 
         return $availabilityAbstractEntity;

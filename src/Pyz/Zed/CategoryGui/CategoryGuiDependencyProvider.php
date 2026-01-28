@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace Pyz\Zed\CategoryGui;
 
 use Spryker\Zed\CategoryGui\CategoryGuiDependencyProvider as SpykerCategoryGuiDependencyProvider;
@@ -21,9 +23,6 @@ use Spryker\Zed\StoreGui\Communication\Plugin\Form\StoreRelationDropdownFormType
  */
 class CategoryGuiDependencyProvider extends SpykerCategoryGuiDependencyProvider
 {
-    /**
-     * @return \Spryker\Zed\Kernel\Communication\Form\FormTypeInterface
-     */
     protected function getStoreRelationFormTypePlugin(): FormTypeInterface
     {
         return new StoreRelationDropdownFormTypePlugin();

@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace PyzTest\Glue\Customer;
 
 use Generated\Shared\Transfer\CustomerTransfer;
@@ -34,8 +36,6 @@ class CustomerApiTester extends ApiEndToEndTester
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      * @param array<string> $restCustomersAttributesTransferData
-     *
-     * @return void
      */
     public function assertCustomersAttributes(
         CustomerTransfer $customerTransfer,

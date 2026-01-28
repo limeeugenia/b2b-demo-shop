@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace PyzTest\Glue\Auth\RestApi;
 
 use Generated\Shared\Transfer\CustomerTransfer;
@@ -15,21 +17,10 @@ use SprykerTest\Shared\Testify\Fixtures\FixturesContainerInterface;
 
 class RefreshTokensRestApiFixtures implements FixturesBuilderInterface, FixturesContainerInterface
 {
-    /**
-     * @var string
-     */
     protected const TEST_PASSWORD = 'change123';
 
-    /**
-     * @var \Generated\Shared\Transfer\OauthResponseTransfer
-     */
     protected OauthResponseTransfer $oauthResponseTransfer;
 
-    /**
-     * @param \PyzTest\Glue\Auth\AuthRestApiTester $I
-     *
-     * @return \SprykerTest\Shared\Testify\Fixtures\FixturesContainerInterface
-     */
     public function buildFixtures(AuthRestApiTester $I): FixturesContainerInterface
     {
         $this->oauthResponseTransfer = $this->createOauthResponseTransfer($I);
@@ -37,19 +28,11 @@ class RefreshTokensRestApiFixtures implements FixturesBuilderInterface, Fixtures
         return $this;
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\OauthResponseTransfer
-     */
     public function getOauthResponseTransfer(): OauthResponseTransfer
     {
         return $this->oauthResponseTransfer;
     }
 
-    /**
-     * @param \PyzTest\Glue\Auth\AuthRestApiTester $I
-     *
-     * @return \Generated\Shared\Transfer\OauthResponseTransfer
-     */
     protected function createOauthResponseTransfer(AuthRestApiTester $I): OauthResponseTransfer
     {
         $customerTransfer = $this->createCustomerTransfer($I);
@@ -58,11 +41,6 @@ class RefreshTokensRestApiFixtures implements FixturesBuilderInterface, Fixtures
         return $I->haveAuthorizationToGlue($customerTransfer);
     }
 
-    /**
-     * @param \PyzTest\Glue\Auth\AuthRestApiTester $I
-     *
-     * @return \Generated\Shared\Transfer\CustomerTransfer
-     */
     protected function createCustomerTransfer(AuthRestApiTester $I): CustomerTransfer
     {
         return $I->haveCustomer([

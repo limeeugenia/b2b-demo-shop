@@ -5,11 +5,16 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace Pyz\Zed\Discount;
 
 use Spryker\Zed\CategoryDiscountConnector\Communication\Plugin\Discount\CategoryDecisionRulePlugin;
 use Spryker\Zed\CategoryDiscountConnector\Communication\Plugin\Discount\CategoryDiscountableItemCollectorPlugin;
+use Spryker\Zed\CustomerDiscountConnector\Communication\Plugin\Discount\CustomerMaximumOrderAmountDecisionRulePlugin;
+use Spryker\Zed\CustomerDiscountConnector\Communication\Plugin\Discount\CustomerReferenceDecisionRulePlugin;
 use Spryker\Zed\CustomerGroupDiscountConnector\Communication\Plugin\DecisionRule\CustomerGroupDecisionRulePlugin;
+use Spryker\Zed\Discount\Communication\Plugin\Discount\DeleteDiscountVoucherPoolDiscountPostUpdatePlugin;
 use Spryker\Zed\Discount\DiscountDependencyProvider as SprykerDiscountDependencyProvider;
 use Spryker\Zed\DiscountPromotion\Communication\Plugin\Discount\DiscountPromotionCalculationFormDataExpanderPlugin;
 use Spryker\Zed\DiscountPromotion\Communication\Plugin\Discount\DiscountPromotionCalculationFormExpanderPlugin;
@@ -55,6 +60,8 @@ class DiscountDependencyProvider extends SprykerDiscountDependencyProvider
             new ProductAttributeDecisionRulePlugin(),
             new CategoryDecisionRulePlugin(),
             new CustomerOrderCountDecisionRulePlugin(),
+            new CustomerReferenceDecisionRulePlugin(),
+            new CustomerMaximumOrderAmountDecisionRulePlugin(),
         ]);
     }
 
@@ -131,6 +138,7 @@ class DiscountDependencyProvider extends SprykerDiscountDependencyProvider
         return [
             new DiscountPromotionDiscountPostUpdatePlugin(),
             new DiscountPromotionCleanerPostUpdatePlugin(),
+            new DeleteDiscountVoucherPoolDiscountPostUpdatePlugin(),
         ];
     }
 
@@ -184,17 +192,11 @@ class DiscountDependencyProvider extends SprykerDiscountDependencyProvider
         ];
     }
 
-    /**
-     * @return \Spryker\Zed\Kernel\Communication\Form\FormTypeInterface
-     */
     protected function getStoreRelationFormTypePlugin(): FormTypeInterface
     {
         return new StoreRelationToggleFormTypePlugin();
     }
 
-    /**
-     * @return \Spryker\Zed\Kernel\Communication\Form\FormTypeInterface
-     */
     protected function getMoneyCollectionFormTypePlugin(): FormTypeInterface
     {
         return new MoneyCollectionFormTypePlugin();

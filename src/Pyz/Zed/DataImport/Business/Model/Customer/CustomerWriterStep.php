@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace Pyz\Zed\DataImport\Business\Model\Customer;
 
 use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
@@ -16,16 +18,8 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 
 class CustomerWriterStep implements DataImportStepInterface
 {
-    /**
-     * @var string
-     */
     public const COL_CUSTOMER_REFERENCE = 'customer_reference';
 
-    /**
-     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
-     *
-     * @return void
-     */
     public function execute(DataSetInterface $dataSet): void
     {
         $customerEntity = SpyCustomerQuery::create()
@@ -40,18 +34,18 @@ class CustomerWriterStep implements DataImportStepInterface
             ->findOneOrCreate();
 
         $currentId = $this->getCurrentId($dataSet);
-        if ($currentId > $sequenceNumberEntity->getCurrentId()) {
-            $sequenceNumberEntity->setCurrentId($currentId);
-            $sequenceNumberEntity->save();
+        if ($currentId <= $sequenceNumberEntity->getCurrentId()) {
+            return;
         }
+
+        $sequenceNumberEntity->setCurrentId($currentId);
+        $sequenceNumberEntity->save();
     }
 
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
      * @throws \Pyz\Zed\DataImport\Business\Exception\InvalidDataException
-     *
-     * @return int
      */
     protected function getCurrentId(DataSetInterface $dataSet): int
     {

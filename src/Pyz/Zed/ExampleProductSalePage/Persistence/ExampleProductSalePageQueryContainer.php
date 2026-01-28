@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace Pyz\Zed\ExampleProductSalePage\Persistence;
 
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
@@ -19,24 +21,16 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class ExampleProductSalePageQueryContainer extends AbstractQueryContainer implements ExampleProductSalePageQueryContainerInterface
 {
-    /**
-     * @var string
-     */
     protected const PRICE_TYPE_ORIGINAL = 'ORIGINAL';
 
-    /**
-     * @var string
-     */
     protected const PRICE_TYPE_DEFAULT = 'DEFAULT';
 
     /**
      * @api
      *
      * @param string $labelName
-     *
-     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery
      */
-    public function queryProductLabelByName($labelName): SpyProductLabelQuery
+    public function queryProductLabelByName(string $labelName): SpyProductLabelQuery
     {
         return $this->getFactory()
             ->getProductLabelQueryContainer()
@@ -47,10 +41,8 @@ class ExampleProductSalePageQueryContainer extends AbstractQueryContainer implem
      * @api
      *
      * @param int $idProductLabel
-     *
-     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstractQuery
      */
-    public function queryRelationsBecomingInactive($idProductLabel): SpyProductLabelProductAbstractQuery
+    public function queryRelationsBecomingInactive(int $idProductLabel): SpyProductLabelProductAbstractQuery
     {
         /** @var \Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstractQuery $productLabelProductAbstractQuery */
         $productLabelProductAbstractQuery = $this->getFactory()
@@ -113,10 +105,8 @@ class ExampleProductSalePageQueryContainer extends AbstractQueryContainer implem
      * @api
      *
      * @param int $idProductLabel
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
-    public function queryRelationsBecomingActive($idProductLabel): SpyProductAbstractQuery
+    public function queryRelationsBecomingActive(int $idProductLabel): SpyProductAbstractQuery
     {
         /** @var \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $productAbstractQuery */
         $productAbstractQuery = $this->getFactory()
@@ -168,8 +158,6 @@ class ExampleProductSalePageQueryContainer extends AbstractQueryContainer implem
      * @param \Propel\Runtime\ActiveQuery\Criteria $criteria
      * @param string $clause
      * @param \Propel\Runtime\Map\ColumnMap|string $column
-     *
-     * @return \Propel\Runtime\ActiveQuery\Criterion\BasicModelCriterion
      */
     protected function getBasicModelCriterion(Criteria $criteria, string $clause, $column): BasicModelCriterion
     {
