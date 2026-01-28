@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace Pyz\Yves\SessionAgentValidation;
 
 use Spryker\Yves\SessionRedis\Plugin\SessionAgentValidation\SessionRedisSessionAgentSaverPlugin;
@@ -15,17 +17,11 @@ use SprykerShop\Yves\SessionAgentValidationExtension\Dependency\Plugin\SessionAg
 
 class SessionAgentValidationDependencyProvider extends SprykerSessionAgentValidationDependencyProvider
 {
-    /**
-     * @return \SprykerShop\Yves\SessionAgentValidationExtension\Dependency\Plugin\SessionAgentSaverPluginInterface
-     */
     protected function getSessionAgentSaverPlugin(): SessionAgentSaverPluginInterface
     {
         return new SessionRedisSessionAgentSaverPlugin();
     }
 
-    /**
-     * @return \SprykerShop\Yves\SessionAgentValidationExtension\Dependency\Plugin\SessionAgentValidatorPluginInterface
-     */
     protected function getSessionAgentValidatorPlugin(): SessionAgentValidatorPluginInterface
     {
         return new SessionRedisSessionAgentValidatorPlugin();

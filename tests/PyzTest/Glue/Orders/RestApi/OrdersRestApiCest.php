@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace PyzTest\Glue\Orders\RestApi;
 
 use Codeception\Util\HttpCode;
@@ -25,16 +27,8 @@ use Spryker\Glue\OrdersRestApi\OrdersRestApiConfig;
  */
 class OrdersRestApiCest
 {
-    /**
-     * @var \PyzTest\Glue\Orders\RestApi\OrdersRestApiFixtures
-     */
     protected OrdersRestApiFixtures $fixtures;
 
-    /**
-     * @param \PyzTest\Glue\Orders\OrdersApiTester $I
-     *
-     * @return void
-     */
     public function loadFixtures(OrdersApiTester $I): void
     {
         /** @var \PyzTest\Glue\Orders\RestApi\OrdersRestApiFixtures $fixtures */
@@ -46,8 +40,6 @@ class OrdersRestApiCest
      * @depends loadFixtures
      *
      * @param \PyzTest\Glue\Orders\OrdersApiTester $I
-     *
-     * @return void
      */
     public function requestGetEmptyListOfOrders(OrdersApiTester $I): void
     {
@@ -75,11 +67,6 @@ class OrdersRestApiCest
             );
     }
 
-    /**
-     * @param \PyzTest\Glue\Orders\OrdersApiTester $I
-     *
-     * @return void
-     */
     public function requestGetListOfOrdersWithSingleOrder(OrdersApiTester $I): void
     {
         // Arrange
@@ -114,11 +101,6 @@ class OrdersRestApiCest
             ->seeResponseDataContainsResourceCollectionOfTypeWithSizeOf('orders', 1);
     }
 
-    /**
-     * @param \PyzTest\Glue\Orders\OrdersApiTester $I
-     *
-     * @return void
-     */
     public function requestGetOrderDetails(OrdersApiTester $I): void
     {
         // Arrange
@@ -150,11 +132,6 @@ class OrdersRestApiCest
             ->seeSingleResourceIdEqualTo($orderReference);
     }
 
-    /**
-     * @param \PyzTest\Glue\Orders\OrdersApiTester $I
-     *
-     * @return void
-     */
     public function requestGetCustomerOrder(OrdersApiTester $I): void
     {
         // Arrange
@@ -179,11 +156,6 @@ class OrdersRestApiCest
         $I->seeResponseMatchesOpenApiSchema();
     }
 
-    /**
-     * @param \PyzTest\Glue\Orders\OrdersApiTester $I
-     *
-     * @return void
-     */
     public function requestGetCustomerOrderAuthorizationError(OrdersApiTester $I): void
     {
         // Arrange
@@ -207,11 +179,6 @@ class OrdersRestApiCest
         $I->seeResponseMatchesOpenApiSchema();
     }
 
-    /**
-     * @param \PyzTest\Glue\Orders\OrdersApiTester $I
-     *
-     * @return void
-     */
     public function requestGetListOfOrderWithoutAuthorizationToken(OrdersApiTester $I): void
     {
         // Act
@@ -225,11 +192,6 @@ class OrdersRestApiCest
         $I->seeResponseMatchesOpenApiSchema();
     }
 
-    /**
-     * @param \PyzTest\Glue\Orders\OrdersApiTester $I
-     *
-     * @return void
-     */
     public function requestGetOrderDetailsWithoutAuthorizationToken(OrdersApiTester $I): void
     {
         // Arrange
@@ -252,11 +214,6 @@ class OrdersRestApiCest
         $I->seeResponseMatchesOpenApiSchema();
     }
 
-    /**
-     * @param \PyzTest\Glue\Orders\OrdersApiTester $I
-     *
-     * @return void
-     */
     public function requestGetOrderDetailsWithIncorrectOrderReference(OrdersApiTester $I): void
     {
         // Arrange
@@ -279,12 +236,6 @@ class OrdersRestApiCest
         $I->seeResponseMatchesOpenApiSchema();
     }
 
-    /**
-     * @param \PyzTest\Glue\Orders\OrdersApiTester $I
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return void
-     */
     protected function authorizeCustomer(OrdersApiTester $I, CustomerTransfer $customerTransfer): void
     {
         $token = $I->haveAuthorizationToGlue($customerTransfer)->getAccessToken();

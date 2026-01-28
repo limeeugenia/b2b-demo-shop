@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace PyzTest\Zed\MessageBroker\MessageHandlers\SearchHttp\Communication;
 
 use Codeception\Test\Unit;
@@ -24,37 +26,25 @@ use PyzTest\Zed\MessageBroker\SearchHttpCommunicationTester;
  */
 class SearchEndpointMessageTest extends Unit
 {
-    /**
-     * @var \PyzTest\Zed\MessageBroker\SearchHttpCommunicationTester
-     */
     protected SearchHttpCommunicationTester $tester;
 
-    /**
-     * @return void
-     */
     public function testSearchEndpointAvailableMessageIsSuccessfullyHandled(): void
     {
         // Arrange
-        $storeTransfer = $this->tester->getAllowedStore();
-        $this->tester->removeHttpConfigForStore($storeTransfer);
+        $this->tester->removeHttpConfig();
         $searchEndpointAvailableTransfer = $this->tester->buildSearchEndpointAvailableTransfer();
 
         // Act
         $this->tester->handleSearchMessage($searchEndpointAvailableTransfer);
 
         // Assert
-        $this->tester->assertSearchHttpConfigExistsForStore($storeTransfer);
+        $this->tester->assertSearchHttpConfigExistsForStore();
     }
 
-    /**
-     * @return void
-     */
     public function testSearchEndpointRemovedMessageIsSuccessfullyHandled(): void
     {
         // Arrange
-        $storeTransfer = $this->tester->getAllowedStore();
-
-        $this->tester->removeHttpConfigForStore($storeTransfer);
+        $this->tester->removeHttpConfig();
         $this->tester->handleSearchMessage(
             $this->tester->buildSearchEndpointAvailableTransfer(),
         );
@@ -65,6 +55,6 @@ class SearchEndpointMessageTest extends Unit
         $this->tester->handleSearchMessage($searchEndpointRemovedTransfer);
 
         // Assert
-        $this->tester->assertSearchHttpConfigIsRemovedForStore($storeTransfer);
+        $this->tester->assertSearchHttpConfigIsRemoved();
     }
 }

@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace PyzTest\Glue\AlternativeProducts;
 
 use Spryker\Glue\AlternativeProductsRestApi\AlternativeProductsRestApiConfig;
@@ -34,8 +36,6 @@ class AlternativeProductsRestApiTester extends ApiEndToEndTester
 
     /**
      * @param array<string> $includes
-     *
-     * @return string
      */
     public function formatQueryInclude(array $includes = []): string
     {
@@ -49,8 +49,6 @@ class AlternativeProductsRestApiTester extends ApiEndToEndTester
     /**
      * @param string $productAbstractSku
      * @param array<string> $includes
-     *
-     * @return string
      */
     public function buildProductAbstractUrl(string $productAbstractSku, array $includes = []): string
     {
@@ -66,8 +64,6 @@ class AlternativeProductsRestApiTester extends ApiEndToEndTester
     /**
      * @param string $productConcreteSku
      * @param array<string> $includes
-     *
-     * @return string
      */
     public function buildProductConcreteUrl(string $productConcreteSku, array $includes = []): string
     {
@@ -83,8 +79,6 @@ class AlternativeProductsRestApiTester extends ApiEndToEndTester
     /**
      * @param string $productConcreteSku
      * @param array<string> $includes
-     *
-     * @return string
      */
     public function buildAbstractAlternativeProductsUrl(string $productConcreteSku, array $includes = []): string
     {
@@ -101,8 +95,6 @@ class AlternativeProductsRestApiTester extends ApiEndToEndTester
     /**
      * @param string $productConcreteSku
      * @param array<string> $includes
-     *
-     * @return string
      */
     public function buildConcreteAlternativeProductsUrl(string $productConcreteSku, array $includes = []): string
     {

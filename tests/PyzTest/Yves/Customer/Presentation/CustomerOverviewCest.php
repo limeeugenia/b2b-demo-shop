@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace PyzTest\Yves\Customer\Presentation;
 
 use Codeception\Scenario;
@@ -27,23 +29,12 @@ use PyzTest\Yves\Customer\PageObject\CustomerProfilePage;
  */
 class CustomerOverviewCest
 {
-    /**
-     * @param \PyzTest\Yves\Customer\CustomerPresentationTester $i
-     *
-     * @return void
-     */
     public function _before(CustomerPresentationTester $i): void
     {
         $i->amYves();
     }
 
-    /**
-     * @param \PyzTest\Yves\Customer\CustomerPresentationTester $i
-     * @param \Codeception\Scenario $scenario
-     *
-     * @return void
-     */
-    public function testICanOpenOverviewPage(CustomerPresentationTester $i, Scenario $scenario): void
+    public function testICanOpenOverviewPage(CustomerPresentationTester $i, Scenario $scenario): void // phpcs:ignore SlevomatCodingStandard.Functions.UnusedParameter
     {
         $i->amLoggedInCustomer();
         $i->amOnPage(CustomerOverviewPage::URL);
@@ -54,62 +45,38 @@ class CustomerOverviewCest
         $i->see(CustomerOverviewPage::BOX_HEADLINE_NEWSLETTER, 'h4');
     }
 
-    /**
-     * @param \PyzTest\Yves\Customer\CustomerPresentationTester $i
-     * @param \Codeception\Scenario $scenario
-     *
-     * @return void
-     */
-    public function testICanGoFromOverviewToProfilePage(CustomerPresentationTester $i, Scenario $scenario): void
+    public function testICanGoFromOverviewToProfilePage(CustomerPresentationTester $i, Scenario $scenario): void // phpcs:ignore SlevomatCodingStandard.Functions.UnusedParameter
     {
         $i->amLoggedInCustomer();
         $i->amOnPage(CustomerOverviewPage::URL);
-        $i->waitForElement(CustomerOverviewPage::LINK_TO_PROFILE_PAGE, 30);
-        $i->click(CustomerOverviewPage::LINK_TO_PROFILE_PAGE);
+        $i->waitForElement($i->getLinkToProfilePage(), 30);
+        $i->click($i->getLinkToProfilePage());
         $i->amOnPage(CustomerProfilePage::URL);
     }
 
-    /**
-     * @param \PyzTest\Yves\Customer\CustomerPresentationTester $i
-     * @param \Codeception\Scenario $scenario
-     *
-     * @return void
-     */
-    public function testICanGoFromOverviewToAddressesPage(CustomerPresentationTester $i, Scenario $scenario): void
+    public function testICanGoFromOverviewToAddressesPage(CustomerPresentationTester $i, Scenario $scenario): void // phpcs:ignore SlevomatCodingStandard.Functions.UnusedParameter
     {
         $i->amLoggedInCustomer();
         $i->amOnPage(CustomerOverviewPage::URL);
-        $i->waitForElement(CustomerOverviewPage::LINK_TO_ADDRESSES_PAGE, 30);
-        $i->click(CustomerOverviewPage::LINK_TO_ADDRESSES_PAGE);
+        $i->waitForElement($i->getLinkToAddressesPage(), 30);
+        $i->click($i->getLinkToAddressesPage());
         $i->amOnPage(CustomerAddressesPage::URL);
     }
 
-    /**
-     * @param \PyzTest\Yves\Customer\CustomerPresentationTester $i
-     * @param \Codeception\Scenario $scenario
-     *
-     * @return void
-     */
-    public function testICanGoFromOverviewToOrdersPage(CustomerPresentationTester $i, Scenario $scenario): void
+    public function testICanGoFromOverviewToOrdersPage(CustomerPresentationTester $i, Scenario $scenario): void // phpcs:ignore SlevomatCodingStandard.Functions.UnusedParameter
     {
         $i->amLoggedInCustomer();
         $i->amOnPage(CustomerOverviewPage::URL);
-        $i->click(CustomerOverviewPage::LINK_TO_ORDERS_PAGE);
+        $i->click($i->getLinkToOrdersPage());
         $i->amOnPage(CustomerOrdersPage::URL);
     }
 
-    /**
-     * @param \PyzTest\Yves\Customer\CustomerPresentationTester $i
-     * @param \Codeception\Scenario $scenario
-     *
-     * @return void
-     */
-    public function testICanGoFromOverviewToNewsletterPage(CustomerPresentationTester $i, Scenario $scenario): void
+    public function testICanGoFromOverviewToNewsletterPage(CustomerPresentationTester $i, Scenario $scenario): void // phpcs:ignore SlevomatCodingStandard.Functions.UnusedParameter
     {
         $i->amLoggedInCustomer();
         $i->amOnPage(CustomerOverviewPage::URL);
-        $i->waitForElement(CustomerOverviewPage::LINK_TO_NEWSLETTER_PAGE, 30);
-        $i->click(CustomerOverviewPage::LINK_TO_NEWSLETTER_PAGE);
+        $i->waitForElement($i->getLinkToNewsletterPage(), 30);
+        $i->click($i->getLinkToNewsletterPage());
         $i->amOnPage(CustomerNewsletterPage::URL);
     }
 }

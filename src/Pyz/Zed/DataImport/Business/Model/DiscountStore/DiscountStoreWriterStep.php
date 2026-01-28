@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace Pyz\Zed\DataImport\Business\Model\DiscountStore;
 
 use Orm\Zed\Discount\Persistence\SpyDiscountQuery;
@@ -15,36 +17,22 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 
 class DiscountStoreWriterStep implements DataImportStepInterface
 {
-    /**
-     * @var int
-     */
     public const BULK_SIZE = 100;
 
-    /**
-     * @var string
-     */
     public const KEY_DISCOUNT_KEY = 'discount_key';
 
-    /**
-     * @var string
-     */
     public const KEY_STORE_NAME = 'store_name';
 
     /**
      * @var array<int> Keys are discount keys, values are discount IDs.
      */
-    protected static $idDiscountBuffer = [];
+    protected static array $idDiscountBuffer = [];
 
     /**
      * @var array<int> Keys are store names, values are store ids.
      */
-    protected static $idStoreBuffer = [];
+    protected static array $idStoreBuffer = [];
 
-    /**
-     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
-     *
-     * @return void
-     */
     public function execute(DataSetInterface $dataSet): void
     {
         (new SpyDiscountStoreQuery())
@@ -54,12 +42,7 @@ class DiscountStoreWriterStep implements DataImportStepInterface
             ->save();
     }
 
-    /**
-     * @param string $discountKey
-     *
-     * @return int
-     */
-    protected function getIdDiscountByKey($discountKey): int
+    protected function getIdDiscountByKey(string $discountKey): int
     {
         if (!isset(static::$idDiscountBuffer[$discountKey])) {
             static::$idDiscountBuffer[$discountKey] =
@@ -69,12 +52,7 @@ class DiscountStoreWriterStep implements DataImportStepInterface
         return static::$idDiscountBuffer[$discountKey];
     }
 
-    /**
-     * @param string $storeName
-     *
-     * @return int
-     */
-    protected function getIdStoreByName($storeName): int
+    protected function getIdStoreByName(string $storeName): int
     {
         if (!isset(static::$idStoreBuffer[$storeName])) {
             static::$idStoreBuffer[$storeName] =

@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace Pyz\Zed\PriceProductStorage;
 
 use Spryker\Shared\PriceProductStorage\PriceProductStorageConfig as SprykerSharedPriceProductStorageConfig;
@@ -12,17 +14,11 @@ use Spryker\Zed\PriceProductStorage\PriceProductStorageConfig as SprykerPricePro
 
 class PriceProductStorageConfig extends SprykerPriceProductStorageConfig
 {
-    /**
-     * @return string|null
-     */
     public function getPriceProductAbstractEventQueueName(): ?string
     {
         return SprykerSharedPriceProductStorageConfig::PUBLISH_PRICE_PRODUCT_ABSTRACT;
     }
 
-    /**
-     * @return string|null
-     */
     public function getPriceProductConcreteEventQueueName(): ?string
     {
         return SprykerSharedPriceProductStorageConfig::PUBLISH_PRICE_PRODUCT_CONCRETE;

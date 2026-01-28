@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace Pyz\Zed\DataImport\Business\CombinedProduct\ProductConcrete\Writer;
 
 use Pyz\Zed\DataImport\Business\CombinedProduct\ProductConcrete\CombinedProductConcreteHydratorStep;
@@ -15,9 +17,6 @@ class CombinedProductConcretePropelDataSetWriter extends ProductConcretePropelDa
 {
     protected const COLUMN_ABSTRACT_SKU = CombinedProductConcreteHydratorStep::COLUMN_ABSTRACT_SKU;
 
-    /**
-     * @param \Pyz\Zed\DataImport\Business\Model\Product\Repository\ProductRepository $productRepository
-     */
     public function __construct(ProductRepository $productRepository)
     {
         parent::__construct($productRepository);

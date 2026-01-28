@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace Pyz\Zed\MerchantSearch;
 
 use Pyz\Zed\Synchronization\SynchronizationConfig;
@@ -12,9 +14,6 @@ use Spryker\Zed\MerchantSearch\MerchantSearchConfig as SprykerMerchantSearchConf
 
 class MerchantSearchConfig extends SprykerMerchantSearchConfig
 {
-    /**
-     * @return string|null
-     */
     public function getMerchantSearchSynchronizationPoolName(): ?string
     {
         return SynchronizationConfig::DEFAULT_SYNCHRONIZATION_POOL_NAME;

@@ -5,15 +5,14 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace Pyz\Yves\QuickOrderPage;
 
 use SprykerShop\Yves\QuickOrderPage\QuickOrderPageConfig as SprykerQuickOrderPageConfig;
 
 class QuickOrderPageConfig extends SprykerQuickOrderPageConfig
 {
-    /**
-     * @var array<string>
-     */
     protected const ALLOWED_CSV_FILE_MIME_TYPES = [
         'text/csv',
         'text/plain',

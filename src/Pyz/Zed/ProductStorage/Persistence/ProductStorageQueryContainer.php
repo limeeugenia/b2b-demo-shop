@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace Pyz\Zed\ProductStorage\Persistence;
 
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
@@ -23,8 +25,6 @@ class ProductStorageQueryContainer extends SprykerProductStorageQueryContainer
      * @api
      *
      * @param array<int> $productAbstractIds
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery
      */
     public function queryProductAbstractByIds(array $productAbstractIds): SpyProductAbstractLocalizedAttributesQuery
     {
@@ -56,8 +56,6 @@ class ProductStorageQueryContainer extends SprykerProductStorageQueryContainer
      * @api
      *
      * @param int $idProductConcrete
-     *
-     * @return \Orm\Zed\ProductBundle\Persistence\SpyProductBundleQuery
      */
     public function queryBundledProductIdsByProductConcreteId(int $idProductConcrete): SpyProductBundleQuery
     {

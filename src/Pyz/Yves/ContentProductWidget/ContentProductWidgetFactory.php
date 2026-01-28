@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace Pyz\Yves\ContentProductWidget;
 
 use Pyz\Yves\ContentProductWidget\Twig\ContentProductAbstractListTwigFunctionProvider;
@@ -14,12 +16,6 @@ use Twig\Environment;
 
 class ContentProductWidgetFactory extends SprykerShopContentProductWidgetFactory
 {
-    /**
-     * @param \Twig\Environment $twig
-     * @param string $localeName
-     *
-     * @return \Spryker\Shared\Twig\TwigFunctionProvider
-     */
     public function createContentProductAbstractListTwigFunctionProvider(Environment $twig, string $localeName): TwigFunctionProvider
     {
         return new ContentProductAbstractListTwigFunctionProvider(

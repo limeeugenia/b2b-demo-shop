@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace PyzTest\Glue\CustomerAccess\RestApi;
 
 use Codeception\Util\HttpCode;
@@ -23,11 +25,6 @@ use PyzTest\Glue\CustomerAccess\CustomerAccessApiTester;
  */
 class CustomerAccessRestApiCest
 {
-    /**
-     * @param \PyzTest\Glue\CustomerAccess\CustomerAccessApiTester $I
-     *
-     * @return void
-     */
     public function requestCustomerAccess(CustomerAccessApiTester $I): void
     {
         // Act

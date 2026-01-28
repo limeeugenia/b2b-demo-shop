@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace Pyz\Zed\DataImport\Business\Model\ProductConcrete;
 
 use Pyz\Zed\DataImport\Business\Exception\InvalidSkuProductException;
@@ -14,29 +16,20 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 
 class ProductConcreteCheckExistenceStep implements DataImportStepInterface
 {
-    /**
-     * @var string
-     */
     public const KEY_CONCRETE_SKU = 'concrete_sku';
 
-    /**
-     * @var \Pyz\Zed\DataImport\Business\Model\Product\Repository\ProductRepositoryInterface
-     */
-    protected $productRepository;
+    protected ProductRepositoryInterface $productRepository;
 
     /**
      * @var array<string> Keys are abstract product sku values.
      */
-    protected $skuProductAbstractList = [];
+    protected array $skuProductAbstractList = [];
 
     /**
      * @var array<string, true> Keys are concrete product sku values. Values are set to "true" when concrete product added.
      */
-    protected $resolved = [];
+    protected array $resolved = [];
 
-    /**
-     * @param \Pyz\Zed\DataImport\Business\Model\Product\Repository\ProductRepositoryInterface $productRepository
-     */
     public function __construct(ProductRepositoryInterface $productRepository)
     {
         $this->productRepository = $productRepository;
@@ -44,11 +37,6 @@ class ProductConcreteCheckExistenceStep implements DataImportStepInterface
         $this->skuProductAbstractList = array_flip($productRepository->getSkuProductAbstractList());
     }
 
-    /**
-     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
-     *
-     * @return void
-     */
     public function execute(DataSetInterface $dataSet): void
     {
         $this->checkSkuProductAlreadyExists($dataSet);
@@ -58,8 +46,6 @@ class ProductConcreteCheckExistenceStep implements DataImportStepInterface
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
      * @throws \Pyz\Zed\DataImport\Business\Exception\InvalidSkuProductException
-     *
-     * @return void
      */
     protected function checkSkuProductAlreadyExists(DataSetInterface $dataSet): void
     {

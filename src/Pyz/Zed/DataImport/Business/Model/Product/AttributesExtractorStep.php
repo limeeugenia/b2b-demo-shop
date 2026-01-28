@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace Pyz\Zed\DataImport\Business\Model\Product;
 
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
@@ -12,16 +14,8 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 
 class AttributesExtractorStep implements DataImportStepInterface
 {
-    /**
-     * @var string
-     */
     public const KEY_ATTRIBUTES = 'attributes';
 
-    /**
-     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
-     *
-     * @return void
-     */
     public function execute(DataSetInterface $dataSet): void
     {
         $keysToUnset = [];
@@ -50,17 +44,11 @@ class AttributesExtractorStep implements DataImportStepInterface
         $dataSet[static::KEY_ATTRIBUTES] = $attributes;
     }
 
-    /**
-     * @return string
-     */
     protected function getAttributeKeyPrefix(): string
     {
         return 'attribute_key_';
     }
 
-    /**
-     * @return string
-     */
     protected function getAttributeValuePrefix(): string
     {
         return 'value_';

@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace Pyz\Yves\ContentBannerWidget\Twig;
 
 use SprykerShop\Yves\ContentBannerWidget\Twig\ContentBannerTwigFunctionProvider as SprykerShopContentBannerTwigFunctionProvider;
@@ -13,8 +15,6 @@ class ContentBannerTwigFunctionProvider extends SprykerShopContentBannerTwigFunc
 {
     /**
      * @uses \Pyz\Shared\ContentBanner\ContentBannerConfig::WIDGET_TEMPLATE_IDENTIFIER_HOME_PAGE
-     *
-     * @var string
      */
     protected const WIDGET_TEMPLATE_IDENTIFIER_HOME_PAGE = 'home-page';
 

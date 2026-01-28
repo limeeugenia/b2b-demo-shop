@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace Pyz\Glue\DocumentationGeneratorApi;
 
 use Spryker\Glue\DocumentationGeneratorApi\DocumentationGeneratorApiDependencyProvider as SprykerDocumentationGeneratorApiDependencyProvider;
@@ -34,14 +36,8 @@ use Spryker\Glue\GlueStorefrontApiApplicationGlueJsonApiConventionConnector\Plug
 
 class DocumentationGeneratorApiDependencyProvider extends SprykerDocumentationGeneratorApiDependencyProvider
 {
-    /**
-     * @var string
-     */
     protected const GLUE_BACKEND_API_APPLICATION_NAME = 'backend';
 
-    /**
-     * @var string
-     */
     protected const GLUE_STOREFRONT_API_APPLICATION_NAME = 'storefront';
 
     /**
@@ -67,11 +63,6 @@ class DocumentationGeneratorApiDependencyProvider extends SprykerDocumentationGe
         ];
     }
 
-    /**
-     * @param \Spryker\Glue\DocumentationGeneratorApi\Expander\ContextExpanderCollectionInterface $contextExpanderCollection
-     *
-     * @return \Spryker\Glue\DocumentationGeneratorApi\Expander\ContextExpanderCollectionInterface
-     */
     protected function getContextExpanderPlugins(ContextExpanderCollectionInterface $contextExpanderCollection): ContextExpanderCollectionInterface
     {
         $apiApplications = [];
@@ -98,9 +89,6 @@ class DocumentationGeneratorApiDependencyProvider extends SprykerDocumentationGe
         return $contextExpanderCollection;
     }
 
-    /**
-     * @return \Spryker\Glue\DocumentationGeneratorApiExtension\Dependency\Plugin\ContentGeneratorStrategyPluginInterface
-     */
     protected function getContentGeneratorStrategyPlugin(): ContentGeneratorStrategyPluginInterface
     {
         return new DocumentationGeneratorOpenApiContentGeneratorStrategyPlugin();

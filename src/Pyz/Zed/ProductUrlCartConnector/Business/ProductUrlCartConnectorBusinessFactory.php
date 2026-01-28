@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace Pyz\Zed\ProductUrlCartConnector\Business;
 
 use Pyz\Zed\ProductUrlCartConnector\Business\Expander\ProductUrlExpander;
@@ -19,9 +21,6 @@ use Spryker\Zed\Product\Business\ProductFacadeInterface;
  */
 class ProductUrlCartConnectorBusinessFactory extends AbstractBusinessFactory
 {
-    /**
-     * @return \Pyz\Zed\ProductUrlCartConnector\Business\Expander\ProductUrlExpanderInterface
-     */
     public function createProductExpander(): ProductUrlExpanderInterface
     {
         return new ProductUrlExpander(
@@ -30,17 +29,11 @@ class ProductUrlCartConnectorBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    /**
-     * @return \Spryker\Zed\Product\Business\ProductFacadeInterface
-     */
     protected function getProductFacade(): ProductFacadeInterface
     {
         return $this->getProvidedDependency(ProductUrlCartConnectorDependencyProvider::FACADE_PRODUCT);
     }
 
-    /**
-     * @return \Spryker\Zed\Locale\Business\LocaleFacadeInterface
-     */
     protected function getLocaleFacade(): LocaleFacadeInterface
     {
         return $this->getProvidedDependency(ProductUrlCartConnectorDependencyProvider::FACADE_LOCALE);

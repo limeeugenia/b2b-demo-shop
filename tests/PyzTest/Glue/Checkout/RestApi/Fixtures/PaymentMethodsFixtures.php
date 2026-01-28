@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace PyzTest\Glue\Checkout\RestApi\Fixtures;
 
 use Generated\Shared\Transfer\PaymentMethodTransfer;
@@ -26,11 +28,6 @@ use SprykerTest\Shared\Testify\Fixtures\FixturesContainerInterface;
  */
 class PaymentMethodsFixtures implements FixturesBuilderInterface, FixturesContainerInterface
 {
-    /**
-     * @param \PyzTest\Glue\Checkout\CheckoutApiTester $I
-     *
-     * @return \SprykerTest\Shared\Testify\Fixtures\FixturesContainerInterface
-     */
     public function buildFixtures(CheckoutApiTester $I): FixturesContainerInterface
     {
         $paymentProviderTransfer = $I->havePaymentProvider([

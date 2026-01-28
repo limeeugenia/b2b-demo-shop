@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace Pyz\Zed\StoreStorage;
 
 use Pyz\Zed\Synchronization\SynchronizationConfig;
@@ -20,9 +22,6 @@ use Spryker\Zed\StoreStorage\StoreStorageConfig as SprykerStoreStorageConfig;
 
 class StoreStorageConfig extends SprykerStoreStorageConfig
 {
-    /**
-     * @return string|null
-     */
     public function getStoreSynchronizationPoolName(): ?string
     {
         return SynchronizationConfig::DEFAULT_SYNCHRONIZATION_POOL_NAME;

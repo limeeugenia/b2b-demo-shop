@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace PyzTest\Glue\PriceProducts\RestApi;
 
 use Codeception\Util\HttpCode;
@@ -23,16 +25,8 @@ use PyzTest\Glue\PriceProducts\PriceProductsApiTester;
  */
 class PriceProductAbstractRestApiCest
 {
-    /**
-     * @var \PyzTest\Glue\PriceProducts\RestApi\PriceProductsRestApiFixtures
-     */
     protected PriceProductsRestApiFixtures $fixtures;
 
-    /**
-     * @param \PyzTest\Glue\PriceProducts\PriceProductsApiTester $I
-     *
-     * @return void
-     */
     public function loadFixtures(PriceProductsApiTester $I): void
     {
         /** @var \PyzTest\Glue\PriceProducts\RestApi\PriceProductsRestApiFixtures $fixtures */
@@ -45,8 +39,6 @@ class PriceProductAbstractRestApiCest
      * @depends loadFixtures
      *
      * @param \PyzTest\Glue\PriceProducts\PriceProductsApiTester $I
-     *
-     * @return void
      */
     public function requestTheNonExistingProductAbstractPrices(PriceProductsApiTester $I): void
     {
@@ -67,8 +59,6 @@ class PriceProductAbstractRestApiCest
      * @depends loadFixtures
      *
      * @param \PyzTest\Glue\PriceProducts\PriceProductsApiTester $I
-     *
-     * @return void
      */
     public function requestProductAbstractPricesWithoutId(PriceProductsApiTester $I): void
     {
@@ -88,8 +78,6 @@ class PriceProductAbstractRestApiCest
      * @depends loadFixtures
      *
      * @param \PyzTest\Glue\PriceProducts\PriceProductsApiTester $I
-     *
-     * @return void
      */
     public function requestExistingProductAbstractPrices(PriceProductsApiTester $I): void
     {

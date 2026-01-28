@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace Pyz\Zed\Sales;
 
 use Spryker\Zed\Sales\SalesConfig as SprykerSalesConfig;
@@ -43,19 +45,24 @@ class SalesConfig extends SprykerSalesConfig
 
     /**
      * @api
-     *
-     * @return bool
      */
     public function isHydrateOrderHistoryToItems(): bool
     {
         return false;
     }
 
-    /**
-     * @return bool
-     */
     public function isOldDeterminationForOrderItemProcessEnabled(): bool
     {
         return false;
+    }
+
+    public function useUniqueRandomIdOrderReferenceGenerator(): bool
+    {
+        return true;
+    }
+
+    public function getItemHashColumn(): string
+    {
+        return 'OrderItemReference';
     }
 }

@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace PyzTest\Glue\Auth\Helper;
 
 use Codeception\Module;
@@ -26,9 +28,6 @@ class CompanyMailConnectorDependencyHelper extends Module
     use DependencyHelperTrait;
     use LocatorHelperTrait;
 
-    /**
-     * @return void
-     */
     public function haveCompanyMailConnectorToMailDependency(): void
     {
         $mailFacade = $this->getLocator()->mail()->facade();

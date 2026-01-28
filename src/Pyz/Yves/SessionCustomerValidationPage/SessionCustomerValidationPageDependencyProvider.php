@@ -5,8 +5,11 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace Pyz\Yves\SessionCustomerValidationPage;
 
+use Spryker\Client\Customer\Plugin\SessionCustomerValidationPage\StorageInvalidationRecordCustomerSessionValidatorPlugin;
 use Spryker\Yves\SessionRedis\Plugin\SessionCustomerValidationPage\RedisCustomerSessionSaverPlugin;
 use Spryker\Yves\SessionRedis\Plugin\SessionCustomerValidationPage\RedisCustomerSessionValidatorPlugin;
 use SprykerShop\Yves\SessionCustomerValidationPage\SessionCustomerValidationPageDependencyProvider as SprykerSessionCustomerValidationPageDependencyProvider;
@@ -15,19 +18,24 @@ use SprykerShop\Yves\SessionCustomerValidationPageExtension\Dependency\Plugin\Cu
 
 class SessionCustomerValidationPageDependencyProvider extends SprykerSessionCustomerValidationPageDependencyProvider
 {
-    /**
-     * @return \SprykerShop\Yves\SessionCustomerValidationPageExtension\Dependency\Plugin\CustomerSessionSaverPluginInterface
-     */
     protected function getCustomerSessionSaverPlugin(): CustomerSessionSaverPluginInterface
     {
         return new RedisCustomerSessionSaverPlugin();
     }
 
-    /**
-     * @return \SprykerShop\Yves\SessionCustomerValidationPageExtension\Dependency\Plugin\CustomerSessionValidatorPluginInterface
-     */
     protected function getCustomerSessionValidatorPlugin(): CustomerSessionValidatorPluginInterface
     {
         return new RedisCustomerSessionValidatorPlugin();
+    }
+
+    /**
+     * @return array<\SprykerShop\Yves\SessionCustomerValidationPageExtension\Dependency\Plugin\CustomerSessionValidatorPluginInterface>
+     */
+    protected function getCustomerSessionValidatorPlugins(): array
+    {
+        return [
+            new RedisCustomerSessionValidatorPlugin(),
+            new StorageInvalidationRecordCustomerSessionValidatorPlugin(),
+        ];
     }
 }

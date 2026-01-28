@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace Pyz\Zed\CompanyRole;
 
 use Generated\Shared\Transfer\CompanyRoleTransfer;
@@ -23,19 +25,10 @@ use SprykerShop\Shared\CartPage\Plugin\RemoveCartItemPermissionPlugin;
 
 class CompanyRoleConfig extends SprykerCompanyRoleConfig
 {
-    /**
-     * @var string
-     */
     protected const BUYER_ROLE_NAME = 'Buyer';
 
-    /**
-     * @var string
-     */
     protected const APPROVER_ROLE_NAME = 'Approver';
 
-    /**
-     * @var string
-     */
     protected const BUYER_WITH_LIMIT_ROLE_NAME = 'Buyer With Limit';
 
     /**
@@ -87,9 +80,6 @@ class CompanyRoleConfig extends SprykerCompanyRoleConfig
         return $companyRoleTransfers;
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\CompanyRoleTransfer
-     */
     protected function getBuyerRole(): CompanyRoleTransfer
     {
         return (new CompanyRoleTransfer())
@@ -99,9 +89,6 @@ class CompanyRoleConfig extends SprykerCompanyRoleConfig
             ));
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\CompanyRoleTransfer
-     */
     protected function getApproverRole(): CompanyRoleTransfer
     {
         return (new CompanyRoleTransfer())
@@ -111,9 +98,6 @@ class CompanyRoleConfig extends SprykerCompanyRoleConfig
             ));
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\CompanyRoleTransfer
-     */
     protected function getBuyerWithLimitRole(): CompanyRoleTransfer
     {
         return (new CompanyRoleTransfer())

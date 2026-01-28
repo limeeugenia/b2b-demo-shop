@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace Pyz\Yves\ContentProductWidget\Twig;
 
 use SprykerShop\Yves\ContentProductWidget\Twig\ContentProductAbstractListTwigFunctionProvider as SprykerShopContentProductAbstractListTwigFunctionProvider;
@@ -16,8 +18,6 @@ class ContentProductAbstractListTwigFunctionProvider extends SprykerShopContentP
 {
     /**
      * @uses \Pyz\Shared\ContentProduct\ContentProductConfig::WIDGET_TEMPLATE_IDENTIFIER_SLIDER
-     *
-     * @var string
      */
     protected const WIDGET_TEMPLATE_IDENTIFIER_SLIDER = 'slider';
 

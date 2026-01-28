@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace Pyz\Zed\ExampleStateMachine\Business;
 
 use Pyz\Zed\ExampleStateMachine\Business\Model\ExampleStateMachineItemReader;
@@ -16,17 +18,11 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
  */
 class ExampleStateMachineBusinessFactory extends AbstractBusinessFactory
 {
-    /**
-     * @return \Pyz\Zed\ExampleStateMachine\Business\Model\ExampleStateMachineItemSaver
-     */
     public function createStateMachineSaver(): ExampleStateMachineItemSaver
     {
         return new ExampleStateMachineItemSaver($this->getQueryContainer());
     }
 
-    /**
-     * @return \Pyz\Zed\ExampleStateMachine\Business\Model\ExampleStateMachineItemReader
-     */
     public function createExampleStateMachineItemReader(): ExampleStateMachineItemReader
     {
         return new ExampleStateMachineItemReader($this->getQueryContainer());

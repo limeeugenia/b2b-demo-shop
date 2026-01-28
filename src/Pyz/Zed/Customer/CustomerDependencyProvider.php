@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace Pyz\Zed\Customer;
 
 use Spryker\Shared\Newsletter\NewsletterConstants;
@@ -20,31 +22,22 @@ use Spryker\Zed\CompanyUser\Communication\Plugin\Customer\IsActiveCompanyUserExi
 use Spryker\Zed\CompanyUserGui\Communication\Plugin\Customer\CompanyUserCustomerTableActionExpanderPlugin;
 use Spryker\Zed\CompanyUserInvitation\Communication\Plugin\CompanyUserInvitationPostCustomerRegistrationPlugin;
 use Spryker\Zed\Customer\CustomerDependencyProvider as SprykerCustomerDependencyProvider;
+use Spryker\Zed\CustomerDataChangeRequest\Communication\Plugin\Customer\EmailChangeRequestSendVerificationCustomerPreUpdatePlugin;
 use Spryker\Zed\CustomerGroup\Communication\Plugin\CustomerAnonymizer\RemoveCustomerFromGroupPlugin;
 use Spryker\Zed\CustomerUserConnector\Communication\Plugin\CustomerTransferUsernameExpanderPlugin;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\MerchantRelationshipProductList\Communication\Plugin\Customer\ProductListCustomerTransferExpanderPlugin;
+use Spryker\Zed\MultiFactorAuth\Communication\Plugin\Customer\RemoveMultiFactorAuthCustomerTableActionExpanderPlugin;
 use Spryker\Zed\Newsletter\Communication\Plugin\CustomerAnonymizer\CustomerUnsubscribePlugin;
 use Spryker\Zed\SharedCart\Communication\Plugin\QuotePermissionCustomerExpanderPlugin;
 use Spryker\Zed\ShoppingList\Communication\Plugin\ShoppingListPermissionCustomerExpanderPlugin;
 
 class CustomerDependencyProvider extends SprykerCustomerDependencyProvider
 {
-    /**
-     * @var string
-     */
     public const FACADE_SALES = 'sales facade';
 
-    /**
-     * @var string
-     */
     public const FACADE_NEWSLETTER = 'newsletter facade';
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     public function provideCommunicationLayerDependencies(Container $container): Container
     {
         $container = parent::provideCommunicationLayerDependencies($container);
@@ -54,11 +47,6 @@ class CustomerDependencyProvider extends SprykerCustomerDependencyProvider
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addFacadeSales(Container $container): Container
     {
         $container->set(static::FACADE_SALES, function (Container $container) {
@@ -68,11 +56,6 @@ class CustomerDependencyProvider extends SprykerCustomerDependencyProvider
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addFacadeNewsletter(Container $container): Container
     {
         $container->set(static::FACADE_NEWSLETTER, function (Container $container) {
@@ -134,6 +117,17 @@ class CustomerDependencyProvider extends SprykerCustomerDependencyProvider
         return [
             new CompanyUserCustomerTableActionExpanderPlugin(),
             new BusinessOnBehalfGuiAttachToCompanyButtonCustomerTableActionExpanderPlugin(),
+            new RemoveMultiFactorAuthCustomerTableActionExpanderPlugin(),
+        ];
+    }
+
+    /**
+     * @return array<\Spryker\Zed\CustomerExtension\Dependency\Plugin\CustomerPreUpdatePluginInterface>
+     */
+    protected function getCustomerPreUpdatePlugins(): array
+    {
+        return [
+            new EmailChangeRequestSendVerificationCustomerPreUpdatePlugin(),
         ];
     }
 }

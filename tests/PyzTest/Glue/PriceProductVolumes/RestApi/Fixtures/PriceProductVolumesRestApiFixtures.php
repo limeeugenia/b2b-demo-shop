@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace PyzTest\Glue\PriceProductVolumes\RestApi\Fixtures;
 
 use Generated\Shared\Transfer\CustomerTransfer;
@@ -18,9 +20,6 @@ use SprykerTest\Shared\Testify\Fixtures\FixturesContainerInterface;
 
 class PriceProductVolumesRestApiFixtures implements FixturesBuilderInterface, FixturesContainerInterface
 {
-    /**
-     * @var array
-     */
     public const VOLUME_PRICE_DATA = [
         [
             PriceProductVolumeConfig::VOLUME_PRICE_QUANTITY => 5,
@@ -39,47 +38,24 @@ class PriceProductVolumesRestApiFixtures implements FixturesBuilderInterface, Fi
         ],
     ];
 
-    /**
-     * @var string
-     */
     public const VOLUME_PRICE_ATTRIBUTE_JSON_PATH = '.prices[0].volumePrices';
 
-    /**
-     * @var string
-     */
     protected const TEST_PASSWORD = 'change123';
 
-    /**
-     * @var \Generated\Shared\Transfer\ProductConcreteTransfer
-     */
     protected ProductConcreteTransfer $productConcreteTransfer;
 
-    /**
-     * @var \Generated\Shared\Transfer\CustomerTransfer
-     */
     protected CustomerTransfer $customerTransfer;
 
-    /**
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
-     */
     public function getProductConcreteTransfer(): ProductConcreteTransfer
     {
         return $this->productConcreteTransfer;
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\CustomerTransfer
-     */
     public function getCustomerTransfer(): CustomerTransfer
     {
         return $this->customerTransfer;
     }
 
-    /**
-     * @param \PyzTest\Glue\PriceProductVolumes\PriceProductVolumesApiTester $I
-     *
-     * @return \SprykerTest\Shared\Testify\Fixtures\FixturesContainerInterface
-     */
     public function buildFixtures(PriceProductVolumesApiTester $I): FixturesContainerInterface
     {
         $this->createProductConcrete($I);
@@ -89,21 +65,11 @@ class PriceProductVolumesRestApiFixtures implements FixturesBuilderInterface, Fi
         return $this;
     }
 
-    /**
-     * @param \PyzTest\Glue\PriceProductVolumes\PriceProductVolumesApiTester $I
-     *
-     * @return void
-     */
     protected function createProductConcrete(PriceProductVolumesApiTester $I): void
     {
         $this->productConcreteTransfer = $I->haveFullProduct();
     }
 
-    /**
-     * @param \PyzTest\Glue\PriceProductVolumes\PriceProductVolumesApiTester $I
-     *
-     * @return void
-     */
     protected function createPriceProduct(PriceProductVolumesApiTester $I): void
     {
         $I->havePriceProduct([
@@ -114,9 +80,6 @@ class PriceProductVolumesRestApiFixtures implements FixturesBuilderInterface, Fi
         ]);
     }
 
-    /**
-     * @return string
-     */
     protected function createVolumePriceData(): string
     {
         return json_encode([
@@ -124,11 +87,6 @@ class PriceProductVolumesRestApiFixtures implements FixturesBuilderInterface, Fi
         ]);
     }
 
-    /**
-     * @param \PyzTest\Glue\PriceProductVolumes\PriceProductVolumesApiTester $I
-     *
-     * @return void
-     */
     protected function createCustomer(PriceProductVolumesApiTester $I): void
     {
         $customerTransfer = $I->haveCustomer([

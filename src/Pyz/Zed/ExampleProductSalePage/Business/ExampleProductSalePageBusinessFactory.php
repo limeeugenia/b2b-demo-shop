@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace Pyz\Zed\ExampleProductSalePage\Business;
 
 use Pyz\Zed\ExampleProductSalePage\Business\Label\ProductAbstractRelationReader;
@@ -17,9 +19,6 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
  */
 class ExampleProductSalePageBusinessFactory extends AbstractBusinessFactory
 {
-    /**
-     * @return \Pyz\Zed\ExampleProductSalePage\Business\Label\ProductAbstractRelationReaderInterface
-     */
     public function createProductAbstractRelationReader(): ProductAbstractRelationReaderInterface
     {
         return new ProductAbstractRelationReader($this->getQueryContainer(), $this->getConfig());

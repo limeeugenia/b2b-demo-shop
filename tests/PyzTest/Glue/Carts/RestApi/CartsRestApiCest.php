@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace PyzTest\Glue\Carts\RestApi;
 
 use Codeception\Util\HttpCode;
@@ -28,16 +30,8 @@ use Spryker\Shared\Calculation\CalculationPriceMode;
  */
 class CartsRestApiCest
 {
-    /**
-     * @var \PyzTest\Glue\Carts\RestApi\Fixtures\CartsRestApiFixtures
-     */
     protected CartsRestApiFixtures $fixtures;
 
-    /**
-     * @param \PyzTest\Glue\Carts\CartsApiTester $I
-     *
-     * @return void
-     */
     public function loadFixtures(CartsApiTester $I): void
     {
         /** @var \PyzTest\Glue\Carts\RestApi\Fixtures\CartsRestApiFixtures $fixtures */
@@ -50,8 +44,6 @@ class CartsRestApiCest
      * @depends loadFixtures
      *
      * @param \PyzTest\Glue\Carts\CartsApiTester $I
-     *
-     * @return void
      */
     public function requestCarts(CartsApiTester $I): void
     {
@@ -90,8 +82,6 @@ class CartsRestApiCest
      * @depends loadFixtures
      *
      * @param \PyzTest\Glue\Carts\CartsApiTester $I
-     *
-     * @return void
      */
     public function requestCartByUuid(CartsApiTester $I): void
     {
@@ -131,8 +121,6 @@ class CartsRestApiCest
      * @depends loadFixtures
      *
      * @param \PyzTest\Glue\Carts\CartsApiTester $I
-     *
-     * @return void
      */
     public function requestCartByUuidWithCartItemsRelationship(CartsApiTester $I): void
     {
@@ -182,8 +170,6 @@ class CartsRestApiCest
      * @depends loadFixtures
      *
      * @param \PyzTest\Glue\Carts\CartsApiTester $I
-     *
-     * @return void
      */
     public function requestCartByUuidWithProductConcreteRelationship(CartsApiTester $I): void
     {
@@ -243,8 +229,6 @@ class CartsRestApiCest
      * @depends loadFixtures
      *
      * @param \PyzTest\Glue\Carts\CartsApiTester $I
-     *
-     * @return void
      */
     public function requestCartByNotExistingCartUuid(CartsApiTester $I): void
     {
@@ -265,8 +249,6 @@ class CartsRestApiCest
      * @depends loadFixtures
      *
      * @param \PyzTest\Glue\Carts\CartsApiTester $I
-     *
-     * @return void
      */
     public function requestCreateCart(CartsApiTester $I): void
     {
@@ -312,8 +294,6 @@ class CartsRestApiCest
      * @depends loadFixtures
      *
      * @param \PyzTest\Glue\Carts\CartsApiTester $I
-     *
-     * @return void
      */
     public function requestCreateCartWithoutAuthorizationToken(CartsApiTester $I): void
     {
@@ -342,8 +322,6 @@ class CartsRestApiCest
      * @depends loadFixtures
      *
      * @param \PyzTest\Glue\Carts\CartsApiTester $I
-     *
-     * @return void
      */
     public function requestCreateCartWithoutPriceMode(CartsApiTester $I): void
     {
@@ -374,8 +352,6 @@ class CartsRestApiCest
      * @depends loadFixtures
      *
      * @param \PyzTest\Glue\Carts\CartsApiTester $I
-     *
-     * @return void
      */
     public function requestCreateCartWithoutPriceCurrency(CartsApiTester $I): void
     {
@@ -406,8 +382,6 @@ class CartsRestApiCest
      * @depends loadFixtures
      *
      * @param \PyzTest\Glue\Carts\CartsApiTester $I
-     *
-     * @return void
      */
     public function requestUpdateCart(CartsApiTester $I): void
     {
@@ -475,8 +449,6 @@ class CartsRestApiCest
      * @depends loadFixtures
      *
      * @param \PyzTest\Glue\Carts\CartsApiTester $I
-     *
-     * @return void
      */
     public function requestUpdatePriceModeOfNonEmptyCart(CartsApiTester $I): void
     {
@@ -526,8 +498,6 @@ class CartsRestApiCest
      * @depends loadFixtures
      *
      * @param \PyzTest\Glue\Carts\CartsApiTester $I
-     *
-     * @return void
      */
     public function requestUpdateCartWithoutCartUuid(CartsApiTester $I): void
     {
@@ -565,8 +535,6 @@ class CartsRestApiCest
      * @depends loadFixtures
      *
      * @param \PyzTest\Glue\Carts\CartsApiTester $I
-     *
-     * @return void
      */
     public function requestUpdateCartWithoutAuthorizationToken(CartsApiTester $I): void
     {
@@ -609,8 +577,6 @@ class CartsRestApiCest
      * @depends loadFixtures
      *
      * @param \PyzTest\Glue\Carts\CartsApiTester $I
-     *
-     * @return void
      */
     public function requestAddItemsToCart(CartsApiTester $I): void
     {
@@ -680,8 +646,6 @@ class CartsRestApiCest
      * @depends loadFixtures
      *
      * @param \PyzTest\Glue\Carts\CartsApiTester $I
-     *
-     * @return void
      */
     public function requestAddItemsToCartWithoutAuthorizationToken(CartsApiTester $I): void
     {
@@ -722,8 +686,6 @@ class CartsRestApiCest
      * @depends loadFixtures
      *
      * @param \PyzTest\Glue\Carts\CartsApiTester $I
-     *
-     * @return void
      */
     public function requestAddItemsToCartWithoutItemSku(CartsApiTester $I): void
     {
@@ -764,8 +726,6 @@ class CartsRestApiCest
      * @depends loadFixtures
      *
      * @param \PyzTest\Glue\Carts\CartsApiTester $I
-     *
-     * @return void
      */
     public function requestAddItemsToCartWithoutItemQuantity(CartsApiTester $I): void
     {
@@ -806,8 +766,6 @@ class CartsRestApiCest
      * @depends loadFixtures
      *
      * @param \PyzTest\Glue\Carts\CartsApiTester $I
-     *
-     * @return void
      */
     public function requestUpdateItemsInCart(CartsApiTester $I): void
     {
@@ -862,8 +820,6 @@ class CartsRestApiCest
      * @depends loadFixtures
      *
      * @param \PyzTest\Glue\Carts\CartsApiTester $I
-     *
-     * @return void
      */
     public function requestUpdateItemsInCartWithoutCartUuid(CartsApiTester $I): void
     {
@@ -899,8 +855,6 @@ class CartsRestApiCest
      * @depends loadFixtures
      *
      * @param \PyzTest\Glue\Carts\CartsApiTester $I
-     *
-     * @return void
      */
     public function requestUpdateItemsInCartWithoutAuthorizationToken(CartsApiTester $I): void
     {
@@ -941,8 +895,6 @@ class CartsRestApiCest
      * @depends loadFixtures
      *
      * @param \PyzTest\Glue\Carts\CartsApiTester $I
-     *
-     * @return void
      */
     public function requestUpdateItemsInCartWithoutQuantity(CartsApiTester $I): void
     {
@@ -983,8 +935,6 @@ class CartsRestApiCest
      * @depends loadFixtures
      *
      * @param \PyzTest\Glue\Carts\CartsApiTester $I
-     *
-     * @return void
      */
     public function requestUpdateItemsInCartWithoutItemSku(CartsApiTester $I): void
     {
@@ -1025,8 +975,6 @@ class CartsRestApiCest
      * @depends loadFixtures
      *
      * @param \PyzTest\Glue\Carts\CartsApiTester $I
-     *
-     * @return void
      */
     public function requestDeleteItemsFromCart(CartsApiTester $I): void
     {
@@ -1059,8 +1007,6 @@ class CartsRestApiCest
      * @depends loadFixtures
      *
      * @param \PyzTest\Glue\Carts\CartsApiTester $I
-     *
-     * @return void
      */
     public function requestDeleteItemsFromCartWithoutCartUuid(CartsApiTester $I): void
     {
@@ -1088,8 +1034,6 @@ class CartsRestApiCest
      * @depends loadFixtures
      *
      * @param \PyzTest\Glue\Carts\CartsApiTester $I
-     *
-     * @return void
      */
     public function requestDeleteItemsFromCartWithoutAuthorizationToken(CartsApiTester $I): void
     {
@@ -1122,8 +1066,6 @@ class CartsRestApiCest
      * @depends loadFixtures
      *
      * @param \PyzTest\Glue\Carts\CartsApiTester $I
-     *
-     * @return void
      */
     public function requestDeleteItemsFromCartWithoutItemSku(CartsApiTester $I): void
     {
@@ -1156,8 +1098,6 @@ class CartsRestApiCest
      * @depends loadFixtures
      *
      * @param \PyzTest\Glue\Carts\CartsApiTester $I
-     *
-     * @return void
      */
     public function requestDeleteCart(CartsApiTester $I): void
     {
@@ -1180,8 +1120,6 @@ class CartsRestApiCest
      * @depends loadFixtures
      *
      * @param \PyzTest\Glue\Carts\CartsApiTester $I
-     *
-     * @return void
      */
     public function requestDeleteCartWithoutCartUuid(CartsApiTester $I): void
     {
@@ -1207,8 +1145,6 @@ class CartsRestApiCest
      * @depends loadFixtures
      *
      * @param \PyzTest\Glue\Carts\CartsApiTester $I
-     *
-     * @return void
      */
     public function requestDeleteCartWithoutAuthorizationToken(CartsApiTester $I): void
     {
@@ -1231,8 +1167,6 @@ class CartsRestApiCest
      * @depends loadFixtures
      *
      * @param \PyzTest\Glue\Carts\CartsApiTester $I
-     *
-     * @return void
      */
     public function requestCustomerCarts(CartsApiTester $I): void
     {
@@ -1260,8 +1194,6 @@ class CartsRestApiCest
      * @depends loadFixtures
      *
      * @param \PyzTest\Glue\Carts\CartsApiTester $I
-     *
-     * @return void
      */
     public function requestCustomerCartsAuthorizationError(CartsApiTester $I): void
     {
@@ -1285,11 +1217,6 @@ class CartsRestApiCest
         $I->seeResponseMatchesOpenApiSchema();
     }
 
-    /**
-     * @param \PyzTest\Glue\Carts\CartsApiTester $I
-     *
-     * @return void
-     */
     protected function authorizeCustomer(CartsApiTester $I): void
     {
         $token = $I->haveAuthorizationToGlue($this->fixtures->getCustomerTransfer())->getAccessToken();

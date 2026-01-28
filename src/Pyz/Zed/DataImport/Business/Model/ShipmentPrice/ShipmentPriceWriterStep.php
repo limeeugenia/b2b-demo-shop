@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace Pyz\Zed\DataImport\Business\Model\ShipmentPrice;
 
 use Orm\Zed\Currency\Persistence\SpyCurrencyQuery;
@@ -16,51 +18,31 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 
 class ShipmentPriceWriterStep implements DataImportStepInterface
 {
-    /**
-     * @var string
-     */
     public const COL_STORE = 'store';
 
-    /**
-     * @var string
-     */
     public const COL_CURRENCY = 'currency';
 
-    /**
-     * @var string
-     */
     public const COL_SHIPMENT_METHOD_KEY = 'shipment_method_key';
 
-    /**
-     * @var string
-     */
     public const COL_NET_AMOUNT = 'value_net';
 
-    /**
-     * @var string
-     */
     public const COL_GROSS_AMOUNT = 'value_gross';
 
     /**
      * @var array<int> Keys are shipment method keys, values are shipment method ids.
      */
-    protected static $idShipmentMethodCache = [];
+    protected static array $idShipmentMethodCache = [];
 
     /**
      * @var array<int> Keys are currency iso codes, values are currency ids.
      */
-    protected static $idCurrencyCache = [];
+    protected static array $idCurrencyCache = [];
 
     /**
      * @var array<int> Keys are store names, values are store ids.
      */
-    protected static $idStoreCache = [];
+    protected static array $idStoreCache = [];
 
-    /**
-     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
-     *
-     * @return void
-     */
     public function execute(DataSetInterface $dataSet): void
     {
         $shipmentMethodPriceEntity = SpyShipmentMethodPriceQuery::create()
@@ -74,12 +56,7 @@ class ShipmentPriceWriterStep implements DataImportStepInterface
         $shipmentMethodPriceEntity->save();
     }
 
-    /**
-     * @param string $shipmentMethodKey
-     *
-     * @return int
-     */
-    protected function getIdShipmentMethodByShipmentMethodKey($shipmentMethodKey): int
+    protected function getIdShipmentMethodByShipmentMethodKey(string $shipmentMethodKey): int
     {
         if (!isset(static::$idShipmentMethodCache[$shipmentMethodKey])) {
             static::$idShipmentMethodCache[$shipmentMethodKey] = SpyShipmentMethodQuery::create()
@@ -90,12 +67,7 @@ class ShipmentPriceWriterStep implements DataImportStepInterface
         return static::$idShipmentMethodCache[$shipmentMethodKey];
     }
 
-    /**
-     * @param string $currencyIsoCode
-     *
-     * @return int
-     */
-    protected function getIdCurrencyByIsoCode($currencyIsoCode): int
+    protected function getIdCurrencyByIsoCode(string $currencyIsoCode): int
     {
         if (!isset(static::$idCurrencyCache[$currencyIsoCode])) {
             static::$idCurrencyCache[$currencyIsoCode] = SpyCurrencyQuery::create()
@@ -106,12 +78,7 @@ class ShipmentPriceWriterStep implements DataImportStepInterface
         return static::$idCurrencyCache[$currencyIsoCode];
     }
 
-    /**
-     * @param string $storeName
-     *
-     * @return int
-     */
-    protected function getIdStoreByStoreName($storeName): int
+    protected function getIdStoreByStoreName(string $storeName): int
     {
         if (!isset(static::$idStoreCache[$storeName])) {
             static::$idStoreCache[$storeName] = SpyStoreQuery::create()

@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace PyzTest\Glue\RelatedProducts\RestApi;
 
 use Codeception\Util\HttpCode;
@@ -24,16 +26,8 @@ use Spryker\Glue\ProductsRestApi\ProductsRestApiConfig;
  */
 class RelatedProductsRestApiCest
 {
-    /**
-     * @var \PyzTest\Glue\RelatedProducts\RestApi\RelatedProductsRestApiFixtures
-     */
     protected RelatedProductsRestApiFixtures $fixtures;
 
-    /**
-     * @param \PyzTest\Glue\RelatedProducts\RelatedProductsApiTester $I
-     *
-     * @return void
-     */
     public function loadFixtures(RelatedProductsApiTester $I): void
     {
         /** @var \PyzTest\Glue\RelatedProducts\RestApi\RelatedProductsRestApiFixtures $fixtures */
@@ -46,8 +40,6 @@ class RelatedProductsRestApiCest
      * @depends loadFixtures
      *
      * @param \PyzTest\Glue\RelatedProducts\RelatedProductsApiTester $I
-     *
-     * @return void
      */
     public function requestRelatedProducts(RelatedProductsApiTester $I): void
     {

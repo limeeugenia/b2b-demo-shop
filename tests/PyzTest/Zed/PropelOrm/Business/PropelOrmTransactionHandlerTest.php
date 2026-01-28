@@ -5,15 +5,20 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace PyzTest\Zed\PropelOrm\Business;
 
 use Codeception\Test\Unit;
 use Exception;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributes;
+use Propel\Runtime\Connection\ConnectionInterface;
 use PyzTest\Zed\PropelOrm\Stub\ProductManagerStub;
 use Spryker\Zed\Product\Business\ProductFacade;
+use Spryker\Zed\Product\Business\ProductFacadeInterface;
 use Spryker\Zed\Product\Persistence\ProductQueryContainer;
+use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 use Throwable;
 
 /**
@@ -28,34 +33,16 @@ use Throwable;
  */
 class PropelOrmTransactionHandlerTest extends Unit
 {
-    /**
-     * @var string
-     */
     public const TEST_SKU = 'foo';
 
-    /**
-     * @var string
-     */
     public const TEST_NAME = 'Foo Bar';
 
-    /**
-     * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
-     */
-    protected $productQueryContainer;
+    protected ProductQueryContainerInterface $productQueryContainer;
 
-    /**
-     * @var \Spryker\Zed\Product\Business\ProductFacadeInterface
-     */
-    protected $productFacade;
+    protected ProductFacadeInterface $productFacade;
 
-    /**
-     * @var \Propel\Runtime\Connection\ConnectionInterface
-     */
-    protected $outsideConnection;
+    protected ConnectionInterface $outsideConnection;
 
-    /**
-     * @return void
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -67,9 +54,6 @@ class PropelOrmTransactionHandlerTest extends Unit
         $this->outsideConnection = clone $this->productQueryContainer->getConnection();
     }
 
-    /**
-     * @return void
-     */
     public function testAddProductWithoutTransactionHandling(): void
     {
         self::markTestSkipped();
@@ -90,8 +74,6 @@ class PropelOrmTransactionHandlerTest extends Unit
 
     /**
      * @depends testAddProductWithoutTransactionHandling
-     *
-     * @return void
      */
     public function testAddProductWithoutTransactionHandlingShouldThrowException(): void
     {
@@ -111,8 +93,6 @@ class PropelOrmTransactionHandlerTest extends Unit
 
     /**
      * @depends testAddProductWithoutTransactionHandling
-     *
-     * @return void
      */
     public function testAddProductWithTransactionHandlingShouldRollbackAndThrowException(): void
     {
@@ -128,8 +108,6 @@ class PropelOrmTransactionHandlerTest extends Unit
 
     /**
      * @depends testAddProductWithoutTransactionHandling
-     *
-     * @return void
      */
     public function testAddProductWithTransactionHandlingShouldCommitAndReturnValue(): void
     {
@@ -143,12 +121,7 @@ class PropelOrmTransactionHandlerTest extends Unit
         $this->assertSame($localizedAttributeEntity->getName(), static::TEST_NAME);
     }
 
-    /**
-     * @param int $idProductAbstract
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAbstract
-     */
-    protected function getProductAbstractToAssert($idProductAbstract): SpyProductAbstract
+    protected function getProductAbstractToAssert(int $idProductAbstract): SpyProductAbstract
     {
         return $this->productQueryContainer
             ->queryProductAbstract()
@@ -156,12 +129,7 @@ class PropelOrmTransactionHandlerTest extends Unit
             ->findOne();
     }
 
-    /**
-     * @param int $idProductAbstract
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributes
-     */
-    protected function getLocalizedAttributesToAssert($idProductAbstract): SpyProductAbstractLocalizedAttributes
+    protected function getLocalizedAttributesToAssert(int $idProductAbstract): SpyProductAbstractLocalizedAttributes
     {
         return $this->productQueryContainer
             ->queryProductAbstractLocalizedAttributes($idProductAbstract)
@@ -169,9 +137,6 @@ class PropelOrmTransactionHandlerTest extends Unit
             ->findOne();
     }
 
-    /**
-     * @return void
-     */
     protected function assertEntityNotCreatedOutsideTransaction(): void
     {
         $this->outsideConnection->forceRollBack();
@@ -184,9 +149,6 @@ class PropelOrmTransactionHandlerTest extends Unit
         $this->assertNull($entityToAssert);
     }
 
-    /**
-     * @return void
-     */
     protected function assertEntityNotCreatedWithinTransaction(): void
     {
         $entityToAssert = $this->productQueryContainer
@@ -197,9 +159,6 @@ class PropelOrmTransactionHandlerTest extends Unit
         $this->assertNull($entityToAssert);
     }
 
-    /**
-     * @return void
-     */
     protected function assertEntityCreatedWithinTransaction(): void
     {
         $entityToAssert = $this->productQueryContainer

@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace PyzTest\Shared\Testify\Helper;
 
 use Codeception\Exception\ModuleConfigException;
@@ -15,14 +17,8 @@ use Symfony\Component\HttpKernel\HttpKernelBrowser;
 
 class YvesBootstrap extends Framework
 {
-    /**
-     * @var \Pyz\Yves\ShopApplication\YvesBootstrap
-     */
-    private $yvesBootstrap;
+    private PyzYvesBootstrap $yvesBootstrap;
 
-    /**
-     * @return void
-     */
     public function _initialize(): void
     {
         $this->loadApplication();
@@ -30,18 +26,14 @@ class YvesBootstrap extends Framework
 
     /**
      * @param array $settings
-     *
-     * @return void
      */
-    public function _beforeSuite($settings = []): void
+    public function _beforeSuite($settings = []): void // phpcs:ignore
     {
         $this->client = new HttpKernelBrowser($this->yvesBootstrap->boot());
     }
 
     /**
      * @throws \Codeception\Exception\ModuleConfigException
-     *
-     * @return void
      */
     protected function loadApplication(): void
     {

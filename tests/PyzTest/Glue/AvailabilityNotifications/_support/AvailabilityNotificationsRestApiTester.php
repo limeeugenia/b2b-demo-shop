@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace PyzTest\Glue\AvailabilityNotifications;
 
 use Spryker\Glue\AvailabilityNotificationsRestApi\AvailabilityNotificationsRestApiConfig;
@@ -30,11 +32,6 @@ class AvailabilityNotificationsRestApiTester extends ApiEndToEndTester
 {
     use _generated\AvailabilityNotificationsRestApiTesterActions;
 
-    /**
-     * @param string $customerReference
-     *
-     * @return string
-     */
     public function buildCustomerAvailabilityNotificationsUrl(string $customerReference): string
     {
         return $this->formatFullUrl(

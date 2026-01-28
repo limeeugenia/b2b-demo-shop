@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace PyzTest\Glue\PriceProducts\RestApi;
 
 use Generated\Shared\Transfer\CustomerTransfer;
@@ -27,47 +29,24 @@ use SprykerTest\Shared\Testify\Fixtures\FixturesContainerInterface;
  */
 class PriceProductsRestApiFixtures implements FixturesBuilderInterface, FixturesContainerInterface
 {
-    /**
-     * @var string
-     */
     protected const TEST_PASSWORD = 'change123';
 
-    /**
-     * @var \Generated\Shared\Transfer\ProductConcreteTransfer
-     */
     protected ProductConcreteTransfer $productConcreteTransfer;
 
-    /**
-     * @var \Generated\Shared\Transfer\PriceProductTransfer
-     */
     protected PriceProductTransfer $priceProductTransfer;
 
-    /**
-     * @var \Generated\Shared\Transfer\CustomerTransfer
-     */
     protected CustomerTransfer $customerTransfer;
 
-    /**
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
-     */
     public function getProductConcreteTransfer(): ProductConcreteTransfer
     {
         return $this->productConcreteTransfer;
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\CustomerTransfer
-     */
     public function getCustomerTransfer(): CustomerTransfer
     {
         return $this->customerTransfer;
     }
 
-    /**
-     * @param \PyzTest\Glue\PriceProducts\PriceProductsApiTester $I
-     *
-     * @return \SprykerTest\Shared\Testify\Fixtures\FixturesContainerInterface
-     */
     public function buildFixtures(PriceProductsApiTester $I): FixturesContainerInterface
     {
         $this->createProductConcrete($I);
@@ -76,21 +55,11 @@ class PriceProductsRestApiFixtures implements FixturesBuilderInterface, Fixtures
         return $this;
     }
 
-    /**
-     * @param \PyzTest\Glue\PriceProducts\PriceProductsApiTester $I
-     *
-     * @return void
-     */
     protected function createProductConcrete(PriceProductsApiTester $I): void
     {
         $this->productConcreteTransfer = $I->haveFullProduct();
     }
 
-    /**
-     * @param \PyzTest\Glue\PriceProducts\PriceProductsApiTester $I
-     *
-     * @return void
-     */
     protected function createCustomer(PriceProductsApiTester $I): void
     {
         $customerTransfer = $I->haveCustomer([

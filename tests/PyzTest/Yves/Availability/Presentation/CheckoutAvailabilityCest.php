@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace PyzTest\Yves\Availability\Presentation;
 
 use Codeception\Scenario;
@@ -32,10 +34,8 @@ class CheckoutAvailabilityCest
      *
      * @param \PyzTest\Yves\Availability\AvailabilityPresentationTester $i
      * @param \Codeception\Scenario $scenario
-     *
-     * @return void
      */
-    public function testCheckoutItemWithAvailability(AvailabilityPresentationTester $i, Scenario $scenario): void
+    public function testCheckoutItemWithAvailability(AvailabilityPresentationTester $i, Scenario $scenario): void // phpcs:ignore SlevomatCodingStandard.Functions.UnusedParameter
     {
         $i->wantTo('Checkout item with stock');
         $i->expectTo('Availability changed during SM processing.');

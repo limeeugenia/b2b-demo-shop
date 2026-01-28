@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace Pyz\Zed\DataImport\Business\Model\ProductAttributeKey;
 
 use Orm\Zed\Product\Persistence\Map\SpyProductAttributeKeyTableMap;
@@ -15,21 +17,13 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 
 class AddProductAttributeKeysStep implements DataImportStepInterface
 {
-    /**
-     * @var string
-     */
     public const KEY_TARGET = 'attributeKeys';
 
     /**
      * @var array<string, int>
      */
-    protected $productAttributeKeys = [];
+    protected array $productAttributeKeys = [];
 
-    /**
-     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
-     *
-     * @return void
-     */
     public function execute(DataSetInterface $dataSet): void
     {
         if (!$this->productAttributeKeys) {

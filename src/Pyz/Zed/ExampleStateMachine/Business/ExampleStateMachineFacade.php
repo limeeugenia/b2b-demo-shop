@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace Pyz\Zed\ExampleStateMachine\Business;
 
 use Generated\Shared\Transfer\StateMachineItemTransfer;
@@ -15,11 +17,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class ExampleStateMachineFacade extends AbstractFacade implements ExampleStateMachineFacadeInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
-     *
-     * @return bool
-     */
     public function updateItemState(StateMachineItemTransfer $stateMachineItemTransfer): bool
     {
         return $this->getFactory()->createStateMachineSaver()->itemStateUpdate($stateMachineItemTransfer);
@@ -43,9 +40,6 @@ class ExampleStateMachineFacade extends AbstractFacade implements ExampleStateMa
         return $this->getFactory()->createExampleStateMachineItemReader()->getStateMachineItems();
     }
 
-    /**
-     * @return bool
-     */
     public function createExampleItem(): bool
     {
         return $this->getFactory()->createStateMachineSaver()->createExampleItem();

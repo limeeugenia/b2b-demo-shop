@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace Pyz\Zed\DataImport\Business\Model\Tax;
 
 use Orm\Zed\Tax\Persistence\SpyTaxSetQuery;
@@ -14,36 +16,20 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 
 class TaxSetNameToIdTaxSetStep implements DataImportStepInterface
 {
-    /**
-     * @var string
-     */
     public const KEY_SOURCE = 'taxSetName';
 
-    /**
-     * @var string
-     */
     public const KEY_TARGET = 'idTaxSet';
 
-    /**
-     * @var string
-     */
-    protected $source;
+    protected string $source;
 
-    /**
-     * @var string
-     */
-    protected $target;
+    protected string $target;
 
     /**
      * @var array<string, int>
      */
-    protected $resolved = [];
+    protected array $resolved = [];
 
-    /**
-     * @param string $source
-     * @param string $target
-     */
-    public function __construct($source = self::KEY_SOURCE, $target = self::KEY_TARGET)
+    public function __construct(string $source = self::KEY_SOURCE, string $target = self::KEY_TARGET)
     {
         $this->source = $source;
         $this->target = $target;
@@ -53,8 +39,6 @@ class TaxSetNameToIdTaxSetStep implements DataImportStepInterface
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
      * @throws \Spryker\Zed\DataImport\Business\Exception\DataKeyNotFoundInDataSetException
-     *
-     * @return void
      */
     public function execute(DataSetInterface $dataSet): void
     {
@@ -75,12 +59,7 @@ class TaxSetNameToIdTaxSetStep implements DataImportStepInterface
         $dataSet[$this->target] = $this->resolved[$taxSetName];
     }
 
-    /**
-     * @param string $taxSetName
-     *
-     * @return int
-     */
-    protected function resolveIdStock($taxSetName): int
+    protected function resolveIdStock(string $taxSetName): int
     {
         $taxSetEntity = SpyTaxSetQuery::create()
             ->filterByName($taxSetName)

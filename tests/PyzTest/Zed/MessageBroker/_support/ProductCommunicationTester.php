@@ -5,7 +5,7 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace PyzTest\Zed\MessageBroker;
 
@@ -35,8 +35,6 @@ class ProductCommunicationTester extends Actor
 
     /**
      * @param array<string, mixed> $messageAttributeSeedData
-     *
-     * @return \Generated\Shared\Transfer\InitializeProductExportTransfer
      */
     public function buildInitializeProductExportTransfer(array $messageAttributeSeedData = []): InitializeProductExportTransfer
     {

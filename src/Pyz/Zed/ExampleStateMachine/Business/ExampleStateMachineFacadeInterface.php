@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace Pyz\Zed\ExampleStateMachine\Business;
 
 use Generated\Shared\Transfer\StateMachineItemTransfer;
@@ -14,11 +16,6 @@ use Generated\Shared\Transfer\StateMachineItemTransfer;
  */
 interface ExampleStateMachineFacadeInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
-     *
-     * @return bool
-     */
     public function updateItemState(StateMachineItemTransfer $stateMachineItemTransfer): bool;
 
     /**
@@ -33,8 +30,5 @@ interface ExampleStateMachineFacadeInterface
      */
     public function getStateMachineItems(): array;
 
-    /**
-     * @return bool
-     */
     public function createExampleItem(): bool;
 }

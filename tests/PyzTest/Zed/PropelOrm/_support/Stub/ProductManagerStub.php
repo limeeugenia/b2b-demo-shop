@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace PyzTest\Zed\PropelOrm\Stub;
 
 use Exception;
@@ -17,25 +19,14 @@ class ProductManagerStub
 {
     use DatabaseTransactionHandlerTrait;
 
-    /**
-     * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
-     */
-    protected $productQueryContainer;
+    protected ProductQueryContainerInterface $productQueryContainer;
 
-    /**
-     * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
-     */
     public function __construct(ProductQueryContainerInterface $productQueryContainer)
     {
         $this->productQueryContainer = $productQueryContainer;
     }
 
-    /**
-     * @param string $sku
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAbstract
-     */
-    protected function createProductAbstractEntity($sku): SpyProductAbstract
+    protected function createProductAbstractEntity(string $sku): SpyProductAbstract
     {
         $productAbstractEntity = new SpyProductAbstract();
         $productAbstractEntity->setSku($sku);
@@ -45,13 +36,7 @@ class ProductManagerStub
         return $productAbstractEntity;
     }
 
-    /**
-     * @param string $name
-     * @param int $idProductAbstract
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributes
-     */
-    protected function createLocalizedAttributeEntity($name, $idProductAbstract): SpyProductAbstractLocalizedAttributes
+    protected function createLocalizedAttributeEntity(string $name, int $idProductAbstract): SpyProductAbstractLocalizedAttributes
     {
         $localizedAttributeEntity = new SpyProductAbstractLocalizedAttributes();
         $localizedAttributeEntity->setAttributes('{}');
@@ -63,13 +48,7 @@ class ProductManagerStub
         return $localizedAttributeEntity;
     }
 
-    /**
-     * @param string $sku
-     * @param string $name
-     *
-     * @return int
-     */
-    public function addProductWithoutTransactionHandling($sku, $name): int
+    public function addProductWithoutTransactionHandling(string $sku, string $name): int
     {
         $this->productQueryContainer->getConnection()->beginTransaction();
 
@@ -81,13 +60,7 @@ class ProductManagerStub
         return $productAbstractEntity->getIdProductAbstract();
     }
 
-    /**
-     * @param string $sku
-     * @param string $name
-     *
-     * @return void
-     */
-    public function addProductWithoutTransactionHandlingShouldThrowException($sku, $name): void
+    public function addProductWithoutTransactionHandlingShouldThrowException(string $sku, string $name): void
     {
         $this->productQueryContainer->getConnection()->beginTransaction();
 
@@ -108,13 +81,7 @@ class ProductManagerStub
         $this->productQueryContainer->getConnection()->commit();
     }
 
-    /**
-     * @param string $sku
-     * @param string $name
-     *
-     * @return void
-     */
-    public function addProductWithTransactionHandlingShouldRollbackAndThrowException($sku, $name): void
+    public function addProductWithTransactionHandlingShouldRollbackAndThrowException(string $sku, string $name): void
     {
         $this->handleDatabaseTransaction(function () use ($sku, $name): void {
             $productAbstractEntity = new SpyProductAbstract();
@@ -133,13 +100,7 @@ class ProductManagerStub
         }, $this->productQueryContainer->getConnection());
     }
 
-    /**
-     * @param string $sku
-     * @param string $name
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributes
-     */
-    public function addProductWithTransactionHandlingShouldCommitAndReturnValue($sku, $name): SpyProductAbstractLocalizedAttributes
+    public function addProductWithTransactionHandlingShouldCommitAndReturnValue(string $sku, string $name): SpyProductAbstractLocalizedAttributes
     {
         return $this->handleDatabaseTransaction(function () use ($sku, $name) {
             $productAbstractEntity = new SpyProductAbstract();
@@ -160,8 +121,6 @@ class ProductManagerStub
 
     /**
      * @throws \Exception
-     *
-     * @return void
      */
     protected function throwSampleException(): void
     {

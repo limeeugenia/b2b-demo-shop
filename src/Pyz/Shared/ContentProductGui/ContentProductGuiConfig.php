@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace Pyz\Shared\ContentProductGui;
 
 use Spryker\Shared\ContentProductGui\ContentProductGuiConfig as SprykerContentProductGuiConfig;
@@ -12,15 +14,11 @@ use Spryker\Shared\ContentProductGui\ContentProductGuiConfig as SprykerContentPr
 class ContentProductGuiConfig extends SprykerContentProductGuiConfig
 {
     /**
-     * @var string
-     *
      * @uses \Pyz\Shared\ContentProduct\ContentProductConfig::WIDGET_TEMPLATE_IDENTIFIER_SLIDER
      */
     protected const WIDGET_TEMPLATE_IDENTIFIER_SLIDER = 'slider';
 
     /**
-     * @var string
-     *
      * Content item abstract product list slider template name
      */
     protected const WIDGET_TEMPLATE_DISPLAY_NAME_SLIDER = 'content_product_abstract_list.template.slider';

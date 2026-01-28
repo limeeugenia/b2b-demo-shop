@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace PyzTest\Yves\Checkout\Process\Steps;
 
 use Codeception\Test\Unit;
@@ -29,9 +31,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class SuccessStepTest extends Unit
 {
-    /**
-     * @return void
-     */
     public function testExecuteShouldEmptyQuoteTransfer(): void
     {
         // Arrange
@@ -53,9 +52,6 @@ class SuccessStepTest extends Unit
         $successStep->execute($this->createRequest(), $quoteTransfer);
     }
 
-    /**
-     * @return void
-     */
     public function testPostConditionsWhenOrderReferenceIsSetShouldReturnTrue(): void
     {
         $successStep = $this->createSuccessStep();
@@ -66,9 +62,6 @@ class SuccessStepTest extends Unit
         $this->assertTrue($successStep->postCondition($quoteTransfer));
     }
 
-    /**
-     * @return void
-     */
     public function testPostConditionsWhenOrderReferenceIsMissingShouldReturnFalse(): void
     {
         $successStep = $this->createSuccessStep();
@@ -77,14 +70,10 @@ class SuccessStepTest extends Unit
         $this->assertFalse($successStep->postCondition($quoteTransfer));
     }
 
-    /**
-     * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCustomerClientInterface|null $customerClientMock
-     * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCartClientInterface|null $cartClientMock
-     *
-     * @return \SprykerShop\Yves\CheckoutPage\Process\Steps\SuccessStep
-     */
-    protected function createSuccessStep($customerClientMock = null, ?CheckoutPageToCartClientInterface $cartClientMock = null): SuccessStep
-    {
+    protected function createSuccessStep(
+        ?CheckoutPageToCustomerClientInterface $customerClientMock = null,
+        ?CheckoutPageToCartClientInterface $cartClientMock = null,
+    ): SuccessStep {
         if ($customerClientMock === null) {
             $customerClientMock = $this->createCustomerClientMock();
         }
@@ -112,9 +101,6 @@ class SuccessStepTest extends Unit
         return $this->getMockBuilder(CheckoutPageToCartClientInterface::class)->getMock();
     }
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\Request
-     */
     protected function createRequest(): Request
     {
         return Request::createFromGlobals();

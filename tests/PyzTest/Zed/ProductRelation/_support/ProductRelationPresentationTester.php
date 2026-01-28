@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace PyzTest\Zed\ProductRelation;
 
 use Codeception\Actor;
@@ -31,57 +33,30 @@ class ProductRelationPresentationTester extends Actor
 {
     use _generated\ProductRelationPresentationTesterActions;
 
-    /**
-     * @var int
-     */
     public const ELEMENT_TIMEOUT = 45;
 
-    /**
-     * @var string
-     */
     public const PRODUCT_RELATION_TYPE_SELECTOR = '//*[@id="product_relation_productRelationType"]';
 
-    /**
-     * @var string
-     */
     public const PRODUCT_TABLE_FILTER_LABEL_INPUT_SELECTOR = '//*[@id="product-table_filter"]/label/input';
 
-    /**
-     * @var string
-     */
     public const PRODUCT_TAB_SELECTOR = '//*[@id="form-product-relation"]/div/ul/li[2]/a';
 
-    /**
-     * @var string
-     */
     public const SUBMIT_RELATION_BUTTON_SELECTOR = '//*[@id="submit-relation"]';
 
-    /**
-     * @var string
-     */
     public const ACTIVATE_RELATION_BUTTON_SELECTOR = '//*[@id="activate-relation"]';
 
-    /**
-     * @var string
-     */
     public const PRODUCT_RELATION_KEY_FIELD_SELECTOR = '//*[@id="product_relation_productRelationKey"]';
 
-    /**
-     * @var string
-     */
     public const PRODUCT_TABLE_BODY_XPATH = '//*[@class="dataTables_scrollBody"]/table/tbody/tr[1]/td[1]';
 
-    /**
-     * @var int
-     */
-    protected $numberOfRulesSelected = 0;
+    protected int $numberOfRulesSelected = 0;
 
     /**
      * @param string $type
      *
      * @return $this
      */
-    public function selectRelationType($type)
+    public function selectRelationType(string $type)
     {
         $this->waitForElement(static::PRODUCT_RELATION_TYPE_SELECTOR, static::ELEMENT_TIMEOUT);
         $this->selectOption(static::PRODUCT_RELATION_TYPE_SELECTOR, $type);
@@ -94,7 +69,7 @@ class ProductRelationPresentationTester extends Actor
      *
      * @return $this
      */
-    public function filterProductsByName($name)
+    public function filterProductsByName(string $name)
     {
         $this->waitForElement(static::PRODUCT_TABLE_BODY_XPATH, static::ELEMENT_TIMEOUT);
         $this->fillField(static::PRODUCT_TABLE_FILTER_LABEL_INPUT_SELECTOR, $name);
@@ -107,7 +82,7 @@ class ProductRelationPresentationTester extends Actor
      *
      * @return $this
      */
-    public function selectProduct($sku)
+    public function selectProduct(string $sku)
     {
         $this->waitForElement(static::PRODUCT_TABLE_BODY_XPATH, static::ELEMENT_TIMEOUT);
         $buttonElementId = sprintf('//*[@id="select-product-%s"]', $sku);
@@ -138,7 +113,7 @@ class ProductRelationPresentationTester extends Actor
      *
      * @return $this
      */
-    public function selectProductRule($ruleName, $operator, $value)
+    public function selectProductRule(string $ruleName, string $operator, string $value)
     {
         $ruleSelectorBaseId = sprintf('[@id="builder_rule_%d"]', $this->numberOfRulesSelected);
 
@@ -173,11 +148,6 @@ class ProductRelationPresentationTester extends Actor
         return $this;
     }
 
-    /**
-     * @param string $productRelationKey
-     *
-     * @return void
-     */
     public function cleanUpProductRelation(string $productRelationKey): void
     {
         $productRelationEntity = $this->findProductRelationByProductRelationKey($productRelationKey);
@@ -189,11 +159,6 @@ class ProductRelationPresentationTester extends Actor
         $productRelationEntity->delete();
     }
 
-    /**
-     * @param string $productRelationKey
-     *
-     * @return \Orm\Zed\ProductRelation\Persistence\SpyProductRelation|null
-     */
     protected function findProductRelationByProductRelationKey(string $productRelationKey): ?SpyProductRelation
     {
         return SpyProductRelationQuery::create()->findOneByProductRelationKey($productRelationKey);

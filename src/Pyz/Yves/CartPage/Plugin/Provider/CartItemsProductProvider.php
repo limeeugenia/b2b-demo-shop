@@ -5,20 +5,16 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace Pyz\Yves\CartPage\Plugin\Provider;
 
 use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToProductStorageClientInterface;
 
 class CartItemsProductProvider implements CartItemsProductProviderInterface
 {
-    /**
-     * @var \SprykerShop\Yves\CartPage\Dependency\Client\CartPageToProductStorageClientInterface
-     */
-    protected $productStorageClient;
+    protected CartPageToProductStorageClientInterface $productStorageClient;
 
-    /**
-     * @param \SprykerShop\Yves\CartPage\Dependency\Client\CartPageToProductStorageClientInterface $productStorageClient
-     */
     public function __construct(CartPageToProductStorageClientInterface $productStorageClient)
     {
         $this->productStorageClient = $productStorageClient;

@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace PyzTest\Glue\Auth\RestApi;
 
 use Codeception\Util\HttpCode;
@@ -24,21 +26,10 @@ use Spryker\Glue\AuthRestApi\AuthRestApiConfig;
  */
 class RefreshTokensRestApiCest
 {
-    /**
-     * @var string
-     */
     protected const INVALID_REFRESH_TOKEN = 'invalid refresh token';
 
-    /**
-     * @var \PyzTest\Glue\Auth\RestApi\RefreshTokensRestApiFixtures
-     */
     protected RefreshTokensRestApiFixtures $fixtures;
 
-    /**
-     * @param \PyzTest\Glue\Auth\AuthRestApiTester $I
-     *
-     * @return void
-     */
     public function loadFixtures(AuthRestApiTester $I): void
     {
         /** @var \PyzTest\Glue\Auth\RestApi\RefreshTokensRestApiFixtures $fixtures */
@@ -51,8 +42,6 @@ class RefreshTokensRestApiCest
      * @depends loadFixtures
      *
      * @param \PyzTest\Glue\Auth\AuthRestApiTester $I
-     *
-     * @return void
      */
     public function requestRefreshTokenWithValidRefreshTokenValue(AuthRestApiTester $I): void
     {
@@ -76,8 +65,6 @@ class RefreshTokensRestApiCest
      * @depends loadFixtures
      *
      * @param \PyzTest\Glue\Auth\AuthRestApiTester $I
-     *
-     * @return void
      */
     public function requestRefreshTokenWithInvalidRefreshTokenValue(AuthRestApiTester $I): void
     {
@@ -100,8 +87,6 @@ class RefreshTokensRestApiCest
      * @depends loadFixtures
      *
      * @param \PyzTest\Glue\Auth\AuthRestApiTester $I
-     *
-     * @return void
      */
     public function requestRefreshTokenWithEmptyRefreshTokenValue(AuthRestApiTester $I): void
     {
@@ -126,8 +111,6 @@ class RefreshTokensRestApiCest
      * @depends loadFixtures
      *
      * @param \PyzTest\Glue\Auth\AuthRestApiTester $I
-     *
-     * @return void
      */
     public function requestRefreshTokenWithInvalidPostData(AuthRestApiTester $I): void
     {
@@ -150,8 +133,6 @@ class RefreshTokensRestApiCest
      * @depends loadFixtures
      *
      * @param \PyzTest\Glue\Auth\AuthRestApiTester $I
-     *
-     * @return void
      */
     public function requestRefreshTokenWithInvalidRequestType(AuthRestApiTester $I): void
     {
@@ -176,8 +157,6 @@ class RefreshTokensRestApiCest
      * @depends loadFixtures
      *
      * @param \PyzTest\Glue\Auth\AuthRestApiTester $I
-     *
-     * @return void
      */
     public function requestRefreshTokenWithEmptyType(AuthRestApiTester $I): void
     {

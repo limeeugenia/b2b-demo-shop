@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace PyzTest\Glue\AvailabilityNotifications\RestApi;
 
 use Codeception\Util\HttpCode;
@@ -24,16 +26,8 @@ use PyzTest\Glue\AvailabilityNotifications\RestApi\Fixtures\AvailabilityNotifica
  */
 class AvailabilityNotificationsRestApiCest
 {
-    /**
-     * @var \PyzTest\Glue\AvailabilityNotifications\RestApi\Fixtures\AvailabilityNotificationsApiFixtures
-     */
     protected AvailabilityNotificationsApiFixtures $fixtures;
 
-    /**
-     * @param \PyzTest\Glue\AvailabilityNotifications\AvailabilityNotificationsRestApiTester.php $I
-     *
-     * @return void
-     */
     public function loadFixtures(AvailabilityNotificationsRestApiTester $I): void
     {
         /** @var \PyzTest\Glue\AvailabilityNotifications\RestApi\Fixtures\AvailabilityNotificationsApiFixtures $fixtures */
@@ -42,11 +36,6 @@ class AvailabilityNotificationsRestApiCest
         $this->fixtures = $fixtures;
     }
 
-    /**
-     * @param \PyzTest\Glue\AvailabilityNotifications\AvailabilityNotificationsRestApiTester $I
-     *
-     * @return void
-     */
     public function requestCustomerAvailabilityNotifications(AvailabilityNotificationsRestApiTester $I): void
     {
         // Arrange
@@ -66,11 +55,6 @@ class AvailabilityNotificationsRestApiCest
         $I->seeResponseMatchesOpenApiSchema();
     }
 
-    /**
-     * @param \PyzTest\Glue\AvailabilityNotifications\AvailabilityNotificationsRestApiTester $I
-     *
-     * @return void
-     */
     public function requestCustomerAvailabilityNotificationsAuthorizationError(AvailabilityNotificationsRestApiTester $I): void
     {
         // Arrange

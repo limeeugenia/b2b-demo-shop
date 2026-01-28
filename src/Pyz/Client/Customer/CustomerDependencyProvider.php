@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace Pyz\Client\Customer;
 
 use Spryker\Client\Agent\Plugin\Customer\AgentAccessCustomerSecuredPatternRulePlugin;
@@ -63,9 +65,6 @@ class CustomerDependencyProvider extends SprykerCustomerDependencyProvider
         ];
     }
 
-    /**
-     * @return \Spryker\Client\CustomerExtension\Dependency\Plugin\AccessTokenAuthenticationHandlerPluginInterface
-     */
     protected function getAccessTokenAuthenticationHandlerPlugin(): AccessTokenAuthenticationHandlerPluginInterface
     {
         return new CompanyUserAccessTokenAuthenticationHandlerPlugin();

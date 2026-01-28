@@ -5,15 +5,14 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace Pyz\Yves\SecurityBlockerPage;
 
 use SprykerShop\Yves\SecurityBlockerPage\SecurityBlockerPageConfig as SprykerSecurityBlockerPageConfig;
 
 class SecurityBlockerPageConfig extends SprykerSecurityBlockerPageConfig
 {
-    /**
-     * @var bool
-     */
     protected const USE_EMAIL_CONTEXT_FOR_LOGIN_SECURITY_BLOCKER = false;
 
     /**

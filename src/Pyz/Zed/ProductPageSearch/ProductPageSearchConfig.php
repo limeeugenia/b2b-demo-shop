@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace Pyz\Zed\ProductPageSearch;
 
 use Spryker\Shared\ProductPageSearch\ProductPageSearchConfig as SprykerSharedProductPageSearchConfig;
@@ -12,17 +14,11 @@ use Spryker\Zed\ProductPageSearch\ProductPageSearchConfig as SprykerProductPageS
 
 class ProductPageSearchConfig extends SprykerProductPageSearchConfig
 {
-    /**
-     * @return string|null
-     */
     public function getProductPageEventQueueName(): ?string
     {
         return SprykerSharedProductPageSearchConfig::PUBLISH_PRODUCT_ABSTRACT_PAGE;
     }
 
-    /**
-     * @return string|null
-     */
     public function getProductConcretePageEventQueueName(): ?string
     {
         return SprykerSharedProductPageSearchConfig::PUBLISH_PRODUCT_CONCRETE_PAGE;

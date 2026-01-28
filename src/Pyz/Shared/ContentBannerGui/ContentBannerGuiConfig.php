@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace Pyz\Shared\ContentBannerGui;
 
 use Spryker\Shared\ContentBannerGui\ContentBannerGuiConfig as SprykerContentBannerGuiConfig;
@@ -12,15 +14,11 @@ use Spryker\Shared\ContentBannerGui\ContentBannerGuiConfig as SprykerContentBann
 class ContentBannerGuiConfig extends SprykerContentBannerGuiConfig
 {
     /**
-     * @var string
-     *
      * @uses \Pyz\Shared\ContentBanner\ContentBannerConfig::WIDGET_TEMPLATE_IDENTIFIER_HOME_PAGE
      */
     protected const WIDGET_TEMPLATE_IDENTIFIER_HOME_PAGE = 'home-page';
 
     /**
-     * @var string
-     *
      * Content item banner home page template name
      */
     protected const WIDGET_TEMPLATE_DISPLAY_NAME_HOME_PAGE = 'content_banner.template.home-page';

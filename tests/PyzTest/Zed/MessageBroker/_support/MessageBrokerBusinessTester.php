@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace PyzTest\Zed\MessageBroker;
 
 use Codeception\Actor;
@@ -30,9 +32,6 @@ class MessageBrokerBusinessTester extends Actor
 {
     use _generated\MessageBrokerBusinessTesterActions;
 
-    /**
-     * @return \Spryker\Zed\MessageBroker\Business\MessageBrokerFacadeInterface
-     */
     public function getMessageBrokerFacade(): MessageBrokerFacadeInterface
     {
         return $this->getLocator()->messageBroker()->facade();

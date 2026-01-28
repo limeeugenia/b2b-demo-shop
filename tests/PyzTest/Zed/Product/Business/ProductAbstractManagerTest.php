@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace PyzTest\Zed\Product\Business;
 
 use Generated\Shared\Transfer\PriceProductTransfer;
@@ -24,9 +26,6 @@ use Generated\Shared\Transfer\ProductImageTransfer;
  */
 class ProductAbstractManagerTest extends ProductTestAbstract
 {
-    /**
-     * @return void
-     */
     public function testCreateProductAbstractShouldCreateProductAbstractAndTriggerPlugins(): void
     {
         $idProductAbstract = $this->productAbstractManager->createProductAbstract($this->productAbstractTransfer);
@@ -36,9 +35,6 @@ class ProductAbstractManagerTest extends ProductTestAbstract
         $this->assertCreateProductAbstract($this->productAbstractTransfer);
     }
 
-    /**
-     * @return void
-     */
     public function testSaveProductAbstractShouldUpdateProductAbstractAndTriggerPlugins(): void
     {
         $idProductAbstract = $this->productAbstractManager->createProductAbstract($this->productAbstractTransfer);
@@ -56,9 +52,6 @@ class ProductAbstractManagerTest extends ProductTestAbstract
         $this->assertSaveProductAbstract($this->productAbstractTransfer);
     }
 
-    /**
-     * @return void
-     */
     public function testGetProductAbstractByIdShouldReturnFullyLoadedTransferObject(): void
     {
         $this->setupDefaultProducts();
@@ -70,11 +63,6 @@ class ProductAbstractManagerTest extends ProductTestAbstract
         $this->assertReadProductAbstract($productAbstract);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     *
-     * @return void
-     */
     protected function assertCreateProductAbstract(ProductAbstractTransfer $productAbstractTransfer): void
     {
         $createdProductEntity = $this->productQueryContainer
@@ -86,11 +74,6 @@ class ProductAbstractManagerTest extends ProductTestAbstract
         $this->assertSame($productAbstractTransfer->getSku(), $createdProductEntity->getSku());
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     *
-     * @return void
-     */
     protected function assertSaveProductAbstract(ProductAbstractTransfer $productAbstractTransfer): void
     {
         $updatedProductEntity = $this->productQueryContainer
@@ -108,22 +91,12 @@ class ProductAbstractManagerTest extends ProductTestAbstract
         }
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     *
-     * @return void
-     */
     protected function assertReadProductAbstract(ProductAbstractTransfer $productAbstractTransfer): void
     {
         $this->assertProductPrice($productAbstractTransfer);
         $this->assertProductImages($productAbstractTransfer);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     *
-     * @return void
-     */
     protected function assertProductPrice(ProductAbstractTransfer $productAbstractTransfer): void
     {
         foreach ($productAbstractTransfer->getPrices() as $priceProductTransfer) {
@@ -133,11 +106,6 @@ class ProductAbstractManagerTest extends ProductTestAbstract
         }
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     *
-     * @return void
-     */
     protected function assertProductImages(ProductAbstractTransfer $productAbstractTransfer): void
     {
         /** @var array<\Generated\Shared\Transfer\ProductImageSetTransfer> $imageSetCollection */

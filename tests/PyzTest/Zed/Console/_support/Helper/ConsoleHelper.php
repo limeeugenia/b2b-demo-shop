@@ -5,9 +5,12 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace PyzTest\Zed\Console\Helper;
 
 use Codeception\Module;
+use Codeception\Module\Cli;
 use Codeception\TestInterface;
 use Codeception\Util\FileSystem;
 use SprykerTest\Shared\Testify\Helper\ModuleHelperConfigTrait;
@@ -16,22 +19,11 @@ class ConsoleHelper extends Module
 {
     use ModuleHelperConfigTrait;
 
-    /**
-     * @var string
-     */
     public const RUNNER = 'console_runner.php';
 
-    /**
-     * @var string
-     */
     public const SANDBOX_DIR = 'cli_sandbox/';
 
-    /**
-     * @param \Codeception\TestInterface $test
-     *
-     * @return void
-     */
-    public function _after(TestInterface $test): void
+    public function _after(TestInterface $test): void // phpcs:ignore SlevomatCodingStandard.Functions.UnusedParameter
     {
         foreach ($this->config['cleanup_dirs'] as $dir) {
             $dir = codecept_data_dir() . self::SANDBOX_DIR . $dir;
@@ -40,20 +32,12 @@ class ConsoleHelper extends Module
         }
     }
 
-    /**
-     * @param string $command
-     *
-     * @return void
-     */
-    public function runSprykerCommand($command): void
+    public function runSprykerCommand(string $command): void
     {
         $command = 'php ' . codecept_data_dir() . self::RUNNER . " $command";
         $this->getCli()->runShellCommand($command);
     }
 
-    /**
-     * @return void
-     */
     protected function setDefaultConfig(): void
     {
         $this->config = [
@@ -61,10 +45,7 @@ class ConsoleHelper extends Module
         ];
     }
 
-    /**
-     * @return \Codeception\Module\Cli|\Codeception\Module
-     */
-    protected function getCli()
+    protected function getCli(): Cli|Module
     {
         return $this->getModule('Cli');
     }

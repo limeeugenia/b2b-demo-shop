@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace Pyz\Zed\DataImport\Business\Model\ProductOptionPrice;
 
 use Orm\Zed\Currency\Persistence\SpyCurrencyQuery;
@@ -20,52 +22,32 @@ use Spryker\Zed\ProductOption\Dependency\ProductOptionEvents;
 
 class ProductOptionPriceWriterStep extends PublishAwareStep implements DataImportStepInterface
 {
-    /**
-     * @var int
-     */
     public const BULK_SIZE = 100;
 
-    /**
-     * @var string
-     */
     public const KEY_PRODUCT_OPTION_SKU = 'product_option_sku';
 
-    /**
-     * @var string
-     */
     public const KEY_STORE = 'store';
 
-    /**
-     * @var string
-     */
     public const KEY_CURRENCY = 'currency';
 
-    /**
-     * @var string
-     */
     public const KEY_NET_AMOUNT = 'value_net';
 
-    /**
-     * @var string
-     */
     public const KEY_GROSS_AMOUNT = 'value_gross';
 
     /**
      * @var array<int> Keys are store names
      */
-    protected static $idStoreBuffer = [];
+    protected static array $idStoreBuffer = [];
 
     /**
      * @var array<int> Keys are currency codes.
      */
-    protected static $idCurrencyBuffer = [];
+    protected static array $idCurrencyBuffer = [];
 
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
      * @throws \Pyz\Zed\DataImport\Business\Exception\InvalidDataException
-     *
-     * @return void
      */
     public function execute(DataSetInterface $dataSet): void
     {
@@ -92,12 +74,7 @@ class ProductOptionPriceWriterStep extends PublishAwareStep implements DataImpor
         $this->publishRelatedProductAbstracts($priceEntity->getFkProductOptionValue());
     }
 
-    /**
-     * @param int $idProductOptionValue
-     *
-     * @return void
-     */
-    protected function publishRelatedProductAbstracts($idProductOptionValue): void
+    protected function publishRelatedProductAbstracts(int $idProductOptionValue): void
     {
         $productAbstractCollection = SpyProductAbstractQuery::create()
             ->joinSpyProductAbstractProductOptionGroup()
@@ -117,12 +94,7 @@ class ProductOptionPriceWriterStep extends PublishAwareStep implements DataImpor
         }
     }
 
-    /**
-     * @param string|null $storeName
-     *
-     * @return int|null
-     */
-    protected function getIdStore($storeName): ?int
+    protected function getIdStore(?string $storeName): ?int
     {
         if ($storeName === '' || $storeName === null) {
             return null;
@@ -136,12 +108,7 @@ class ProductOptionPriceWriterStep extends PublishAwareStep implements DataImpor
         return static::$idStoreBuffer[$storeName];
     }
 
-    /**
-     * @param string $currencyIsoCode
-     *
-     * @return int
-     */
-    protected function getIdCurrency($currencyIsoCode): int
+    protected function getIdCurrency(string $currencyIsoCode): int
     {
         if (!isset(static::$idCurrencyBuffer[$currencyIsoCode])) {
             static::$idCurrencyBuffer[$currencyIsoCode] = SpyCurrencyQuery::create()
@@ -154,8 +121,6 @@ class ProductOptionPriceWriterStep extends PublishAwareStep implements DataImpor
 
     /**
      * @param string|int|null $price
-     *
-     * @return int|null
      */
     protected function formatPrice($price): ?int
     {

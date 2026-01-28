@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace PyzTest\Glue\Customer\RestApi;
 
 use Codeception\Util\HttpCode;
@@ -25,21 +27,10 @@ use Spryker\Glue\CustomersRestApi\CustomersRestApiConfig;
  */
 class CustomerAddressesRestApiCest
 {
-    /**
-     * @var \PyzTest\Glue\Customer\RestApi\CustomerRestApiFixtures
-     */
     protected CustomerRestApiFixtures $fixtures;
 
-    /**
-     * @var \Generated\Shared\Transfer\CustomerTransfer
-     */
     protected CustomerTransfer $customerTransfer;
 
-    /**
-     * @param \PyzTest\Glue\Customer\CustomerApiTester $I
-     *
-     * @return void
-     */
     public function _before(CustomerApiTester $I): void
     {
         /** @var \PyzTest\Glue\Customer\RestApi\CustomerRestApiFixtures $fixtures */
@@ -60,11 +51,6 @@ class CustomerAddressesRestApiCest
         $I->amBearerAuthenticated($oauthResponseTransfer->getAccessToken());
     }
 
-    /**
-     * @param \PyzTest\Glue\Customer\CustomerApiTester $I
-     *
-     * @return void
-     */
     public function requestGetCustomerAddresses(CustomerApiTester $I): void
     {
         // Act
@@ -84,11 +70,6 @@ class CustomerAddressesRestApiCest
         $I->seeResponseMatchesOpenApiSchema();
     }
 
-    /**
-     * @param \PyzTest\Glue\Customer\CustomerApiTester $I
-     *
-     * @return void
-     */
     public function requestGetCustomerAddressesAuthorizationError(CustomerApiTester $I): void
     {
         // Act

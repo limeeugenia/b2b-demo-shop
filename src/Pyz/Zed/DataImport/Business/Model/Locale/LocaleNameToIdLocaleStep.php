@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace Pyz\Zed\DataImport\Business\Model\Locale;
 
 use Orm\Zed\Locale\Persistence\SpyLocaleQuery;
@@ -15,36 +17,20 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 
 class LocaleNameToIdLocaleStep implements DataImportStepInterface
 {
-    /**
-     * @var string
-     */
     public const KEY_SOURCE = 'localeName';
 
-    /**
-     * @var string
-     */
     public const KEY_TARGET = 'idLocale';
 
-    /**
-     * @var string
-     */
-    protected $source;
+    protected string $source;
 
-    /**
-     * @var string
-     */
-    protected $target;
+    protected string $target;
 
     /**
      * @var array<string, int>
      */
-    protected $resolved = [];
+    protected array $resolved = [];
 
-    /**
-     * @param string $source
-     * @param string $target
-     */
-    public function __construct($source = self::KEY_SOURCE, $target = self::KEY_TARGET)
+    public function __construct(string $source = self::KEY_SOURCE, string $target = self::KEY_TARGET)
     {
         $this->source = $source;
         $this->target = $target;
@@ -54,8 +40,6 @@ class LocaleNameToIdLocaleStep implements DataImportStepInterface
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
      * @throws \Spryker\Zed\DataImport\Business\Exception\DataKeyNotFoundInDataSetException
-     *
-     * @return void
      */
     public function execute(DataSetInterface $dataSet): void
     {
@@ -80,10 +64,8 @@ class LocaleNameToIdLocaleStep implements DataImportStepInterface
      * @param string $localeName
      *
      * @throws \Pyz\Zed\DataImport\Business\Exception\EntityNotFoundException
-     *
-     * @return int
      */
-    protected function resolveIdLocale($localeName): int
+    protected function resolveIdLocale(string $localeName): int
     {
         $query = SpyLocaleQuery::create();
         $localeEntity = $query->filterByLocaleName($localeName)->findOne();

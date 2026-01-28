@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace Pyz\Zed\Log\Communication\Plugin;
 
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -18,18 +20,12 @@ use Symfony\Component\Process\Process;
  */
 class FilebeatLogListenerPlugin extends AbstractPlugin implements LogListenerInterface
 {
-    /**
-     * @return void
-     */
     public function startListener(): void
     {
         $process = new Process(['sudo service filebeat start']);
         $process->run();
     }
 
-    /**
-     * @return void
-     */
     public function stopListener(): void
     {
         $process = new Process(['sudo service filebeat stop']);

@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace Pyz\Zed\DataImport\Business\CombinedProduct\ProductStock\Writer;
 
 use Pyz\Zed\DataImport\Business\CombinedProduct\ProductStock\CombinedProductStockHydratorStep;
@@ -22,12 +24,6 @@ class CombinedProductStockPropelDataSetWriter extends ProductStockPropelDataSetW
 
     protected const COLUMN_IS_NEVER_OUT_OF_STOCK = CombinedProductStockHydratorStep::COLUMN_IS_NEVER_OUT_OF_STOCK;
 
-    /**
-     * @param \Spryker\Zed\ProductBundle\Business\ProductBundleFacadeInterface $productBundleFacade
-     * @param \Pyz\Zed\DataImport\Business\Model\Product\Repository\ProductRepositoryInterface $productRepository
-     * @param \Spryker\Zed\Store\Business\StoreFacadeInterface $storeFacade
-     * @param \Spryker\Zed\Stock\Business\StockFacadeInterface $stockFacade
-     */
     public function __construct(
         ProductBundleFacadeInterface $productBundleFacade,
         ProductRepositoryInterface $productRepository,

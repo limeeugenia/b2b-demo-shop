@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace PyzTest\Zed\CmsGui\Presentation;
 
 use Codeception\Scenario;
@@ -25,11 +27,6 @@ use PyzTest\Zed\CmsGui\PageObject\CmsEditPage;
  */
 class CmsGuiCreatePageCest
 {
-    /**
-     * @param \PyzTest\Zed\CmsGui\CmsGuiPresentationTester $i
-     *
-     * @return void
-     */
     public function _before(CmsGuiPresentationTester $i): void
     {
         $i->amZed();
@@ -41,10 +38,8 @@ class CmsGuiCreatePageCest
      *
      * @param \PyzTest\Zed\CmsGui\CmsGuiPresentationTester $i
      * @param \Codeception\Scenario $scenario
-     *
-     * @return void
      */
-    public function testICanCreateCmsPageWithTranslatedPlaceholders(CmsGuiPresentationTester $i, Scenario $scenario): void
+    public function testICanCreateCmsPageWithTranslatedPlaceholders(CmsGuiPresentationTester $i, Scenario $scenario): void // phpcs:ignore SlevomatCodingStandard.Functions.UnusedParameter
     {
         $i->wantTo('Create cms page with multiple translations');
         $i->expect('Page is persisted in Zed, exported to Yves and is accessible.');
@@ -57,7 +52,6 @@ class CmsGuiCreatePageCest
         $i->setIsSearchable();
 
         $i->fillLocalizedUrlForm(0, $i->getLocalizedName('en'), $i->getLocalizedUrl('en'));
-        $i->expandLocalizedUrlPane();
         $i->fillLocalizedUrlForm(1, $i->getLocalizedName('de'), $i->getLocalizedUrl('de'));
         $i->clickSubmit();
 

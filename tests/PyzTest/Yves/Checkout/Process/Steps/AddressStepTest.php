@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace PyzTest\Yves\Checkout\Process\Steps;
 
 use Codeception\Test\Unit;
@@ -16,6 +18,7 @@ use Generated\Shared\Transfer\AddressesTransfer;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use PyzTest\Yves\Checkout\CheckoutBusinessTester;
 use SprykerShop\Yves\CheckoutPage\CheckoutPageConfig;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCalculationClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCustomerClientInterface;
@@ -46,14 +49,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class AddressStepTest extends Unit
 {
-    /**
-     * @var \PyzTest\Yves\Checkout\CheckoutBusinessTester
-     */
-    public $tester;
+    public CheckoutBusinessTester $tester;
 
-    /**
-     * @return void
-     */
     public function testExecuteAddressStepWhenGuestIsSubmittedShouldUseDataFromAddressFromForm(): void
     {
         $customerClientMock = $this->createCustomerClientMock();
@@ -71,9 +68,6 @@ class AddressStepTest extends Unit
         $this->assertEquals($addressTransfer->getAddress1(), $quoteTransfer->getBillingAddress()->getAddress1());
     }
 
-    /**
-     * @return void
-     */
     public function testExecuteAddressStepWhenGuestIsSubmittedShouldUseDataFromAddressFromFormWithItemLevelShippingAddresses(): void
     {
         $addressStep = $this->createAddressStep();
@@ -93,9 +87,6 @@ class AddressStepTest extends Unit
         $this->assertEquals($addressTransfer->getAddress1(), $quoteTransfer->getBillingAddress()->getAddress1());
     }
 
-    /**
-     * @return void
-     */
     public function testExecuteAddressStepWhenLoggedInUserCreatesNewAddress(): void
     {
         $addressTransfer = new AddressTransfer();
@@ -133,9 +124,6 @@ class AddressStepTest extends Unit
         $this->assertEquals($addressTransfer->getAddress1(), $quoteTransfer->getBillingAddress()->getAddress1());
     }
 
-    /**
-     * @return void
-     */
     public function testExecuteAddressStepWhenLoggedInUserCreatesNewAddressWithItemLevelShippingAddresses(): void
     {
         $addressTransfer = new AddressTransfer();
@@ -172,9 +160,6 @@ class AddressStepTest extends Unit
         $this->assertEquals($addressTransfer->getAddress1(), $quoteTransfer->getBillingAddress()->getAddress1());
     }
 
-    /**
-     * @return void
-     */
     public function testExecuteWhenBillingAddressSameAsShippingSelectedShouldCopyShipmentIntoBilling(): void
     {
         $addressTransfer = new AddressTransfer();
@@ -204,9 +189,6 @@ class AddressStepTest extends Unit
         $this->assertEquals($addressTransfer->getAddress1(), $quoteTransfer->getBillingAddress()->getAddress1());
     }
 
-    /**
-     * @return void
-     */
     public function testExecuteWhenBillingAddressSameAsShippingSelectedShouldCopyShipmentIntoBillingWithItemLevelShippingAddresses(): void
     {
         $addressTransfer = (new AddressBuilder([
@@ -239,18 +221,12 @@ class AddressStepTest extends Unit
         $this->assertEquals($addressTransfer->getAddress1(), $quoteTransfer->getBillingAddress()->getAddress1());
     }
 
-    /**
-     * @return void
-     */
     public function testPostConditionWhenNoAddressesSetShouldReturnFalse(): void
     {
         $addressStep = $this->createAddressStep();
         $this->assertFalse($addressStep->postCondition(new QuoteTransfer()));
     }
 
-    /**
-     * @return void
-     */
     public function testPostConditionIfShippingIsEmptyShouldReturnFalse(): void
     {
         $addressStep = $this->createAddressStep();
@@ -260,9 +236,6 @@ class AddressStepTest extends Unit
         $this->assertFalse($addressStep->postCondition($quoteTransfer));
     }
 
-    /**
-     * @return void
-     */
     public function testPostConditionIfBillingIsEmptyShouldReturnFalse(): void
     {
         $addressStep = $this->createAddressStep();
@@ -272,9 +245,6 @@ class AddressStepTest extends Unit
         $this->assertFalse($addressStep->postCondition($quoteTransfer));
     }
 
-    /**
-     * @return void
-     */
     public function testPostConditionIfBillingIsEmptyShouldReturnFalseWithItemLevelShippingAddresses(): void
     {
         $addressStep = $this->createAddressStep();
@@ -290,9 +260,6 @@ class AddressStepTest extends Unit
         $this->assertFalse($addressStep->postCondition($quoteTransfer));
     }
 
-    /**
-     * @return void
-     */
     public function testPostConditionIfEmptyAddressesIsSetShouldReturnFalse(): void
     {
         // Arrange
@@ -308,9 +275,6 @@ class AddressStepTest extends Unit
         $this->assertFalse($result);
     }
 
-    /**
-     * @return void
-     */
     public function testPostConditionIfNotEmptyAddressesIsSetShouldReturnTrue(): void
     {
         // Arrange
@@ -328,9 +292,6 @@ class AddressStepTest extends Unit
         $this->assertTrue($result);
     }
 
-    /**
-     * @return void
-     */
     public function testPostConditionIfAddressesIsSetShouldReturnTrueWithItemLevelShippingAddresses(): void
     {
         // Arrange
@@ -352,9 +313,6 @@ class AddressStepTest extends Unit
         $this->assertTrue($result);
     }
 
-    /**
-     * @return void
-     */
     public function testRequireInputShouldReturnTrue(): void
     {
         $addressStep = $this->createAddressStep();
@@ -396,9 +354,7 @@ class AddressStepTest extends Unit
      */
     protected function createCalculationClientMock(): CheckoutPageToCalculationClientInterface
     {
-        $calculationMock = $this->getMockBuilder(CheckoutPageToCalculationClientInterface::class)->getMock();
-
-        return $calculationMock;
+        return $this->getMockBuilder(CheckoutPageToCalculationClientInterface::class)->getMock();
     }
 
     /**
@@ -437,9 +393,6 @@ class AddressStepTest extends Unit
         return $this->getMockBuilder(CheckoutPageConfig::class)->getMock();
     }
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\Request
-     */
     protected function createRequest(): Request
     {
         return Request::createFromGlobals();

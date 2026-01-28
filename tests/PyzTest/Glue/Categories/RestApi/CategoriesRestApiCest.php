@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace PyzTest\Glue\Categories\RestApi;
 
 use PyzTest\Glue\Categories\CategoriesRestApiTester;
@@ -22,16 +24,8 @@ use PyzTest\Glue\Categories\CategoriesRestApiTester;
  */
 class CategoriesRestApiCest
 {
-    /**
-     * @var \PyzTest\Glue\Categories\RestApi\CategoriesRestApiFixtures
-     */
     protected CategoriesRestApiFixtures $fixtures;
 
-    /**
-     * @param \PyzTest\Glue\Categories\CategoriesRestApiTester $I
-     *
-     * @return void
-     */
     public function loadFixtures(CategoriesRestApiTester $I): void
     {
         /** @var \PyzTest\Glue\Categories\RestApi\CategoriesRestApiFixtures $fixtures */
@@ -44,8 +38,6 @@ class CategoriesRestApiCest
      * @depends loadFixtures
      *
      * @param \PyzTest\Glue\Categories\CategoriesRestApiTester $I
-     *
-     * @return void
      */
     public function requestCategoryNodeHasUrlAttribute(CategoriesRestApiTester $I): void
     {

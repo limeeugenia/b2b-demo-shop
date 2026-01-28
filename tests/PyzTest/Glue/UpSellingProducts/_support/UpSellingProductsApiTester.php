@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace PyzTest\Glue\UpSellingProducts;
 
 use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
@@ -34,8 +36,6 @@ class UpSellingProductsApiTester extends ApiEndToEndTester
 
     /**
      * @param array<string> $includes
-     *
-     * @return string
      */
     public function formatQueryInclude(array $includes = []): string
     {
@@ -49,8 +49,6 @@ class UpSellingProductsApiTester extends ApiEndToEndTester
     /**
      * @param string $cartUuid
      * @param array<string> $includes
-     *
-     * @return string
      */
     public function buildCartUpSellingProductsUrl(string $cartUuid, array $includes = []): string
     {

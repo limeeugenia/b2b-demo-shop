@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace PyzTest\Glue\Categories\RestApi;
 
 use Generated\Shared\Transfer\CategoryTransfer;
@@ -25,24 +27,13 @@ use SprykerTest\Shared\Testify\Fixtures\FixturesContainerInterface;
  */
 class CategoriesRestApiFixtures implements FixturesBuilderInterface, FixturesContainerInterface
 {
-    /**
-     * @var \Generated\Shared\Transfer\CategoryTransfer
-     */
     protected CategoryTransfer $categoryTransfer;
 
-    /**
-     * @return \Generated\Shared\Transfer\CategoryTransfer
-     */
     public function getCategoryTransfer(): CategoryTransfer
     {
         return $this->categoryTransfer;
     }
 
-    /**
-     * @param \PyzTest\Glue\Categories\CategoriesRestApiTester $I
-     *
-     * @return \SprykerTest\Shared\Testify\Fixtures\FixturesContainerInterface
-     */
     public function buildFixtures(CategoriesRestApiTester $I): FixturesContainerInterface
     {
         $this->createCategory($I);
@@ -50,11 +41,6 @@ class CategoriesRestApiFixtures implements FixturesBuilderInterface, FixturesCon
         return $this;
     }
 
-    /**
-     * @param \PyzTest\Glue\Categories\CategoriesRestApiTester $I
-     *
-     * @return void
-     */
     protected function createCategory(CategoriesRestApiTester $I): void
     {
         $storeTransfer = $I->getLocator()->store()->facade()->getCurrentStore();

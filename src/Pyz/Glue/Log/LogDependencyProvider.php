@@ -5,10 +5,11 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace Pyz\Glue\Log;
 
 use Spryker\Glue\Log\LogDependencyProvider as SprykerLogDependencyProvider;
-use Spryker\Glue\Log\Plugin\Handler\ExceptionStreamHandlerPlugin;
 use Spryker\Glue\Log\Plugin\Handler\StreamHandlerPlugin;
 use Spryker\Glue\Log\Plugin\Log\AuditLogMetaDataProcessorPlugin;
 use Spryker\Glue\Log\Plugin\Log\AuditLogRequestProcessorPlugin;
@@ -29,7 +30,6 @@ class LogDependencyProvider extends SprykerLogDependencyProvider
     {
         return [
             new StreamHandlerPlugin(),
-            new ExceptionStreamHandlerPlugin(),
         ];
     }
 

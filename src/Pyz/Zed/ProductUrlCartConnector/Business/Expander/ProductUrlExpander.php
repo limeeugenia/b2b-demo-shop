@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace Pyz\Zed\ProductUrlCartConnector\Business\Expander;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
@@ -15,20 +17,10 @@ use Spryker\Zed\Product\Business\ProductFacadeInterface;
 
 class ProductUrlExpander implements ProductUrlExpanderInterface
 {
-    /**
-     * @var \Spryker\Zed\Product\Business\ProductFacadeInterface
-     */
-    protected $productFacade;
+    protected ProductFacadeInterface $productFacade;
 
-    /**
-     * @var \Spryker\Zed\Locale\Business\LocaleFacadeInterface
-     */
-    protected $localeFacade;
+    protected LocaleFacadeInterface $localeFacade;
 
-    /**
-     * @param \Spryker\Zed\Product\Business\ProductFacadeInterface $productFacade
-     * @param \Spryker\Zed\Locale\Business\LocaleFacadeInterface $localeFacade
-     */
     public function __construct(
         ProductFacadeInterface $productFacade,
         LocaleFacadeInterface $localeFacade,
@@ -37,11 +29,6 @@ class ProductUrlExpander implements ProductUrlExpanderInterface
         $this->localeFacade = $localeFacade;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
-     *
-     * @return \Generated\Shared\Transfer\CartChangeTransfer
-     */
     public function expandItems(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
     {
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
@@ -51,11 +38,6 @@ class ProductUrlExpander implements ProductUrlExpanderInterface
         return $cartChangeTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     *
-     * @return void
-     */
     protected function expandItemsWithUrl(ItemTransfer $itemTransfer): void
     {
         $idLocale = $this->localeFacade->getCurrentLocale()->getIdLocale();
@@ -65,9 +47,11 @@ class ProductUrlExpander implements ProductUrlExpanderInterface
             ->setIdProductAbstract($itemTransfer->getIdProductAbstract());
         $productUrlTransfer = $this->productFacade->getProductUrl($productAbstractTransfer);
         foreach ($productUrlTransfer->getUrls() as $localizedUrlTransfer) {
-            if ($localizedUrlTransfer->getLocale() !== null && $localizedUrlTransfer->getLocale()->getIdLocale() === $idLocale) {
-                $itemTransfer->setUrl($localizedUrlTransfer->getUrl());
+            if ($localizedUrlTransfer->getLocale() === null || $localizedUrlTransfer->getLocale()->getIdLocale() !== $idLocale) {
+                continue;
             }
+
+            $itemTransfer->setUrl($localizedUrlTransfer->getUrl());
         }
     }
 }

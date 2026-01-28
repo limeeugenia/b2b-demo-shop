@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace Pyz\Zed\ExampleStateMachine\Communication\Plugin\Condition;
 
 use Generated\Shared\Transfer\StateMachineItemTransfer;
@@ -18,11 +20,6 @@ use Spryker\Zed\StateMachine\Dependency\Plugin\ConditionPluginInterface;
  */
 class TestConditionPlugin extends AbstractPlugin implements ConditionPluginInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
-     *
-     * @return bool
-     */
     public function check(StateMachineItemTransfer $stateMachineItemTransfer): bool
     {
         return (bool)($stateMachineItemTransfer->getIdentifier() % 2);

@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace PyzTest\Zed\Console\Console;
 
 use PHPUnit\Framework\Assert;
@@ -22,11 +24,6 @@ use PyzTest\Zed\Console\ConsoleConsoleTester;
  */
 class ConsoleCest
 {
-    /**
-     * @param \PyzTest\Zed\Console\ConsoleConsoleTester $i
-     *
-     * @return void
-     */
     public function testICanRunConsoleApplication(ConsoleConsoleTester $i): void
     {
         $i->wantTo('See that console is running');

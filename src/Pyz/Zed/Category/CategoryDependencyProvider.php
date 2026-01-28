@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace Pyz\Zed\Category;
 
 use Spryker\Zed\Category\CategoryDependencyProvider as SprykerDependencyProvider;
@@ -90,9 +92,6 @@ class CategoryDependencyProvider extends SprykerDependencyProvider
         ];
     }
 
-    /**
-     * @return \Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryStoreAssignerPluginInterface
-     */
     protected function getCategoryStoreAssignerPlugin(): CategoryStoreAssignerPluginInterface
     {
         return new MainChildrenPropagationCategoryStoreAssignerPlugin();

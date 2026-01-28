@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace Pyz\Zed\DataImport\Business\Model\ProductGroup;
 
 use Orm\Zed\ProductGroup\Persistence\SpyProductAbstractGroupQuery;
@@ -17,44 +19,21 @@ use Spryker\Zed\ProductGroup\Dependency\ProductGroupEvents;
 
 class ProductGroupWriter extends PublishAwareStep implements DataImportStepInterface
 {
-    /**
-     * @var int
-     */
     public const BULK_SIZE = 100;
 
-    /**
-     * @var string
-     */
     public const COLUMN_ABSTRACT_SKU = 'abstract_sku';
 
-    /**
-     * @var string
-     */
     public const COLUMN_PRODUCT_GROUP_KEY = 'group_key';
 
-    /**
-     * @var string
-     */
     public const COLUMN_POSITION = 'position';
 
-    /**
-     * @var \Pyz\Zed\DataImport\Business\Model\Product\Repository\ProductRepository
-     */
-    protected $productRepository;
+    protected ProductRepository $productRepository;
 
-    /**
-     * @param \Pyz\Zed\DataImport\Business\Model\Product\Repository\ProductRepository $productRepository
-     */
     public function __construct(ProductRepository $productRepository)
     {
         $this->productRepository = $productRepository;
     }
 
-    /**
-     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
-     *
-     * @return void
-     */
     public function execute(DataSetInterface $dataSet): void
     {
         $productGroupEntity = SpyProductGroupQuery::create()

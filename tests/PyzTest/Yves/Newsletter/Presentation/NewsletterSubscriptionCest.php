@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace PyzTest\Yves\Newsletter\Presentation;
 
 use Codeception\Scenario;
@@ -28,21 +30,11 @@ use PyzTest\Yves\Newsletter\PageObject\NewsletterSubscriptionHomePage;
  */
 class NewsletterSubscriptionCest
 {
-    /**
-     * @param \PyzTest\Yves\Newsletter\NewsletterPresentationTester $i
-     *
-     * @return void
-     */
     public function _before(NewsletterPresentationTester $i): void
     {
         $i->amYves();
     }
 
-    /**
-     * @param \PyzTest\Yves\Newsletter\NewsletterPresentationTester $i
-     *
-     * @return void
-     */
     public function iCanSubscribeWithAnUnsubscribedEmail(NewsletterPresentationTester $i): void
     {
         $i->wantTo('Subscribe to the newsletter with an unsubscribed new email.');
@@ -53,16 +45,11 @@ class NewsletterSubscriptionCest
         $customerTransfer = (new CustomerBuilder())->build();
 
         $i->fillField(NewsletterSubscriptionHomePage::FORM_FIELD_EMAIL, $customerTransfer->getEmail());
-        $i->click(NewsletterSubscriptionHomePage::FORM_BUTTON_SUBMIT);
+        $i->executeJS('document.querySelector("' . NewsletterSubscriptionHomePage::FORM_BUTTON_SUBMIT . '").click();');
 
         $i->seeInPageSource(NewsletterSubscriptionHomePage::SUCCESS_MESSAGE);
     }
 
-    /**
-     * @param \PyzTest\Yves\Newsletter\NewsletterPresentationTester $i
-     *
-     * @return void
-     */
     public function iCanNotSubscribeWithAnAlreadySubscribedEmail(NewsletterPresentationTester $i): void
     {
         $i->wantTo('Subscribe to the newsletter with an already subscribed email.');
@@ -75,16 +62,11 @@ class NewsletterSubscriptionCest
         $i->haveAnAlreadySubscribedEmail($customerTransfer->getEmail());
 
         $i->fillField(NewsletterSubscriptionHomePage::FORM_FIELD_EMAIL, $customerTransfer->getEmail());
-        $i->click(NewsletterSubscriptionHomePage::FORM_BUTTON_SUBMIT);
+        $i->executeJS('document.querySelector("' . NewsletterSubscriptionHomePage::FORM_BUTTON_SUBMIT . '").click();');
 
         $i->seeInPageSource(NewsletterSubscriptionHomePage::ERROR_MESSAGE);
     }
 
-    /**
-     * @param \PyzTest\Yves\Newsletter\NewsletterPresentationTester $i
-     *
-     * @return void
-     */
     public function subscribedEmailIsLinkedWithCustomerAfterRegistration(NewsletterPresentationTester $i): void
     {
         $i->wantTo('Subscribe to the newsletter with an unsubscribed email and later on register with that address.');
@@ -95,7 +77,7 @@ class NewsletterSubscriptionCest
         $customerTransfer = (new CustomerBuilder())->build();
 
         $i->fillField(NewsletterSubscriptionHomePage::FORM_FIELD_EMAIL, $customerTransfer->getEmail());
-        $i->click(NewsletterSubscriptionHomePage::FORM_BUTTON_SUBMIT);
+        $i->executeJS('document.querySelector("' . NewsletterSubscriptionHomePage::FORM_BUTTON_SUBMIT . '").click();');
         $i->see(CustomerOverviewPage::MESSAGE_SUCCESS_NEWSLETTER_SUBSCRIBED);
 
         $i->amLoggedInCustomer([
@@ -105,12 +87,6 @@ class NewsletterSubscriptionCest
         $i->seeCheckboxIsChecked(CustomerNewsletterPage::FORM_FIELD_SELECTOR_NEWSLETTER_SUBSCRIPTION_INPUT);
     }
 
-    /**
-     * @param \PyzTest\Yves\Newsletter\NewsletterPresentationTester $i
-     * @param \Codeception\Scenario $scenario
-     *
-     * @return void
-     */
     public function subscribedEmailCanBeUnsubscribedByCustomerAfterRegistration(NewsletterPresentationTester $i, Scenario $scenario): void
     {
         $scenario->skip('Test is broken due to improper usage of checkbox check/uncheck functions.');
@@ -123,7 +99,7 @@ class NewsletterSubscriptionCest
         $customerTransfer = (new CustomerBuilder())->build();
 
         $i->fillField(NewsletterSubscriptionHomePage::FORM_FIELD_EMAIL, $customerTransfer->getEmail());
-        $i->click(NewsletterSubscriptionHomePage::FORM_BUTTON_SUBMIT);
+        $i->executeJS('document.querySelector("' . NewsletterSubscriptionHomePage::FORM_BUTTON_SUBMIT . '").click();');
         $i->see(CustomerOverviewPage::MESSAGE_SUCCESS_NEWSLETTER_SUBSCRIBED);
 
         $i->amLoggedInCustomer([

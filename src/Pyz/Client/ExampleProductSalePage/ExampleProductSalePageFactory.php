@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace Pyz\Client\ExampleProductSalePage;
 
 use Generated\Shared\Transfer\StoreTransfer;
@@ -20,8 +22,6 @@ class ExampleProductSalePageFactory extends AbstractFactory
 {
     /**
      * @param array<string, mixed> $requestParameters
-     *
-     * @return \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface
      */
     public function getSaleSearchQueryPlugin(array $requestParameters = []): QueryInterface
     {
@@ -34,17 +34,11 @@ class ExampleProductSalePageFactory extends AbstractFactory
         );
     }
 
-    /**
-     * @return \Spryker\Client\ProductLabelStorage\ProductLabelStorageClientInterface
-     */
     public function getProductLabelStorageClient(): ProductLabelStorageClientInterface
     {
         return $this->getProvidedDependency(ExampleProductSalePageDependencyProvider::CLIENT_PRODUCT_LABEL_STORAGE);
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\StoreTransfer
-     */
     public function getStore(): StoreTransfer
     {
         $storeClient = $this->getProvidedDependency(ExampleProductSalePageDependencyProvider::CLIENT_STORE);
@@ -52,9 +46,6 @@ class ExampleProductSalePageFactory extends AbstractFactory
         return $storeClient->getCurrentStore();
     }
 
-    /**
-     * @return \Spryker\Client\Search\SearchClientInterface
-     */
     public function getSearchClient(): SearchClientInterface
     {
         return $this->getProvidedDependency(ExampleProductSalePageDependencyProvider::CLIENT_SEARCH);
