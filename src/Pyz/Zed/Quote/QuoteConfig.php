@@ -28,6 +28,8 @@ class QuoteConfig extends SprykerQuoteConfig
             QuoteTransfer::QUOTE_REQUEST_VERSION_REFERENCE,
             QuoteTransfer::QUOTE_REQUEST_REFERENCE,
             QuoteTransfer::IS_ORDER_PLACED_SUCCESSFULLY,
+            \Generated\Shared\Transfer\QuoteTransfer::QUOTE_PROCESS_FLOW,
+            \Generated\Shared\Transfer\QuoteTransfer::ORIGINAL_SALES_ORDER_ITEM_UNIT_PRICES,
         ]);
     }
 }

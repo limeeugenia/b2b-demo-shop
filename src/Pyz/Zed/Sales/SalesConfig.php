@@ -58,4 +58,28 @@ class SalesConfig extends SprykerSalesConfig
     {
         return false;
     }
+    /**
+     * Specification:
+     * - Defines if the order reference should be generated using the UniqueRandomIdOrderReferenceGenerator, instead of SequenceNumberOrderReferenceGenerator. UniqueRandomIdOrderReferenceGenerator does not use a database, so it's faster in concurrent requests.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function useUniqueRandomIdOrderReferenceGenerator(): bool
+    {
+        return true;
+    }
+    /**
+     * Specification:
+     * - Defines the column used in order batch save as a unique identifier. This column must contain unique values and can be used for hashing or indexing purposes.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getItemHashColumn(): string
+    {
+        return 'OrderItemReference';
+    }
 }

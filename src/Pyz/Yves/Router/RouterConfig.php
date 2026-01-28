@@ -24,4 +24,21 @@ class RouterConfig extends SprykerRouterConfig
     {
         return (new Container())->getLocator()->locale()->client()->getAllowedLanguages();
     }
+    /**
+     * Specification:
+     * - Returns a list of supported stores for Route manipulation.
+     * - Will be used to strip of store information from a route before a route is matched.
+     *
+     * @api
+     *
+     * @example Incoming URL `/DE/home` will be manipulated to `/home` because the router only knows URL's without any optional pre/suffix.
+     *
+     * @see \Spryker\Yves\Router\Plugin\RouterEnhancer\StorePrefixRouterEnhancerPlugin
+     *
+     * @return array<string>
+     */
+    public function getAllowedStores(): array
+    {
+        return (new \Spryker\Client\Kernel\Container())->getLocator()->storeStorage()->client()->getStoreNames();
+    }
 }

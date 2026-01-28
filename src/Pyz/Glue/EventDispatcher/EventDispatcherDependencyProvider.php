@@ -34,6 +34,7 @@ class EventDispatcherDependencyProvider extends SprykerEventDispatcherDependency
             new ResponseSecurityHeadersEventDispatcherPlugin(),
             new StrictTransportSecurityHeaderEventDispatcherPlugin(),
             new CacheControlHeaderEventDispatcherPlugin(),
+            new Spryker\Glue\Monitoring\Plugin\EventDispatcher\MonitoringRequestTransactionEventDispatcherPlugin(),
         ];
     }
 
@@ -52,6 +53,7 @@ class EventDispatcherDependencyProvider extends SprykerEventDispatcherDependency
             new StrictTransportSecurityHeaderEventDispatcherPlugin(),
             new EventBehaviorEventDispatcherPlugin(),
             new CacheControlHeaderEventDispatcherPlugin(),
+            new Spryker\Glue\Monitoring\Plugin\EventDispatcher\MonitoringRequestTransactionEventDispatcherPlugin(),
         ];
     }
 
@@ -69,6 +71,7 @@ class EventDispatcherDependencyProvider extends SprykerEventDispatcherDependency
             new ResponseSecurityHeadersEventDispatcherPlugin(),
             new StrictTransportSecurityHeaderEventDispatcherPlugin(),
             new CacheControlHeaderEventDispatcherPlugin(),
+            new Spryker\Glue\Monitoring\Plugin\EventDispatcher\MonitoringRequestTransactionEventDispatcherPlugin(),
         ];
     }
 }

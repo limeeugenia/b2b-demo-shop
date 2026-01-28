@@ -21,4 +21,18 @@ class CheckoutPageConfig extends SprykerCheckoutPageConfig
             'de_DE' => '/de/agb',
         ];
     }
+    /**
+     * Specification:
+     * - Returns keys that are used to filter out payment methods during the checkout process on the Payment step.
+     *
+     * @api
+     *
+     * @return list<string>
+     */
+    public function getExcludedPaymentMethodKeys(): array
+    {
+        return [
+            'payone-paypal-express',
+        ];
+    }
 }

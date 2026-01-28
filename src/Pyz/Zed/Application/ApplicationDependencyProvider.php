@@ -112,10 +112,10 @@ class ApplicationDependencyProvider extends SprykerApplicationDependencyProvider
             new CurrencyBackendGatewayApplicationPlugin(),
             new MockArraySessionApplicationPlugin(),
             new TranslatorApplicationPlugin(),
-            new TwigApplicationPlugin(),
             new PropelApplicationPlugin(),
             new BackendGatewayRouterApplicationPlugin(),
             new HttpApplicationPlugin(),
+            new Spryker\Zed\Twig\Communication\Plugin\Application\TwigGatewayApplicationPlugin(),
         ];
     }
 

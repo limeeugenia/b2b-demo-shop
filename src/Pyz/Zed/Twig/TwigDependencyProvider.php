@@ -119,4 +119,52 @@ class TwigDependencyProvider extends SprykerTwigDependencyProvider
 
         return $plugins;
     }
+    /**
+     * @return array<\Spryker\Shared\TwigExtension\Dependency\Plugin\TwigPluginInterface>
+     */
+    protected function getTwigGatewayPlugins(): array
+    {
+        return [
+            new Spryker\Shared\Twig\Plugin\VarDumperTwigPlugin(),
+            new Spryker\Shared\Twig\Plugin\FormTwigPlugin(),
+            new Spryker\Zed\Http\Communication\Plugin\Twig\HttpKernelTwigPlugin(),
+            new Spryker\Shared\Twig\Plugin\RoutingTwigPlugin(),
+            new Spryker\Shared\Twig\Plugin\SecurityTwigPlugin(),
+            new Spryker\Zed\Http\Communication\Plugin\Twig\RuntimeLoaderTwigPlugin(),
+            new Spryker\Zed\Gui\Communication\Plugin\Twig\FormRuntimeLoaderTwigPlugin(),
+            new Spryker\Zed\Application\Communication\Plugin\Twig\ApplicationTwigPlugin(),
+            new Spryker\Zed\ChartGui\Communication\Plugin\Twig\Chart\ChartGuiTwigPlugin(),
+            new Spryker\Zed\User\Communication\Plugin\Twig\UserTwigPlugin(),
+            new Spryker\Zed\Money\Communication\Plugin\Twig\MoneyTwigPlugin(),
+            new Spryker\Zed\Currency\Communication\Plugin\Twig\CurrencyTwigPlugin(),
+            new Spryker\Zed\Translator\Communication\Plugin\Twig\TranslatorTwigPlugin(),
+            new Spryker\Service\UtilDateTime\Plugin\Twig\DateTimeFormatterTwigPlugin(),
+            new Spryker\Zed\ZedUi\Communication\Plugin\ZedUiNavigationTwigPlugin(),
+            new Spryker\Zed\Scheduler\Communication\Plugin\Twig\SchedulerTwigPlugin(),
+            new Spryker\Zed\Barcode\Plugin\Twig\BarcodeTwigPlugin(),
+            new Spryker\Zed\CmsBlock\Communication\Plugin\Twig\CmsBlockTwigExtensionPlugin(),
+            new Spryker\Zed\Gui\Communication\Plugin\Twig\NumberFormatterTwigPlugin(),
+            new Spryker\Zed\Gui\Communication\Plugin\Twig\AssetsPathTwigPlugin(),
+            new Spryker\Zed\Gui\Communication\Plugin\Twig\TabsTwigPlugin(),
+            new Spryker\Zed\Gui\Communication\Plugin\Twig\UrlTwigPlugin(),
+            new Spryker\Zed\Gui\Communication\Plugin\Twig\UrlDecodeTwigPlugin(),
+            new Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\ButtonGroupTwigPlugin(),
+            new Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Action\BackActionButtonTwigPlugin(),
+            new Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Action\CreateActionButtonTwigPlugin(),
+            new Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Action\ViewActionButtonTwigPlugin(),
+            new Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Action\EditActionButtonTwigPlugin(),
+            new Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Action\RemoveActionButtonTwigPlugin(),
+            new Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Table\EditTableButtonTwigPlugin(),
+            new Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Table\BackTableButtonTwigPlugin(),
+            new Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Table\CreateTableButtonTwigPlugin(),
+            new Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Table\ViewTableButtonTwigPlugin(),
+            new Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Table\RemoveTableButtonTwigPlugin(),
+            new Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Form\SubmitButtonTwigPlugin(),
+            new Spryker\Zed\Gui\Communication\Plugin\Twig\GuiFilterTwigPlugin(),
+            new Spryker\Zed\ZedUi\Communication\Plugin\Twig\BooleanToStringTwigPlugin(),
+            new Spryker\Zed\GuiTable\Communication\Plugin\Twig\GuiTableConfigurationTwigPlugin(),
+            new Spryker\Zed\MerchantUser\Communication\Plugin\Twig\MerchantUserTwigPlugin(),
+            new Spryker\Zed\MerchantPortalApplication\Communication\Plugin\Twig\MerchantNavigationTypeTwigPlugin(),
+        ];
+    }
 }

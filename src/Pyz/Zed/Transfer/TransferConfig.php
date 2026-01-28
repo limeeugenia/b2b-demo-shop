@@ -37,4 +37,18 @@ class TransferConfig extends SprykerTransferConfig
     {
         return TransferConstants::PROPERTY_DESCRIPTION_MERGE_STRATEGY_GET_FIRST;
     }
+    /**
+     * Specification:
+     * - Controls whether primitive array validation fails on empty array.
+     * - When enabled, `require` methods will fail on empty array.
+     * - The change of this config requires transfer regeneration to take effect.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isArrayRequireValidationEnabled(): bool
+    {
+        return true;
+    }
 }

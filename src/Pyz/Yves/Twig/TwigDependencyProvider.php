@@ -87,6 +87,7 @@ class TwigDependencyProvider extends SprykerTwigDependencyProvider
             new PriceModeTwigPlugin(),
             new NumberFormatterTwigPlugin(),
             new Spryker\Shared\Twig\Plugin\VarDumperTwigPlugin(),
+            new SprykerShop\Yves\ShopUi\Plugin\Twig\GeneratePathTwigPlugin(),
         ];
     }
 

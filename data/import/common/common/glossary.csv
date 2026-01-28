@@ -4093,3 +4093,17 @@ merchant_relationship.mail.trans.merchant_relationship_delete.link,Contact merch
 merchant_relationship.mail.trans.merchant_relationship_delete.link,Händler kontaktieren,de_DE
 customer.salutation.n/a,n/a,en_US
 customer.salutation.n/a,n/a,de_DE
+oms.state.order-amendment-draft-pending,Editing in Progress,en_US
+oms.state.order-amendment-draft-pending,Bestelländerung in Bearbeitung,de_DE
+oms.state.order-amendment-draft-applied,Editing in Progress,en_US
+oms.state.order-amendment-draft-applied,Bestelländerung in Bearbeitung,de_DE
+sales.validation.sales_order_entity_not_found,The sales order entity was not found.,en_US
+sales.validation.sales_order_entity_not_found,Die Verkaufsbestellung wurde nicht gefunden.,de_DE
+sales.validation.sales_order_item_entity_not_found,The sales order item entity was not found.,en_US
+sales.validation.sales_order_item_entity_not_found,Der Verkaufsbestellungsartikel wurde nicht gefunden.,de_DE
+sales.validation.sales_order_item_entity_duplicated,The sales order item entity was duplicated.,en_US
+sales.validation.sales_order_item_entity_duplicated,Der Verkaufsbestellungsartikel wurde dupliziert.,de_DE
+sales.validation.items_not_from_same_order,Items are not from the same order.,en_US
+sales.validation.items_not_from_same_order,Die Artikel stammen nicht aus derselben Bestellung.,de_DE
+store.cart_reorder.error.store_mismatch,This order was placed in a different store. This action cannot be performed.,en_US
+store.cart_reorder.error.store_mismatch,Diese Bestellung wurde in einem anderen Store getätigt. Aktion kann nicht ausgeführt werden.,de_DE

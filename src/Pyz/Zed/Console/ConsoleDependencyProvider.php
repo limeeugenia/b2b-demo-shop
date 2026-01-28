@@ -386,10 +386,13 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
 
             new DateTimeProductConfiguratorBuildFrontendConsole(),
             new OrderMatrixConsole(),
+            new Spryker\Zed\StorageRedis\Communication\Console\StorageRedisDataReSaveConsole(),
         ];
 
         $propelCommands = $container->getLocator()->propel()->facade()->getConsoleCommands();
-        $commands = array_merge($commands, $propelCommands);
+        $commands = array_merge($commands, $propelCommands, [
+            new Spryker\Zed\Console\Communication\Plugin\Console\MultiProcessRunConsole(),
+        ]);
 
         if ($this->getConfig()->isDevelopmentConsoleCommandsEnabled()) {
             $commands[] = new CodeTestConsole();

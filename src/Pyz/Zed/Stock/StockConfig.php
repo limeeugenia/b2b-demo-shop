@@ -29,4 +29,28 @@ class StockConfig extends SprykerStockConfig
             ],
         ];
     }
+    /**
+     * Specification:
+     * - For controlling stock related entities update, for example when only name has changed the stock update won't trigger product stock relation update.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isConditionalStockUpdateApplied(): bool
+    {
+        return true;
+    }
+    /**
+     * Specification:
+     * - This event is used for updating stock relations after a stock update.
+     *
+     * @api
+     *
+     * @return string|null
+     */
+    public function getEventQueueName(): ?string
+    {
+        return Spryker\Shared\Publisher\PublisherConfig::PUBLISH_QUEUE;
+    }
 }

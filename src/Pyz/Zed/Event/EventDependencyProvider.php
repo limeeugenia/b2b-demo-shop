@@ -123,6 +123,7 @@ class EventDependencyProvider extends SprykerEventDependencyProvider
         $eventSubscriberCollection->add(new ProductConcretePageSearchProductLocalizedAttributesEventSubscriber());
 
         $eventSubscriberCollection->add(new PublisherSubscriber());
+        $eventSubscriberCollection->add(new Spryker\Zed\Stock\Communication\Plugin\Event\Subscriber\PostUpdateStockRelationsEventSubscriber());
 
         return $eventSubscriberCollection;
     }

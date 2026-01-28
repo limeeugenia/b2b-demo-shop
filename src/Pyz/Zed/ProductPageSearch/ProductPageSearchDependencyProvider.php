@@ -50,7 +50,9 @@ class ProductPageSearchDependencyProvider extends SprykerProductPageSearchDepend
      */
     protected function getDataExpanderPlugins(): array
     {
-        $dataExpanderPlugins = [];
+        $dataExpanderPlugins = [
+            \Spryker\Shared\ProductImage\ProductImageConfig::PLUGIN_PRODUCT_IMAGE_ALTERNATIVE_TEXT_DATA => new Spryker\Zed\ProductImage\Communication\Plugin\ProductPageSearch\ProductImageAlternativeTextProductPageDataExpanderPlugin(),
+        ];
 
         $dataExpanderPlugins[ProductLabelSearchConfig::PLUGIN_PRODUCT_LABEL_DATA] = new ProductLabelDataLoaderExpanderPlugin();
         $dataExpanderPlugins[ProductReviewSearchConfig::PLUGIN_PRODUCT_PAGE_RATING_DATA] = new ProductReviewDataLoaderExpanderPlugin();
@@ -96,6 +98,7 @@ class ProductPageSearchDependencyProvider extends SprykerProductPageSearchDepend
         return [
             new ProductConcreteProductListPageDataExpanderPlugin(),
             new ProductImageProductConcretePageDataExpanderPlugin(),
+            new Spryker\Zed\ProductImage\Communication\Plugin\ProductPageSearch\ProductImageAlternativeTextProductConcretePageDataExpanderPlugin(),
         ];
     }
 
